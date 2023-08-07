@@ -71,7 +71,7 @@ const Footer = () => {
                     <FooterLogo>
                       @
                     </FooterLogo>
-                    <h1>게임추천사이트</h1>
+                    <h1>Steam 100</h1>
                     <FooterP>
                     (주)게임추천사이트 | 대표: 박병주 | 사업자등록번호 ???-??-????? <br />
 
