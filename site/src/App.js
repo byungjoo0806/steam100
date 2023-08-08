@@ -1,9 +1,9 @@
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { isLoginFalse, isLoginTrue } from './features/LoginSlice';
+// import { isLoginFalse, isLoginTrue } from './features/LoginSlice';
 import { add, edit, deleted } from './features/BorderSlice'
 import { useState } from 'react';
-import { Login, Border, Main, SignUp } from './pages';
+import { Login, Border, Main, SignUp, MyPage } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
@@ -12,7 +12,7 @@ import Footer from './components/footer/Footer';
 
 function App() {
   const dispatch = useDispatch();
-  const isLogin = useSelector(state => state.login.isLogin)
+  // const isLogin = useSelector(state => state.login.isLogin)
   const posts = useSelector(state=> state.border.posts);
   const [postContent, setPostContent] = useState('');
 
@@ -32,13 +32,7 @@ function App() {
         />}>  
         </Route>
 
-        <Route path='login' element={<Login 
-          dispatch={dispatch}
-          isLogin={isLogin}
-          isLoginTrue={isLoginTrue}
-          isLoginFalse={isLoginFalse}
-        />}>
-        </Route>
+        <Route path='login' element={<Login />}></Route>
 
         <Route path='border' element={<Border 
           dispatch={dispatch}
@@ -52,6 +46,7 @@ function App() {
         </Route>
 
         <Route path='/signup' element={<SignUp />}></Route>
+        <Route path='/mypage' element={<MyPage />}></Route>
 
       </Routes>
 

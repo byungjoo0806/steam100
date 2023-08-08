@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Signup } from '../components'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const SignUp = () => {
     const navi = useNavigate();
+    
+    // 리렌더링을 위한 변수 설정
+    const [page,setPage] = useState('');
+    const inputId = useRef();
+    const inputPw = useRef();
+    const inputNick = useRef();
+    const inputAge = useRef();
+    const inputGender = useRef();
+
+    // 회원 가입용 변수
     let user_id = '';
     let user_pw = '';
     let nickname = '';
-    let age = 0;
+    let age = 15;
     let gender = 'male';
 
     const CreateId = (e)=>{
@@ -43,7 +53,11 @@ const SignUp = () => {
         }).then((e)=>{
             alert(e.data);
             if(e.data[0] === '아'){
-                navi('/signup');
+                if(page === ''){
+                    setPage('reset');
+                }else{
+                    setPage('');
+                }
             }else{
                 navi('/');
             }
@@ -51,21 +65,30 @@ const SignUp = () => {
             console.log(err);
         })
     }
+    
+    useEffect(()=>{
+        inputId.current.value = "";
+        inputPw.current.value = '';
+        inputNick.current.value = '';
+        inputAge.current.value = 15;
+        inputGender.current.checked = true;
+    },[page])
 
     return (
         <>
             <Signup>
-                <label htmlFor="">ID</label>
-                <input onChange={CreateId}></input>
-                <label htmlFor="">PW</label>
-                <input onChange={CreatePw}></input>
-                <label htmlFor="">Nickname</label>
-                <input onChange={CreateNick}></input>
-                <label htmlFor="">Age</label>
-                <input type='number' min={0} step={1} onChange={CreateAge}></input>
-                <div onChange={CreateGender}>Gender
+                <label htmlFor="">아이디</label>
+                <input onChange={CreateId} ref={inputId}></input>
+                <label htmlFor="">비밀번호</label>
+                <input onChange={CreatePw} type='password' ref={inputPw}></input>
+                <label htmlFor="">닉네임</label>
+                <input onChange={CreateNick} ref={inputNick}></input>
+                <label htmlFor="">나이</label>
+                <input type='number' min={15} step={1} onChange={CreateAge} ref={inputAge}></input>
+                <div onChange={CreateGender}>
+                    <p>성별</p>
                     <label htmlFor="male">남성</label>
-                    <input type='radio' id='male' name='gender' value={'male'} defaultChecked></input>
+                    <input type='radio' id='male' name='gender' value={'male'} defaultChecked ref={inputGender}></input>
                     <label htmlFor="female">여성</label>
                     <input type='radio' id='female' name='gender' value={'female'}></input>
                 </div>
