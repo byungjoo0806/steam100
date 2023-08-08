@@ -1,14 +1,14 @@
-import React from 'react';
-import { Mypage } from '../components';
+// import React from 'react';
+// import { Mypage } from '../components';
 
-const Mypage = () => {
-    return (
-        <>
-            <Mypage>
+// const Mypage = () => {
+//     return (
+//         <>
+//             <Mypage>
 
-            </Mypage>
-        </>
-    )
-}
+//             </Mypage>
+//         </>
+//     )
+// }
 
-export default Mypage
+// export default Mypage
