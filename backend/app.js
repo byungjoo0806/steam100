@@ -9,6 +9,7 @@ const app = express();
 const signUpRouter = require('./routers/signUp');
 const loginRouter = require('./routers/login');
 const postRouter = require('./routers/post');
+const mypageRouter = require('./routers/mypage');
 
 sequelize.sync({force : false}).then(()=>{
     console.log('연결 성공');
@@ -27,14 +28,15 @@ app.use(session({
 }))
 
 app.use(cors({
-    origin : '',
+    origin : 'http://localhost:3000',
     credentials : true
 }))
 
 app.use('/signUp',signUpRouter);
 app.use('/login',loginRouter);
 app.use('/post',postRouter);
+app.use('/mypage',mypageRouter);
 
-app.listen(6000,()=>{
+app.listen(8080,()=>{
     console.log('server open');
 })

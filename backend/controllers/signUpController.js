@@ -7,9 +7,15 @@ exports.SignUp = async(req,res)=>{
 
         const user = await User.findOne({where : {user_id}});
 
+        const nick = await User.findOne({where : {nickname}});
+
         if(user != null){
             return res.send('아이디가 이미 존재합니다.');
         }
+
+        if(nick != null){
+            return res.send('닉네임이 이미 존재합니다.');
+        }        
 
         const hash = bcrypt.hashSync(user_pw,10);
 

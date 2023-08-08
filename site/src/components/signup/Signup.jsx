@@ -1,7 +1,7 @@
 import React from 'react';
 import { SignupBox } from './Signup.styled';
 
-const Signup = ({children}) => {
+const Signup = ({ children }) => {
   return (
     <div>
       <SignupBox>

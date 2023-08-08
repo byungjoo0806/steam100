@@ -7,8 +7,8 @@ import { Login, Border, Main, SignUp, Mypage, AdminPage } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
-import Menu from './components/menu/Menu';
 import Footer from './components/footer/Footer';
+import Menu from './components/menu/Menu';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function App() {
       <Menu 
       Link={Link}
       />
-      
+
       <Routes>
         <Route path='' element={<Main 
         
