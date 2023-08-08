@@ -8,6 +8,7 @@ export const SectionContainer = styled.div`
     text-align: center;
     border-radius: 10px; 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    margin: 10px;
 `
 /////////////////////////////////////
 
@@ -116,5 +117,7 @@ export const FooterLink = styled.div`
     &:hover {
         background-color: #8f7446;
         transform: scale(1.05);
+
+    cursor: pointer;
     }
 `
