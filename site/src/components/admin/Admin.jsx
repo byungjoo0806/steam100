@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { AdminBox } from './Admin.styled';
 
-const Admin = () => {
+const Admin = ({children}) => {
   return (
     <div>
-        <h2>홍길동</h2>
-        <p>직업</p>
+      <AdminBox>
+        {children}
+      </AdminBox>
     </div>
   )
 }

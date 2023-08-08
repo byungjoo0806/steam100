@@ -1,6 +1,6 @@
 import React from 'react'
 import { FooterContainer, FooterWrap, FooterTop, FooterTopLeft, FooterTopRight, FooterLangBtn,
-    FooterBottom, FooterLogo, FooterP } from './Footer.styled'
+    FooterBottom, FooterP, FooterH2 } from './Footer.styled'
 
 const Footer = () => {
   return (
@@ -68,14 +68,11 @@ const Footer = () => {
                     </FooterTopRight>
                 </FooterTop>
                 <FooterBottom>
-                    <FooterLogo>
-                      @
-                    </FooterLogo>
-                    <h1>Steam 100</h1>
+                    <FooterH2>Steam 100</FooterH2>
                     <FooterP>
-                    (주)게임추천사이트 | 대표: 박병주 | 사업자등록번호 ???-??-????? <br />
+                    (주)Steam100 | 대표: 홍길동 | 사업자등록번호 123-45-6789 <br />
 
-                    (00000) 서울시 강동구 마곡중앙8로 7길 11 게임추천사이트 <br />
+                    (00000) 서울시 강동구 천호동 123-45 Steam100 <br />
 
                     이메일: jisub11@nate.com <br />
                     <br />

@@ -1,8 +1,13 @@
 import React from 'react'
+import { Admin } from '../components'
 
 const AdminPage = () => {
   return (
-    <div>AdminPage</div>
+    <>
+      <Admin>
+        <h1>어드민 승인 페이지</h1>
+      </Admin>
+    </>
   )
 }
 
