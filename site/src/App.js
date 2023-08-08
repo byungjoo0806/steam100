@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isLoginFalse, isLoginTrue } from './features/LoginSlice';
 import { add, edit, deleted } from './features/BorderSlice'
 import { useState } from 'react';
-import { Login, Border, Main } from './pages';
+import { Login, Border, Main, SignUp } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
@@ -50,6 +50,8 @@ function App() {
           deleted={deleted}        
         />}>
         </Route>
+
+        <Route path='/signup' element={<SignUp />}></Route>
 
       </Routes>
 
