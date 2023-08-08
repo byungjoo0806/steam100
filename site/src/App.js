@@ -7,6 +7,7 @@ import { Login, Border, Main } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
+import Menu from './components/menu/Menu';
 import Footer from './components/footer/Footer';
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
     <div className="App">
 
       <Header 
+      Link={Link}
+      />
+      <Menu 
       Link={Link}
       />
       
@@ -49,7 +53,7 @@ function App() {
 
       </Routes>
 
-    {/* <Footer /> */}
+    <Footer />
     </div>
     
   );

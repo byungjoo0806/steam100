@@ -3,7 +3,9 @@ import { Section } from '../components'
 
 export const Main = () => {
   return (
-    <div>
+    <div className='Main'>
+      <Section></Section>
+      <Section></Section>
       <Section></Section>
     </div>
   )
