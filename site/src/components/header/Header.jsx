@@ -1,26 +1,7 @@
 import React from 'react'
 import { HeaderWarp, HeaderLogo, HeaderBand, HeaderInput, Mypage, HeaderIconWarp, HeaderIcon, HeaderIcon2, HeaderH1 } from './Header.styled'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 const Header = ( {Link} ) => {
-  const navi = useNavigate();
-  const dispatch = useDispatch();
-
-  const LoginCheck = async()=>{
-    await axios.get('http://localhost:5000/mypage',{
-      withCredentials: true
-    }).then((e)=>{
-      if(e.data[0] === '세'){
-        alert(e.data);
-        navi('/login');
-      }else{
-        // dispatch(isLoginTrue())
-      }
-    })
-  }
-
   return (
     <div className='Header'>
       <HeaderWarp>
