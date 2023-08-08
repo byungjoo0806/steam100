@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit"
 
 export const LoginSlice = createSlice({
     name : 'Login',
-    initialState : {isLogin : false},
+    initialState : {
+        isLogin : false,
+        nickname : '',
+        age : 15,
+        gender : 'male'
+    },
     reducers : {
         isLoginTrue : (state) => {
             state.isLogin = true;

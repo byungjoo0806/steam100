@@ -1,7 +1,26 @@
 import React from 'react'
 import { HeaderWarp, HeaderLogo, HeaderBand, HeaderInput, Mypage, HeaderIconWarp, HeaderIcon, HeaderIcon2, HeaderH1 } from './Header.styled'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 const Header = ( {Link} ) => {
+  const navi = useNavigate();
+  const dispatch = useDispatch();
+
+  const LoginCheck = async()=>{
+    await axios.get('http://localhost:5000/mypage',{
+      withCredentials: true
+    }).then((e)=>{
+      if(e.data[0] === '세'){
+        alert(e.data);
+        navi('/login');
+      }else{
+        // dispatch(isLoginTrue())
+      }
+    })
+  }
+
   return (
     <div className='Header'>
       <HeaderWarp>
@@ -15,9 +34,9 @@ const Header = ( {Link} ) => {
               
               <h5>beta</h5>
               <HeaderInput placeholder='찾기를 원하는 게임 이름을 입력하시오' title='?' />
-            {/* <Link to={'/mypage'}> */}
+            <Link to={'/mypage'}>
               <Mypage>마이페이지</Mypage>
-            {/* </Link>  */}
+            </Link> 
               <HeaderIconWarp>
                 <HeaderIcon>
                 <svg viewBox="0 0 24 24" width="24" height="24" className="header_dark"><path fill="none" d="M0 0h24v24H0z"></path><path d="M11.38 2.019a7.5 7.5 0 1 0 10.6 10.6C21.662 17.854 17.316 22 12.001 22 6.477 22 2 17.523 2 12c0-5.315 4.146-9.661 9.38-9.981z"></path></svg>
