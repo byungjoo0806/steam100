@@ -35,6 +35,6 @@ app.use('/signUp',signUpRouter);
 app.use('/login',loginRouter);
 app.use('/post',postRouter);
 
-app.listen(5000,()=>{
+app.listen(6000,()=>{
     console.log('server open');
 })

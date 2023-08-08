@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LoginBox = styled.div`
+export const MypageBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
