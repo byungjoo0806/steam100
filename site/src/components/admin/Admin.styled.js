@@ -4,7 +4,7 @@ export const AdminBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20%;
+    width: 25%;
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #e0e0e0;

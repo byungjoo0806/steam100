@@ -65,7 +65,7 @@ export const SectionMainLi = styled.li`
     margin: 4px 0; // 상하 마진
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.2); // 호버
+        background-color: #9e814c;
     }
 `
 

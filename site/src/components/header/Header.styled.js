@@ -29,6 +29,10 @@ export const HeaderIcon = styled.button`
     width: 35px;
     height: 35px;
     cursor: pointer;
+
+    &:hover {
+        background-color: #9e814c;
+    }
 `
 
 export const HeaderIcon2 = styled.button`
@@ -43,6 +47,19 @@ export const HeaderIcon2 = styled.button`
     height: 35px;
     cursor: pointer;
     margin-left: 5px;
+
+    &:hover {
+        background-color: #9e814c;
+    }
+`
+export const HeaderAdminImg = styled.button`
+    border: none;
+    background-color: transparent; 
+    cursor: pointer; 
+
+    &:hover {
+        background-color: royalblue;
+    }
 `
 
 export const HeaderH1 = styled.h1`
