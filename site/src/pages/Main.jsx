@@ -1,19 +1,13 @@
-import React, { useState } from 'react'
-import { HeaderH1 } from '../components/header/Header.styled'
-import { Link, useLocation } from 'react-router-dom'
+import React from 'react';
+import { Section } from '../components';
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export const Main = () => {
-  const location = useLocation();
-  console.log(location);
-
-  const game = "PUBG: BATTLEGROUNDS";
 
   return (
-    <div>
-              <HeaderH1>게임추천사이트</HeaderH1>
-              <Link to={`/detail/${game}`} state={{gameName : game}}>
-                {game}
-              </Link>
+    <div style={{width : "100%", height : "770px"}} className='Main'>
+      <Section></Section>
     </div>
   )
-}
+};

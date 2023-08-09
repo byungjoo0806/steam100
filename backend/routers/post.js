@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {PostDelete,PostInsert,PostUpdate,PostViewAll,PostViewOne} = require('../controllers/postController');
 
-const {LoginCheck} = require('../middleware/tokencheck');
+const {LoginCheck} = require('../middleware/loginCheck');
 
 router.get('/',PostViewAll);
 

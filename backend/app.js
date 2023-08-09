@@ -10,6 +10,8 @@ const app = express();
 const signUpRouter = require('./routers/signUp');
 const loginRouter = require('./routers/login');
 const postRouter = require('./routers/post');
+const mypageRouter = require('./routers/mypage');
+const apiRouter = require('./routers/webAPI');
 
 sequelize.sync({force : false}).then(()=>{
     console.log('연결 성공');
@@ -32,47 +34,11 @@ app.use(cors({
     credentials : true
 }));
 
-let appID = "";
-// proxy 설정
-app.get("/api/appList", async (req,res)=>{
-    const game = req.query;
-    console.log(game);
-    try {
-        const {data : response} = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
-        const applist = response.applist;
-        const appObject = applist.apps;
-        // console.log(appObject);
-
-        appObject.map((el,index)=>{
-            if(el.name === game.name){
-                // console.log(el.appid);
-                appID = el.appid;
-            };
-        });
-        console.log(appID);
-        res.json("");
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-app.get("/api/appInfo", async (req,res)=>{
-    try {
-        // const appId = req.query.id;
-        console.log(appID);
-        const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${appID}`);
-        // console.log(data);
-        // console.log(data[appID].data);
-        const response = data[appID].data;
-        res.json(response);
-    } catch (error) {
-        console.log(error);
-    }
-});
-
 app.use('/signUp',signUpRouter);
 app.use('/login',loginRouter);
 app.use('/post',postRouter);
+app.use('/mypage',mypageRouter);
+app.use('/api',apiRouter);
 
 app.listen(8080,()=>{
     console.log('server open');

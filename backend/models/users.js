@@ -26,8 +26,8 @@ class User extends Sequelize.Model{
                 defaultValue : 'male'
             },
             access : {
-                type : Sequelize.STRING(10),
-                defaultValue : 'No'
+                type : Sequelize.INTEGER,
+                defaultValue : 0
             }
         },{
             sequelize : seq,

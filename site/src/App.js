@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isLoginFalse, isLoginTrue } from './features/LoginSlice';
 import { add, edit, deleted } from './features/BorderSlice'
 import { useState } from 'react';
-import { Login, Border, Main } from './pages';
+import { Login, Border, Main, SignUp, Mypage, AdminPage } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Detail from './pages/Detail';
+import Menu from './components/menu/Menu';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +23,10 @@ function App() {
       <Header 
       Link={Link}
       />
-      
+      <Menu 
+      Link={Link}
+      />
+
       <Routes>
         <Route path='' element={<Main 
         
@@ -48,10 +52,13 @@ function App() {
         />}>
         </Route>
 
+        <Route path='/signup' element={<SignUp />}></Route>
+        <Route path='/mypage' element={<Mypage />}></Route>
+        <Route path='/admin' element={<AdminPage />}></Route>
+
         <Route path='/detail/:id' element={<Detail />} />
+
       </Routes>
-
-
     <Footer />
     </div>
     
