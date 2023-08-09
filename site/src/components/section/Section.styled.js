@@ -75,7 +75,6 @@ export const SectionMainSpan = styled.span`
     align-items: center;
     margin-left: 8px; 
     flex-grow: 1;
-    margin-right: 100px;
 `
 
 export const SectionMainImg = styled.img`

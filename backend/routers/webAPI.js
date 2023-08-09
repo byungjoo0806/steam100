@@ -74,7 +74,7 @@ router.get("/top100", async (req,res)=>{
         rankArr.map((el,index)=>{
             rankById.push(el.appid);
         })
-        // console.log(rankById);
+        console.log(rankById);
 
         const {data : response} = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
         const applist = response.applist;
@@ -89,7 +89,7 @@ router.get("/top100", async (req,res)=>{
                 };
             });
         });
-        // console.log(topGameNameArr);
+        console.log(topGameNameArr);
         // console.log(appID);
         res.json(topGameNameArr);
     } catch (error) {
