@@ -42,28 +42,36 @@ const SignUp = () => {
     }
 
     const CreateUserData = async()=>{
-        await axios.post('http://localhost:8080/signUp',{
-            user_id,
-            user_pw,
-            nickname,
-            age,
-            gender
-        },{
-            withCredentials : true
-        }).then((e)=>{
-            alert(e.data);
-            if(e.data[0] === '아'){
-                if(page === ''){
-                    setPage('reset');
+        if(user_id === ''){
+            alert('아이디를 입력해 주시기 바랍니다.');
+        }else if(user_pw === ''){
+            alert('비밀번호를 입력해 주시기 바랍니다.');
+        }else if(nickname === ''){
+            alert('닉네임을 입력해 주시기 바랍니다.')
+        }else{
+            await axios.post('http://localhost:8080/signUp',{
+                user_id,
+                user_pw,
+                nickname,
+                age,
+                gender
+            },{
+                withCredentials : true
+            }).then((e)=>{
+                alert(e.data);
+                if(e.data[0] === '아'){
+                    if(page === ''){
+                        setPage('reset');
+                    }else{
+                        setPage('');
+                    }
                 }else{
-                    setPage('');
+                    navi('/');
                 }
-            }else{
-                navi('/');
-            }
-        }).catch((err)=>{
-            console.log(err);
-        })
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
     }
     
     useEffect(()=>{
