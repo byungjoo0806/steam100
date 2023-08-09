@@ -37,6 +37,12 @@ app.use('/login',loginRouter);
 app.use('/post',postRouter);
 app.use('/mypage',mypageRouter);
 
+app.put('/login/pendingUsers/:userId', (req, res) => {
+    const userId = req.params.userId;
+    // 여기에 사용자 승인 로직
+  });
+  
+
 app.listen(8080,()=>{
     console.log('server open');
 })
