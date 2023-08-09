@@ -42,7 +42,7 @@ const SignUp = () => {
     }
 
     const CreateUserData = async()=>{
-        await axios.post('http://localhost:5000/signUp',{
+        await axios.post('http://localhost:8080/signUp',{
             user_id,
             user_pw,
             nickname,

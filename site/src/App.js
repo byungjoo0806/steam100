@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import Detail from './pages/Detail';
 
 function App() {
   const dispatch = useDispatch();
@@ -44,7 +45,9 @@ function App() {
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/mypage' element={<MyPage />}></Route>
 
+        <Route path='/detail/:id' element={<Detail />} />
       </Routes>
+
 
     <Footer />
     </div>

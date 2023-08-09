@@ -33,7 +33,7 @@ const MyPage = () => {
     let loginData = {};
     
     const LoginUserData = async()=>{
-        await axios.get('http://localhost:5000/mypage',{
+        await axios.get('http://localhost:8080/mypage',{
             withCredentials : true
         }).then((e)=>{
             if(e.data[0] !== '세'){
@@ -79,7 +79,7 @@ const MyPage = () => {
     }
 
     const ChangeInfo = async()=>{
-        await axios.post('http://localhost:5000/mypage',{
+        await axios.post('http://localhost:8080/mypage',{
             nickname,
             age,
             gender
@@ -87,22 +87,27 @@ const MyPage = () => {
             withCredentials : true
         }).then((e)=>{
             if(e.data[0] !== '세'){
-                let _gender = '남성';
-                
-                if(e.data.gender === 'female'){
-                    _gender = '여성';
-                }
-                
-                loginData.nickname = e.data.nickname;
-                loginData.age = e.data.age;
-                loginData.gender = _gender;
-
-                setUserInfo(loginData);
-
-                if(page === ''){
-                    setPage('reset');
+                if(e.data[0] !== '이'){
+                    alert(e.data.msg);
+                    let _gender = '남성';
+                    
+                    if(e.data.user.gender === 'female'){
+                        _gender = '여성';
+                    }
+                    
+                    loginData.nickname = e.data.user.nickname;
+                    loginData.age = e.data.user.age;
+                    loginData.gender = _gender;
+    
+                    setUserInfo(loginData);
+    
+                    if(page === ''){
+                        setPage('reset');
+                    }else{
+                        setPage('');
+                    }
                 }else{
-                    setPage('');
+                    alert(e.data);
                 }
             }else{
                 alert(e.data);
@@ -140,7 +145,7 @@ const MyPage = () => {
 
     // 비밀 번호 변경 함수
     const ChangePw = async()=>{
-        await axios.post('http://localhost:5000/mypage/changePw',{
+        await axios.post('http://localhost:8080/mypage/changePw',{
             currentPw,
             changePw
         },{
