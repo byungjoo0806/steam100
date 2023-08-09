@@ -166,7 +166,7 @@ const MyPage = () => {
                 <label>나이 : {userInfo.age}</label>
                 <input type='number' onChange={ChangeAge} ref={inputAge}></input>
                 <div onChange={ChangeGender}>
-                    <p>gender : {userInfo.gender}</p>
+                    <p>성별</p>
                     <label>남성</label>
                     <input type='radio' name='gender' value={'male'} ref={inputMale}></input>
                     <label>여성</label>
