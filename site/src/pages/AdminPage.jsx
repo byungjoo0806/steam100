@@ -57,13 +57,17 @@ const AdminPage = () => {
     <>
       <Admin>
         <h1>어드민 승인 페이지</h1>
-        {users && users.map(user => (
-          <div key={user.id}>
-            {user.nickname}
-            <button onClick={()=>{approveUser(user.id)}}>승인</button>
-            <button onClick={()=>{rejectUser(user.id)}}>거절</button>
-          </div>
+        <div className='usersContainer'>
+           {users && users.map(user => (
+              <div key={user.id} className='user-item'>
+                <span className="nickname">{user.nickname}</span>
+                <div>
+                    <button onClick={()=>{approveUser(user.id)}}>승인</button>
+                    <button onClick={()=>{rejectUser(user.id)}}>거절</button>
+                </div>
+              </div>
           ))}
+        </div>
       </Admin>
     </>
   )
