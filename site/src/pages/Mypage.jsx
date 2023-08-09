@@ -33,31 +33,35 @@ const MyPage = () => {
     let loginData = {};
     
     const LoginUserData = async()=>{
-        await axios.get('http://localhost:8080/mypage',{
-            withCredentials : true
-        }).then((e)=>{
-            if(e.data[0] !== '세'){
-                let _gender = '남성';
-                
-                if(e.data.gender === 'female'){
-                    _gender = '여성';
-                    inputFemale.current.checked = true;
+        if(nickname === ''){
+            alert('닉네임을 입력해 주시기 바랍니다.');
+        }else{
+            await axios.get('http://localhost:8080/mypage',{
+                withCredentials : true
+            }).then((e)=>{
+                if(e.data[0] !== '세'){
+                    let _gender = '남성';
+                    
+                    if(e.data.gender === 'female'){
+                        _gender = '여성';
+                        inputFemale.current.checked = true;
+                    }else{
+                        inputMale.current.checked = true;
+                    }
+                    
+                    loginData.nickname = e.data.nickname;
+                    loginData.age = e.data.age;
+                    loginData.gender = _gender;
+    
+                    setUserInfo(loginData);
                 }else{
-                    inputMale.current.checked = true;
+                    alert(e.data);
+                    navi('/login');
                 }
-                
-                loginData.nickname = e.data.nickname;
-                loginData.age = e.data.age;
-                loginData.gender = _gender;
-
-                setUserInfo(loginData);
-            }else{
-                alert(e.data);
-                navi('/login');
-            }
-        }).catch((err)=>{
-            console.log(err);
-        })
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
     }
 
     // 유저 데이터 소환
