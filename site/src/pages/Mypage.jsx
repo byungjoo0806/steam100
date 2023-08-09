@@ -7,11 +7,13 @@ const MyPage = () => {
     const navi = useNavigate();
 
     // input 초기화 설정
-    // const [page,setPage] = useState('');
+    const [page,setPage] = useState('');
     const inputNick = useRef();
     const inputAge = useRef();
     const inputMale = useRef();
     const inputFemale = useRef();
+    const inputCurrentPw = useRef();
+    const inputChangePw = useRef();
 
     // 개인 정보 변수
     let nickname = '';
@@ -39,6 +41,9 @@ const MyPage = () => {
                 
                 if(e.data.gender === 'female'){
                     _gender = '여성';
+                    inputFemale.current.checked = true;
+                }else{
+                    inputMale.current.checked = true;
                 }
                 
                 loginData.nickname = e.data.nickname;
@@ -57,7 +62,7 @@ const MyPage = () => {
 
     // 유저 데이터 소환
     useEffect(()=>{
-        LoginUserData();
+        LoginUserData();        
     },[])
 
     // 개인 정보 변경
@@ -93,6 +98,12 @@ const MyPage = () => {
                 loginData.gender = _gender;
 
                 setUserInfo(loginData);
+
+                if(page === ''){
+                    setPage('reset');
+                }else{
+                    setPage('');
+                }
             }else{
                 alert(e.data);
                 navi('/login');
@@ -102,17 +113,49 @@ const MyPage = () => {
         })
     }
 
-    // useEffect(()=>{
-    //     inputNick.current.value = loginData.nickname;
-    //     inputAge.current.value = loginData.age;
-    //     if(loginData.gender === '남성'){
-    //         inputMale.current.checked = true;
-    //         inputFemale.current.checked = false;
-    //     }else{
-    //         inputMale.current.checked = false;
-    //         inputFemale.current.checked = true;
-    //     }
-    // },[page])
+    // input 초기화
+    useEffect(()=>{
+        inputNick.current.value = '';
+        inputAge.current.value = '';
+        inputCurrentPw.current.value = '';
+        inputChangePw.current.value = '';
+        if(userInfo.gender === '남성'){
+            inputMale.current.checked = true;
+        }else{
+            inputFemale.current.checked = true;
+        }
+    },[page])
+
+    // 비밀 번호 변경 변수
+    let currentPw = '';
+    let changePw = '';
+
+    const CurrentPassword = (e)=>{
+        currentPw = e.target.value;
+    }
+
+    const ChangePassword = (e)=>{
+        changePw = e.target.value;
+    }
+
+    // 비밀 번호 변경 함수
+    const ChangePw = async()=>{
+        await axios.post('http://localhost:5000/mypage/changePw',{
+            currentPw,
+            changePw
+        },{
+            withCredentials : true
+        }).then((e)=>{
+            alert(e.data);
+            if(page === ''){
+                setPage('reset');
+            }else{
+                setPage('');
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
 
     return (
         <>
@@ -132,9 +175,10 @@ const MyPage = () => {
                 <button onClick={ChangeInfo}>개인 정보 변경</button>
                 <h3>비밀 번호 변경</h3>
                 <label>현재 비밀번호</label>
-                <input type='password'></input>
+                <input type='password' onChange={CurrentPassword} ref={inputCurrentPw}></input>
                 <label>변경 비밀번호</label>
-                <input type='password'></input>
+                <input type='password' onChange={ChangePassword} ref={inputChangePw}></input>
+                <button onClick={ChangePw}>비밀 번호 변경</button>
             </Mypage>
         </>
     )
