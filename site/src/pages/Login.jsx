@@ -10,7 +10,7 @@ export const Login = () => {
 
   // 어드민 계정 생성
   const CreateAdmin = async() =>{
-    await axios.get('http://localhost:8080/login',{withCredentials : true});
+    await axios.get('http://localhost:8080/login',{ withCredentials: true });
   }
 
   useEffect(()=>{

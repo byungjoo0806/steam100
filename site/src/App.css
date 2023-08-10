@@ -1,13 +1,30 @@
+/* app.js에 들어가는 가장 큰 컴포넌트는 여기에 */
+
 .Header {
     background-color: #ffffff;
     width: 100%;
-    height: 80px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
+}
   
-  .Body {
-    width: 100%;
-    height: 100%;
-  }
+.Body {
+  width: 100%;
+  height: 100%;
+}
+
+.Link {
+  text-decoration: none;
+}
+
+.Menu {
+  background-color: whitesmoke;
+  position: sticky;
+  top: 0;  
+  z-index: 10;
+  font-size: 1.5em;
+}
+
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
