@@ -33,35 +33,31 @@ const MyPage = () => {
     let loginData = {};
     
     const LoginUserData = async()=>{
-        if(nickname === ''){
-            alert('닉네임을 입력해 주시기 바랍니다.');
-        }else{
-            await axios.get('http://localhost:8080/mypage',{
-                withCredentials : true
-            }).then((e)=>{
-                if(e.data[0] !== '세'){
-                    let _gender = '남성';
-                    
-                    if(e.data.gender === 'female'){
-                        _gender = '여성';
-                        inputFemale.current.checked = true;
-                    }else{
-                        inputMale.current.checked = true;
-                    }
-                    
-                    loginData.nickname = e.data.nickname;
-                    loginData.age = e.data.age;
-                    loginData.gender = _gender;
-    
-                    setUserInfo(loginData);
+        await axios.get('http://localhost:8080/mypage',{
+            withCredentials : true
+        }).then((e)=>{
+            if(e.data[0] !== '세'){
+                let _gender = '남성';
+                
+                if(e.data.gender === 'female'){
+                    _gender = '여성';
+                    inputFemale.current.checked = true;
                 }else{
-                    alert(e.data);
-                    navi('/login');
+                    inputMale.current.checked = true;
                 }
-            }).catch((err)=>{
-                console.log(err);
-            })
-        }
+                
+                loginData.nickname = e.data.nickname;
+                loginData.age = e.data.age;
+                loginData.gender = _gender;
+
+                setUserInfo(loginData);
+            }else{
+                alert(e.data);
+                navi('/login');
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
 
     // 유저 데이터 소환
@@ -83,43 +79,47 @@ const MyPage = () => {
     }
 
     const ChangeInfo = async()=>{
-        await axios.post('http://localhost:8080/mypage',{
-            nickname,
-            age,
-            gender
-        },{
-            withCredentials : true
-        }).then((e)=>{
-            if(e.data[0] !== '세'){
-                if(e.data[0] !== '이'){
-                    alert(e.data.msg);
-                    let _gender = '남성';
-                    
-                    if(e.data.user.gender === 'female'){
-                        _gender = '여성';
-                    }
-                    
-                    loginData.nickname = e.data.user.nickname;
-                    loginData.age = e.data.user.age;
-                    loginData.gender = _gender;
-    
-                    setUserInfo(loginData);
-    
-                    if(page === ''){
-                        setPage('reset');
+        if(nickname === ''){
+            alert('닉네임을 입력해 주시기 바랍니다.');
+        }else{
+            await axios.post('http://localhost:8080/mypage',{
+                nickname,
+                age,
+                gender
+            },{
+                withCredentials : true
+            }).then((e)=>{
+                if(e.data[0] !== '세'){
+                    if(e.data[0] !== '이'){
+                        alert(e.data.msg);
+                        let _gender = '남성';
+                        
+                        if(e.data.user.gender === 'female'){
+                            _gender = '여성';
+                        }
+                        
+                        loginData.nickname = e.data.user.nickname;
+                        loginData.age = e.data.user.age;
+                        loginData.gender = _gender;
+        
+                        setUserInfo(loginData);
+        
+                        if(page === ''){
+                            setPage('reset');
+                        }else{
+                            setPage('');
+                        }
                     }else{
-                        setPage('');
+                        alert(e.data);
                     }
                 }else{
                     alert(e.data);
+                    navi('/login');
                 }
-            }else{
-                alert(e.data);
-                navi('/login');
-            }
-        }).catch((err)=>{
-            console.log(err);
-        })
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
     }
 
     // input 초기화
@@ -169,25 +169,29 @@ const MyPage = () => {
     return (
         <>
             <Mypage>
-                <h3>개인 정보</h3>
-                <label>닉네임 : {userInfo.nickname}</label>
-                <input onChange={ChangeNick} ref={inputNick}></input>
-                <label>나이 : {userInfo.age}</label>
-                <input type='number' onChange={ChangeAge} ref={inputAge}></input>
-                <div onChange={ChangeGender}>
-                    <p>성별</p>
-                    <label>남성</label>
-                    <input type='radio' name='gender' value={'male'} ref={inputMale}></input>
-                    <label>여성</label>
-                    <input type='radio' name='gender' value={'female'} ref={inputFemale}></input>
+                <div className='userInfo_box'>
+                    <h3>개인 정보</h3>
+                    <label>닉네임 : {userInfo.nickname}</label>
+                    <input onChange={ChangeNick} ref={inputNick}></input>
+                    <label>나이 : {userInfo.age}</label>
+                    <input type='number' onChange={ChangeAge} ref={inputAge}></input>
+                    <div onChange={ChangeGender}>
+                        <p>성별</p>
+                        <label>남성</label>
+                        <input type='radio' name='gender' value={'male'} ref={inputMale}></input>
+                        <label>여성</label>
+                        <input type='radio' name='gender' value={'female'} ref={inputFemale}></input>
+                    </div>
+                    <button onClick={ChangeInfo} className='change_info_btn'>개인 정보 변경</button>
                 </div>
-                <button onClick={ChangeInfo}>개인 정보 변경</button>
-                <h3>비밀 번호 변경</h3>
-                <label>현재 비밀번호</label>
-                <input type='password' onChange={CurrentPassword} ref={inputCurrentPw}></input>
-                <label>변경 비밀번호</label>
-                <input type='password' onChange={ChangePassword} ref={inputChangePw}></input>
-                <button onClick={ChangePw}>비밀 번호 변경</button>
+                <div className='changePw_box'>
+                    <h3>비밀 번호 변경</h3>
+                    <label>현재 비밀번호</label>
+                    <input type='password' onChange={CurrentPassword} ref={inputCurrentPw}></input>
+                    <label>변경 비밀번호</label>
+                    <input type='password' onChange={ChangePassword} ref={inputChangePw}></input>
+                    <button onClick={ChangePw} className='change_pw_btn'>비밀 번호 변경</button>
+                </div>
             </Mypage>
         </>
     )

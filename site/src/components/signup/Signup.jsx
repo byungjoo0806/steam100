@@ -1,12 +1,15 @@
 import React from 'react';
-import { SignupBox } from './Signup.styled';
+import { SignupBox, SignupMainBox } from './Signup.styled';
 
 const Signup = ({ children }) => {
   return (
-    <div>
-      <SignupBox>
-        {children}
-      </SignupBox>
+    <div style={{width : "100%", height : "100%", display : "flex", justifyContent : "space-evenly"}}>
+      <SignupMainBox>
+        Sign Up
+        <SignupBox>
+          {children}
+        </SignupBox>
+      </SignupMainBox>
     </div>
   )
 }

@@ -5,7 +5,7 @@ exports.ViewUserInfo = async(req,res)=>{
     try {
         const {acc_decoded} = req;
 
-        const user = await User.findOne({where : {nickname : acc_decoded.nickname}});
+        const user = await User.findOne({where : {id : acc_decoded.id}});
 
         res.send(user);
     } catch (error) {

@@ -28,3 +28,37 @@
   align-items: center;
   text-align: center;
 }
+
+.login_box_btns{
+  width: 170px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.gender_box{
+  width: 170px;
+  height: 80px;  
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;  
+}
+
+.signup_btn, .mainpage_btn{
+  position: absolute;
+  bottom: 10px;
+}
+
+.mainpage_btn{
+  right: 10px;
+}
+
+.userInfo_box, .changePw_box{
+  display: flex;
+  flex-direction: column;  
+}
+
+.change_info_btn, .change_pw_btn{
+  margin-top: 10px;
+}
