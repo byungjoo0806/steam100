@@ -32,7 +32,10 @@ exports.Login = async(req,res) => {
 
         req.session.token = token;
 
-        res.send('로그인 성공');
+        res.send({
+            status : "로그인 성공",
+            user : user
+        });
     } catch (error) {
         console.log('로그인 컨트롤러에서 로그인 하다 에러남');
         console.log(error);

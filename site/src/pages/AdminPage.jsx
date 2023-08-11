@@ -25,6 +25,7 @@ const AdminPage = () => {
       console.log(error);
     }
   }
+  
   // 승인 거절되면 삭제
   const rejectUser = async (userId) => {
     try {

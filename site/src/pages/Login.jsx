@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { LoginMain } from '../components'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import axios from 'axios'
 
 export const Login = () => {
   const navi = useNavigate();
@@ -25,15 +25,25 @@ export const Login = () => {
     user_pw = e.target.value;
   }
 
-  const LoginFtn = async()=>{
-    await axios.post('http://localhost:8080/login',{
+  const LoginFtn = ()=>{
+
+    axios.post('http://localhost:8080/login',{
       user_id,
       user_pw
     },{
       withCredentials : true
     }).then((e)=>{
-      alert(e.data);
-      if(e.data[0] === '로'){
+      // dispath(action(e))
+      // 컴포넌트 어디서든 사용할수 있음
+      // useselector
+
+      // 1. 리덕스로 유저 정보 저장 e
+      // 2. useselector로 필요한 곳에 가져와서 사용
+      // 3. user.access 2 
+      
+      console.log(e);
+      alert(e.data.status);
+      if(e.data.status === '로그인 성공'){
         navi('/');
       }else{
         navi('/login');
@@ -42,7 +52,7 @@ export const Login = () => {
       console.log(err);
     })
   }
-
+  
   return (
   <>
     <LoginMain>

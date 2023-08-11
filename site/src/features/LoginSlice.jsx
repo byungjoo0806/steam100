@@ -6,16 +6,20 @@ export const LoginSlice = createSlice({
         isLogin : false,
         nickname : '',
         age : 15,
-        gender : 'male'
+        gender : '',
+        access : 0
     },
     reducers : {
         isLoginTrue : (state) => {
             state.isLogin = true;
         },
         isLoginFalse : (state) => {
-            state.isLogin = false
+            state.isLogin = false;
+        },
+        setUserInfo : (state) => {
+            state.access = 2;
         }
     }
 })
 
-export const {isLoginTrue, isLoginFalse} = LoginSlice.actions
+export const {isLoginTrue, isLoginFalse, setUserInfo} = LoginSlice.actions
