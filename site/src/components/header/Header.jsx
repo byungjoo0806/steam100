@@ -1,39 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { HeaderWarp, HeaderBand, HeaderIconWarp, HeaderIcon, HeaderIcon2, HeaderH1, HeaderSlogan, HeaderAdminImg } from './Header.styled'
 import { adminImg } from '../../img'
-import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const Header = ( { Link } ) => {
 
-  const [userAccess, setUserAccess] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.post('http://localhost:8080/login');
-        const access = response.data.user.access;
-        console.log(access);
-        console.log(response);
-
-        if (response.data.user.access === 2) {
-          setUserAccess(response.data.user.access);
-        }
-          console.log(access);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
-    fetchData();
-
-  }, [setUserAccess]);
-  console.log(userAccess);
+  const user = useSelector(state => state.login);
 
   return (
     <div className='Header'>
       <HeaderWarp>
           <HeaderIconWarp>
-            {userAccess === 2 &&
+            {user.access === 2 &&
               <Link to={'admin'}>
                 <HeaderAdminImg>
                   <img src={adminImg} alt='adminImg' />

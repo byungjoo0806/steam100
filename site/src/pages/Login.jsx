@@ -2,11 +2,16 @@ import React, { useEffect } from 'react'
 import { LoginMain } from '../components'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserInfo } from '../features/LoginSlice';
 
 export const Login = () => {
   const navi = useNavigate();
   let user_id = '';
   let user_pw = '';
+
+  const user = useSelector(state => state.login); // redux에서 가져온 유저정보
+  const dispatch = useDispatch(); 
 
   // 어드민 계정 생성
   const CreateAdmin = async() =>{
@@ -33,17 +38,15 @@ export const Login = () => {
     },{
       withCredentials : true
     }).then((e)=>{
-      // dispath(action(e))
-      // 컴포넌트 어디서든 사용할수 있음
-      // useselector
 
       // 1. 리덕스로 유저 정보 저장 e
       // 2. useselector로 필요한 곳에 가져와서 사용
-      // 3. user.access 2 
+      // 3. user.access 2만 어드민 페이지 보이게 설정
       
       console.log(e);
       alert(e.data.status);
       if(e.data.status === '로그인 성공'){
+        dispatch(setUserInfo(e.data.user))
         navi('/');
       }else{
         navi('/login');

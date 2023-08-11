@@ -16,10 +16,15 @@ export const LoginSlice = createSlice({
         isLoginFalse : (state) => {
             state.isLogin = false;
         },
-        setUserInfo : (state) => {
-            state.access = 2;
+        setUserInfo : (state, action) => {
+            const { nickname, age, gender, access } = action.payload;
+            state.nickname = nickname;
+            state.age = age;
+            state.gender = gender;
+            state.access = access;
+            state.isLogin = true;
         }
     }
 })
 
-export const {isLoginTrue, isLoginFalse, setUserInfo} = LoginSlice.actions
+export const { isLoginTrue, isLoginFalse, setUserInfo } = LoginSlice.actions
