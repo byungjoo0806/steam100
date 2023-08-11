@@ -8,18 +8,23 @@ import { store } from './store/store';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ThemeProvider } from './context/themeProvider';
+import { GlobalStyle } from './theme/GlobalStyle';
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  <BrowserRouter>
+  <ThemeProvider>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={true}/>
+        <GlobalStyle />
         <App />
       </QueryClientProvider>
     </Provider>
+   </ThemeProvider>
   </BrowserRouter>
 );
 

@@ -11,6 +11,6 @@ export const MenuUl = styled.ul`
 `
 export const MenuLi = styled.li`
     display: inline-block;
-    color: #9e814c;
+    color: #000000;
     font-weight: 800;
 `

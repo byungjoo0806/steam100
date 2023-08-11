@@ -38,11 +38,6 @@ export const Login = () => {
     },{
       withCredentials : true
     }).then((e)=>{
-
-      // 1. 리덕스로 유저 정보 저장 e
-      // 2. useselector로 필요한 곳에 가져와서 사용
-      // 3. user.access 2만 어드민 페이지 보이게 설정
-      
       console.log(e);
       alert(e.data.status);
       if(e.data.status === '로그인 성공'){
