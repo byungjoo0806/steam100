@@ -3,7 +3,6 @@ import { HeaderWarp, HeaderBand, HeaderIconWarp, HeaderIcon, HeaderIcon2, Header
 import { adminImg } from '../../img'
 import { useSelector } from 'react-redux'
 import { useTheme } from '../../context/themeProvider'
-import ThemeToggle from './Header.styled'
 
 const Header = ( { Link } ) => {
 
