@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { theme } from '../../theme/theme';
 
 export const HeaderWarp = styled.div`
     width: 100%;
+    background-color: ${({theme}) => theme.bgColor};
 `
 
 export const HeaderBand = styled.div`
@@ -64,7 +66,8 @@ export const HeaderAdminImg = styled.button`
 
 export const HeaderH1 = styled.h1`
     margin: 0;
-    color: #9e814c;
+    /* color: #9e814c; */
+    color: ${({theme}) => theme.textColor};
     font-size: 8em;
     font-weight: 800;
     text-align: center;
@@ -75,7 +78,8 @@ export const HeaderH1 = styled.h1`
 export const HeaderSlogan = styled.p`
     padding-bottom: 0.9em;
     font: calc(6px + 1vw)/.8 Codystar;
-    color: #b3b5bd;
+    /* color: #b3b5bd; */
+    color: ${({theme}) => theme.textColor};
     text-shadow: 0 0 0 #b3b5bd, 0 0 3px #989976, 1px 1px 0 #000;
     text-transform: uppercase;
     text-align: center;
