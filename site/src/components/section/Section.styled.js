@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const SectionContainer = styled.div`
     background-color: #faf3e6;;
     width: 450px;
-    height: 500px;
+    height: 570px;
     text-align: center;
     border-radius: 10px; 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
@@ -38,7 +38,7 @@ export const SectionHeaderP = styled.p`
 // 섹션 메인 부분
 export const SectionMain = styled.div`
     width: 95%;
-    height: 70%;
+    height: 100%;
     display: flex;
     flex-direction: column; 
     padding: 10px; 
@@ -57,6 +57,7 @@ export const SectionMainUl = styled.ul`
 
 export const SectionMainLi = styled.li`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.05);
     padding: 8px; // 패딩 
@@ -74,7 +75,6 @@ export const SectionMainSpan = styled.span`
     align-items: center;
     margin-left: 8px; 
     flex-grow: 1;
-    margin-right: 100px;
 `
 
 export const SectionMainImg = styled.img`

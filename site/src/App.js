@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import Detail from './pages/Detail';
 import Menu from './components/menu/Menu';
 
 function App() {
@@ -55,6 +56,8 @@ function App() {
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/mypage' element={<Mypage />}></Route>
         <Route path='/admin' element={<AdminPage />}></Route>
+
+        <Route path='/detail/:id' element={<Detail />} />
 
       </Routes>
     <Footer />
