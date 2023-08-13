@@ -8,6 +8,8 @@ import { store } from './store/store';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { GlobalStyle } from './theme/GlobalStyle';
+import { ThemeProvider } from './context/themeProvider';
 
 // import "./proxy";
 const queryClient = new QueryClient();
@@ -15,11 +17,14 @@ const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <GlobalStyle />
+          <App />
+        </Provider>
+      </QueryClientProvider>
+    </ThemeProvider>
   </BrowserRouter>
 );
 

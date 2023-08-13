@@ -40,19 +40,6 @@ const Header = ( {Link} ) => {
         HELPING YOU FIND GOOD GAMES ON STEAM SINCE 2017
         </HeaderSlogan>
       </HeaderWarp>
-      <Menu>
-        <MenuUl>
-          <Link to={'/'}>
-            <MenuLi>Top 100</MenuLi>
-          </Link>
-          <Link to={'/'}>
-            <MenuLi>세계 탑 10</MenuLi>
-          </Link>  
-          <Link to={'/'}>
-            <MenuLi>한국 탑 10</MenuLi>
-          </Link>
-        </MenuUl>
-      </Menu>
     </div>
   )
 }
