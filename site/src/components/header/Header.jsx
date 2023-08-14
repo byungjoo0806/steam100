@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeaderWarp, HeaderBand, HeaderIconWarp, HeaderIcon, HeaderH1, HeaderSlogan, HeaderAdminImg } from './Header.styled'
+import { HeaderWarp, HeaderBand, HeaderIconWarp, HeaderIcon, HeaderH1, HeaderSlogan, HeaderLoginUser} from './Header.styled'
 import { adminImg } from '../../img'
 import { useSelector } from 'react-redux'
 import { useTheme } from '../../context/themeProvider'
@@ -14,7 +14,9 @@ const Header = ( { Link } ) => {
     <div className='Header'>
       <HeaderWarp>
           <HeaderIconWarp>
-         {user.nickname ? `${user.nickname} 님 접속중` : '로그인 되지 않았습니다.'}
+            <HeaderLoginUser>
+              {user.nickname ? `${user.nickname} 님 접속중` : '로그인 되지 않았습니다.'}
+            </HeaderLoginUser>
             {/* 어드민만 어드민 버튼 보이게 적용 */}
             {user.access === 2 &&
               <Link to={'admin'}>

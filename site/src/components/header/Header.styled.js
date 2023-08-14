@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { theme } from '../../theme/theme';
 
 export const HeaderWarp = styled.div`
@@ -30,22 +30,13 @@ export const HeaderIcon = styled.button`
     justify-content: center;
     width: 35px;
     height: 35px;
+    margin-right: 10px;
     cursor: pointer;
 
     &:hover {
         background-color: #9e814c;
     }
 `
-export const HeaderAdminImg = styled.button`
-    border: none;
-    background-color: transparent; 
-    cursor: pointer; 
-
-    &:hover {
-        background-color: royalblue;
-    }
-`
-
 export const HeaderH1 = styled.h1`
     margin: 0;
     color: #9e814c;
@@ -65,4 +56,16 @@ export const HeaderSlogan = styled.p`
     text-shadow: 0 0 0 #b3b5bd, 0 0 3px #989976, 1px 1px 0 #000;
     text-transform: uppercase;
     text-align: center;
+`
+export const HeaderLoginUser = styled.div`
+    animation: colorChange 3s infinite;
+
+    @keyframes colorChange {
+        0% {color : black}
+        33% {color : blue}
+        66% {color : red}
+        100% {color : black}
+    };
+    
+    margin-right: 10px;
 `

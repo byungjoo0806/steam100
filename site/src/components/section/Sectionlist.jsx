@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText } from './Section.styled';
+import { testImg1 } from '../../img';
 
 import { Link } from 'react-router-dom';
 import axios from "axios";
@@ -59,10 +60,10 @@ const Sectionlist = () => {
             {isLoading ? (<img src={loadingGIF} alt='loading' />) : (
                 <>
                     {gameList.map((el,index)=>(
-                        <Link to={`/detail/${el.title}`} key={index} state={{gameName : el.title}}>
+                        <Link className='Link' to={`/detail/${el.title}`} key={index} state={{gameName : el.title}}>
                             <SectionMainLi>{index + 1}
                                 <SectionMainSpan>
-                                    <SectionMainImg src={el.img} alt={`${el.title} image`} />
+                                   {el.img ? <SectionMainImg src={el.img} alt={`${el.title} image`} /> : undefined}
                                     <SectionMainText>{el.title}</SectionMainText>
                                 </SectionMainSpan>
                             </SectionMainLi>
