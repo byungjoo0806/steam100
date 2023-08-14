@@ -36,24 +36,6 @@ export const HeaderIcon = styled.button`
         background-color: #9e814c;
     }
 `
-
-export const HeaderIcon2 = styled.button`
-    background-color: #b3b5bd;
-    transition: all .15s cubic-bezier(.4,0,.2,1);
-    border: 1px solid #e7e8ec;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    margin-left: 5px;
-
-    &:hover {
-        background-color: #9e814c;
-    }
-`
 export const HeaderAdminImg = styled.button`
     border: none;
     background-color: transparent; 
@@ -66,8 +48,8 @@ export const HeaderAdminImg = styled.button`
 
 export const HeaderH1 = styled.h1`
     margin: 0;
-    /* color: #9e814c; */
-    color: ${({theme}) => theme.textColor};
+    color: #9e814c;
+    /* color: ${({theme}) => theme.textColor}; */
     font-size: 8em;
     font-weight: 800;
     text-align: center;
@@ -78,8 +60,8 @@ export const HeaderH1 = styled.h1`
 export const HeaderSlogan = styled.p`
     padding-bottom: 0.9em;
     font: calc(6px + 1vw)/.8 Codystar;
-    /* color: #b3b5bd; */
-    color: ${({theme}) => theme.textColor};
+    color: #b3b5bd;
+    /* color: ${({theme}) => theme.textColor}; */
     text-shadow: 0 0 0 #b3b5bd, 0 0 3px #989976, 1px 1px 0 #000;
     text-transform: uppercase;
     text-align: center;

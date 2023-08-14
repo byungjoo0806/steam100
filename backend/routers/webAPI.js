@@ -52,10 +52,10 @@ router.get("/appList", async (req,res)=>{
 let appInfoArr = [];
 router.get("/appInfo", async (req,res)=>{
     try {
-        // appID = req.query.id;
+        appID = req.query.id;
         for(const appid of appIDArr){
             const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
-            // console.log(data[appid].data);
+            console.log(data[appid].data);
             appInfoArr.push(data[appid].data);
         };
         res.json(appInfoArr);

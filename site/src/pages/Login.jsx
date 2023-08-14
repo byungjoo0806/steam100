@@ -58,9 +58,10 @@ export const Login = () => {
       <input onChange={loginId}></input>
       <label>비밀번호</label>
       <input onChange={loginPw} type='password'></input>
-      <button onClick={LoginFtn}>로그인</button>      
-      <button><Link to={'/signup'}>회원 가입</Link></button>
-      
+      <div className='login_box_btns'>
+        <button onClick={LoginFtn}>로그인</button>      
+        <Link to={'/signup'}><button>회원 가입</button></Link>
+      </div>
     </LoginMain>
   </>
   )

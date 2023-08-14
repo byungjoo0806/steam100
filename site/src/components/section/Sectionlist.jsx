@@ -26,27 +26,26 @@ const Sectionlist = () => {
                         game : tenGames,
                     }
                 });
-                // console.log(appIdList);
+                console.log(appIdList);
                 
                 
                 const info = await axios.get("http://localhost:8080/api/appInfo",{
                     withCredentials : true,
                 });
-                console.log(info.data);
+                console.log("이미지?", info.data[0]);
 
                 let gameImgTitleSet = [];
                 tenGames.map((el,index)=>{
                     let games = {
-                        img : info.data[index].capsule_image,
+                        img : info.data[index]?.capsule_image,
                         title : el,
                     };
                     console.log(games);
                     gameImgTitleSet.push(games);
                 });
-                // console.log(gameImgTitleSet);
+                console.log(gameImgTitleSet);
                 setGameList(gameImgTitleSet);
-
-                // setGameList(data);
+                
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
