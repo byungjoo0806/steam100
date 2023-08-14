@@ -12,26 +12,34 @@ const Detail = () => {
 
     const fetchAppList = async ()=>{
         try {
-            const response = await axios.get("http://localhost:8080/api/appList",{
+            const {data} = await axios.get("http://localhost:8080/api/detailApp",{
                 withCredentials : true,
                 params : {
-                    name : game,
+                    game : game,
                 }
             });
 
-            const info = await axios.get("http://localhost:8080/api/appInfo",{
-                withCredentials : true,
-            });
-            console.log(info);
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
     };
-    fetchAppList();
+    // fetchAppList();
 
     return (
-        <div style={{width : "100%", height : "200px", display : "flex", justifyContent : "center", alignItems : "center"}}>
-            <button>get list</button> <br/>
+        <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap"}} className='Main'>
+            <div style={{width : "1000px", height : "700px", border : "1px solid", display : "flex", flexWrap : "wrap", boxSizing : "content-box"}} className='gameIntroBox'>
+                <div className='gameTitle' style={{width : "500px", height : "50px", border : "1px solid"}}></div>
+                <div className='gameImgVid' style={{width : "700px", height : "500px", border : "1px solid"}}></div>
+                <div className='gameImgVidSwiper' style={{width : "700px", height : "150px", border : "1px solid"}}></div>
+                <div className='gameIntro' style={{width : "300px", height : "650px", border : "1px solid"}}></div>
+            </div>
+            <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameIntroBox'>
+
+            </div>
+            <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameIntroBox'>
+
+            </div>
         </div>
     )
 }
