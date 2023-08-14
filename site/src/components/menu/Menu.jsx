@@ -14,7 +14,7 @@ const Menu = ({ Link }) => {
             <MenuLi>Top 10</MenuLi>
           </Link>  
           <Link to={'/'}>
-            <MenuLi>orea Top 10</MenuLi>
+            <MenuLi>Korea Top 10</MenuLi>
           </Link>
         </MenuUl>
       </MenuBar>

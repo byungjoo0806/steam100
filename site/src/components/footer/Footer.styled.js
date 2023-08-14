@@ -42,13 +42,6 @@ export const FooterBottom = styled.div`
     margin-top: 50px;
     position: relative;
 `
-export const FooterP = styled.p`
-    position: absolute;
-    top: 90px;
-    left: 30px;
-    font-weight: 200;
-`
-
 export const FooterH2 = styled.h2`
     margin: 0;
     color: #9e814c;
@@ -56,5 +49,11 @@ export const FooterH2 = styled.h2`
     font-weight: 800;
     text-align: center;
     text-shadow: 0 1px 0 #9e814c, 0 2px 0 #8f7446, 0 3px 0 #826940, 0 4px 0 #735d39, 0 5px 0 #665233, -1px -1px 1px #fffccc, 0 6px 1px rgba(0,0,0,.0980392), 0 0 5px rgba(0,0,0,.0980392), 0 1px 3px rgba(0,0,0,.298039), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.247059), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.14902);
-
 ` 
+export const FooterP = styled.p`
+    /* position: absolute; */
+    margin: auto;
+    top: 90px;
+    left: 30px;
+    font-weight: 200;
+`
