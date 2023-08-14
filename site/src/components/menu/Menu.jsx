@@ -10,11 +10,11 @@ const Menu = ({ Link }) => {
           <Link to={'/'}> 
             <MenuLi>Top 100</MenuLi>
           </Link>
-          <Link to={'/'}>
+          <Link to={'/top10'}>
             <MenuLi>Top 10</MenuLi>
           </Link>  
           <Link to={'/'}>
-            <MenuLi>Korea Top 10</MenuLi>
+            <MenuLi>orea Top 10</MenuLi>
           </Link>
         </MenuUl>
       </MenuBar>

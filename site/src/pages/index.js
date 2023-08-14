@@ -5,5 +5,6 @@ import SignUp from './Signup';
 import Mypage from './Mypage';
 import AdminPage from './AdminPage'
 import Detail from './Detail'
+import Top10 from './Top10';
 
-export { Border, Login, Main, SignUp, Mypage, AdminPage, Detail };
+export { Border, Login, Main, SignUp, Mypage, AdminPage, Detail, Top10 };

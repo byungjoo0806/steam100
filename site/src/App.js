@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isLoginFalse, isLoginTrue, setUserInfo } from './features/LoginSlice';
 import { add, edit, deleted } from './features/BorderSlice'
 import { useState } from 'react';
-import { Login, Border, Main, SignUp, Mypage, AdminPage } from './pages';
+import { Login, Border, Main, SignUp, Mypage, AdminPage, Top10 } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
@@ -56,6 +56,7 @@ function App() {
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/mypage' element={<Mypage />}></Route>
         <Route path='/admin' element={<AdminPage />}></Route>
+        <Route path='/top10' element={<Top10 />}></Route>
 
         <Route path='/detail/:id' element={<Detail />} />
 

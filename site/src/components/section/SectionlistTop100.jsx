@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText } from './Section.styled';
-import { testImg1 } from '../../img';
-
 import { Link } from 'react-router-dom';
 import axios from "axios";
-
 import { loadingGIF } from '../../img';
 
-const Sectionlist = () => {
+const SectionlistTop100 = () => {
     const [gameList, setGameList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -17,7 +14,7 @@ const Sectionlist = () => {
                 // top100 게임 이름 가져오기
                 const {data} = await axios.get("http://localhost:8080/api/top100");
                 console.log(data);
-                const tenGames = data.splice(0,10);
+                const tenGames = data.splice(0,100);
                 console.log(tenGames);
 
                 // top100 게임 이름에 따른 스팀 게임 아이디 찾기
@@ -75,4 +72,4 @@ const Sectionlist = () => {
     )
 };
 
-export default Sectionlist;
+export default SectionlistTop100;

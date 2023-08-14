@@ -102,7 +102,6 @@ export const SectionMainText = styled.span`
 // 섹션 바텀 부분
 export const SectionFooter = styled.div`
     width: 100%;
-    height: 10%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
