@@ -26,7 +26,7 @@ const SectionlistTop100 = () => {
                         game : tenGames,
                     }
                 });
-                console.log(appIdList);
+                // console.log(appIdList);
                 const newTenGames = appIdList.data.splice(appIdList.length - 10,10);
                 console.log(newTenGames);
                 setGameList(newTenGames);
