@@ -1,17 +1,5 @@
 import styled from 'styled-components';
 
-export const LoginBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 500px;
-    height: 500px;
-    border: 1px solid;
-    background-color: whitesmoke;
-`
-
 export const LoginMainBox = styled.div`
     display: flex;
     flex-direction: column;
@@ -25,4 +13,19 @@ export const LoginMainBox = styled.div`
     font-size: 50px;
     font-weight: bold;
     color: #9e814c;
+`
+
+export const LoginBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 280px;
+    height: 150px;
+    border-radius: 8px;
+    background-color: #f8e5d1;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
 `

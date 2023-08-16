@@ -1,7 +1,7 @@
 import { Border } from './Border'
 import { Login } from './Login'
 import { Main } from './Main';
-import SignUp from './Signup';
+import SignUp from './SignUp';
 import Mypage from './Mypage';
 import AdminPage from './AdminPage'
 import Detail from './Detail'

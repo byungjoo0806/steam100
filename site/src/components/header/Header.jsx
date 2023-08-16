@@ -1,14 +1,31 @@
 import React from 'react'
-import { HeaderWarp, HeaderBand, HeaderIconWarp, HeaderIcon, HeaderH1, HeaderSlogan, HeaderLoginUser} from './Header.styled'
-import { adminImg } from '../../img'
+import { HeaderWarp, HeaderBand, HeaderIconWarp, HeaderIcon, HeaderIcon2, HeaderH1, HeaderSlogan, HeaderLoginUser} from './Header.styled'
 import { useSelector } from 'react-redux'
 import { useTheme } from '../../context/themeProvider'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Header = ( { Link } ) => {
 
   const user = useSelector(state => state.login);
   const [ThemeMode, toggleTheme] = useTheme();
   // console.log(user)
+
+  const navi = useNavigate();
+
+  const LoginCheck = async()=>{
+    await axios.get('http://localhost:8080/mypage',{
+      withCredentials : true
+    }).then((e)=>{
+      if(e.data[0] !== '세'){
+        navi('/mypage');
+      }else{
+        navi('/login');
+      }
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
 
   return (
     <div className='Header'>
@@ -53,6 +70,9 @@ const Header = ( { Link } ) => {
             <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.92 16L28.92 16 M23.93 25v3h-16V4h16V7h2V3a1 1 0 0 0-1-1h-18a1 1 0 0 0-1 1V29a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V25 M28.92 16l-4 4 M28.92 16l-4-4 M24.92 8.09V6.09 M24.92 26v-2"></path>
             </svg>
             </HeaderIcon>
+              <HeaderIcon2 onClick={LoginCheck}>
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M11 14.062V20h2v-5.938c3.946.492 7 3.858 7 7.938H4a8.001 8.001 0 0 1 7-7.938zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6z"></path></svg>
+              </HeaderIcon2>
           </HeaderIconWarp>
         <HeaderBand>
             <Link to={'/'} className='Link'>
