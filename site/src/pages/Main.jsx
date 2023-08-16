@@ -1,7 +1,5 @@
 import React from 'react';
 import { Section } from '../components';
-import { Link } from "react-router-dom";
-import axios from "axios";
 
 export const Main = () => {
 
@@ -10,4 +8,5 @@ export const Main = () => {
       <Section></Section>
     </div>
   )
+  
 };

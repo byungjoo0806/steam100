@@ -10,6 +10,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Detail from './pages/Detail';
 import Menu from './components/menu/Menu';
+import { Section } from './components';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,9 +29,8 @@ function App() {
       />
 
       <Routes>
-        <Route path='' element={<Main 
-        
-        />}>  
+        <Route path='' element={<Main />}>  
+        <Route exact path={"/"} element={<Section />} />
         </Route>
 
         <Route path='login' element={<Login 
