@@ -71,6 +71,19 @@ exports.Admin = async(req,res)=>{
     }
 }
 
+exports.Logout = async(req,res) =>{
+    try {
+        req.session.token = null;
+
+        res.clearCookie('connect.sid');
+
+        res.send('로그아웃 되었습니다.');
+    } catch (error) {
+        console.log('로그인 컨트롤러에서 로그아웃하다 에러남');
+        console.log(error);
+    }
+}
+
 //////////////////////////어드민//////////////////////////////
 
 // 가입 승인 처리 컨트롤러
