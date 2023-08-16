@@ -42,28 +42,36 @@ const SignUp = () => {
     }
 
     const CreateUserData = async()=>{
-        await axios.post('http://localhost:8080/signUp',{
-            user_id,
-            user_pw,
-            nickname,
-            age,
-            gender
-        },{
-            withCredentials : true
-        }).then((e)=>{
-            alert(e.data);
-            if(e.data[0] === '아'){
-                if(page === ''){
-                    setPage('reset');
+        if(user_id === ''){
+            alert('아이디를 입력해 주시기 바랍니다.');
+        }else if(user_pw === ''){
+            alert('비밀번호를 입력해 주시기 바랍니다.');
+        }else if(nickname === ''){
+            alert('닉네임을 입력해 주시기 바랍니다.')
+        }else{
+            await axios.post('http://localhost:8080/signUp',{
+                user_id,
+                user_pw,
+                nickname,
+                age,
+                gender
+            },{
+                withCredentials : true
+            }).then((e)=>{
+                alert(e.data);
+                if(e.data[0] === '아'){
+                    if(page === ''){
+                        setPage('reset');
+                    }else{
+                        setPage('');
+                    }
                 }else{
-                    setPage('');
+                    navi('/');
                 }
-            }else{
-                navi('/');
-            }
-        }).catch((err)=>{
-            console.log(err);
-        })
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
     }
     
     useEffect(()=>{
@@ -85,15 +93,17 @@ const SignUp = () => {
                 <input onChange={CreateNick} ref={inputNick}></input>
                 <label htmlFor="">나이</label>
                 <input type='number' min={15} step={1} onChange={CreateAge} ref={inputAge}></input>
-                <div onChange={CreateGender}>
+                <div onChange={CreateGender} className='gender_box'>
                     <p>성별</p>
-                    <label htmlFor="male">남성</label>
-                    <input type='radio' id='male' name='gender' value={'male'} defaultChecked ref={inputGender}></input>
-                    <label htmlFor="female">여성</label>
-                    <input type='radio' id='female' name='gender' value={'female'}></input>
+                    <div>
+                        <label htmlFor="male">남성</label>
+                        <input type='radio' id='male' name='gender' value={'male'} defaultChecked ref={inputGender}></input>
+                        <label htmlFor="female">여성</label>
+                        <input type='radio' id='female' name='gender' value={'female'}></input>
+                    </div>
                 </div>
-                <button onClick={CreateUserData}>회원 가입</button>
-                <button><Link to={'/'}>메인 페이지로</Link></button>
+                <button onClick={CreateUserData} className='signup_btn'>회원 가입</button>
+                <Link to={'/'} className='mainpage_btn'><button>메인 페이지로</button></Link>
             </Signup>
         </>
     )

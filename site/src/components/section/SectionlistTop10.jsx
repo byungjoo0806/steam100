@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText } from './Section.styled';
+
 import { Link } from 'react-router-dom';
 import axios from "axios";
+
 import { loadingGIF } from '../../img';
 
 const SectionlistTop10 = () => {
@@ -25,25 +27,9 @@ const SectionlistTop10 = () => {
                     }
                 });
                 console.log(appIdList);
-                
-                
-                const info = await axios.get("http://localhost:8080/api/appInfo",{
-                    withCredentials : true,
-                });
-                console.log("이미지?", info.data[0]);
-
-                let gameImgTitleSet = [];
-                tenGames.map((el,index)=>{
-                    let games = {
-                        img : info.data[index]?.capsule_image,
-                        title : el,
-                    };
-                    console.log(games);
-                    gameImgTitleSet.push(games);
-                });
-                console.log(gameImgTitleSet);
-                setGameList(gameImgTitleSet);
-                
+                const newTenGames = appIdList.data.splice(appIdList.length - 10,10);
+                console.log(newTenGames);
+                setGameList(newTenGames);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
@@ -57,11 +43,11 @@ const SectionlistTop10 = () => {
             {isLoading ? (<img src={loadingGIF} alt='loading' />) : (
                 <>
                     {gameList.map((el,index)=>(
-                        <Link className='Link' to={`/detail/${el.title}`} key={index} state={{gameName : el.title}}>
+                        <Link to={`/detail/${el.name}`} key={index} state={{gameName : el.name}}>
                             <SectionMainLi>{index + 1}
                                 <SectionMainSpan>
-                                   {el.img ? <SectionMainImg src={el.img} alt={`${el.title} image`} /> : undefined}
-                                    <SectionMainText>{el.title}</SectionMainText>
+                                    <SectionMainImg src={el.capsule_image} alt={`${el.name} image`} />
+                                    <SectionMainText>{el.name}</SectionMainText>
                                 </SectionMainSpan>
                             </SectionMainLi>
                         </Link>

@@ -11,4 +11,5 @@ export const Main = ({type}) => {
       <SectionTop100 />
     </div>
   )
+  
 };

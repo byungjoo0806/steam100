@@ -1,6 +1,8 @@
 const router = require('express').Router();
 
-const {Login,Admin, FetchPendingUsers, ApproveUser, RejectUser} = require('../controllers/loginController');
+const {Login, Admin, FetchPendingUsers, ApproveUser, RejectUser, Logout} = require('../controllers/loginController');
+
+const {LoginCheck} = require('../middleware/loginCheck');
 
 router.post('/',Login);
 
@@ -11,5 +13,7 @@ router.get('/pendingUsers', FetchPendingUsers);
 router.put('/pendingUsers/:userId', ApproveUser);
 
 router.delete('/pendingUsers/:userId', RejectUser);
+
+router.get('/logout',LoginCheck, Logout);
 
 module.exports = router;

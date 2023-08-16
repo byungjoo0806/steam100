@@ -23,6 +23,7 @@ exports.Login = async(req,res) => {
         }
 
         const token = jwt.sign({
+            id : user.id,
             nickname : user.nickname,
             age : user.age,
             gender : user.gender
@@ -66,6 +67,19 @@ exports.Admin = async(req,res)=>{
         res.send();
     } catch (error) {
         console.log('로그인 컨트롤러에서 어드민 계정 만들다 에러남');
+        console.log(error);
+    }
+}
+
+exports.Logout = async(req,res) =>{
+    try {
+        req.session.token = null;
+
+        res.clearCookie('connect.sid');
+
+        res.send('로그아웃 되었습니다.');
+    } catch (error) {
+        console.log('로그인 컨트롤러에서 로그아웃하다 에러남');
         console.log(error);
     }
 }

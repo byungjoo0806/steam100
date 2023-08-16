@@ -3,6 +3,7 @@ const session = require('express-session');
 const dot = require('dotenv').config();
 const cors = require('cors');
 const {sequelize} = require('./models');
+const cookieParser = require('cookie-parser')
 const axios = require("axios");
 
 const app = express();
@@ -18,6 +19,7 @@ sequelize.sync({force : false}).then(()=>{
 }).catch((err)=>{
     console.log(err);
 })
+app.use(cookieParser());
 
 app.use(express.urlencoded({extended : false}));
 
