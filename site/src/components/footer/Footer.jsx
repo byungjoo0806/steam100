@@ -67,10 +67,28 @@ const Footer = () => {
                             </FooterLangBtn>
                     </FooterTopRight>
                 </FooterTop>
-                <FooterBottom>
                     <FooterH2>Steam 100</FooterH2>
+                <FooterBottom>
                     <FooterP>
-                    (주)Steam100 | 대표: 홍길동 | 사업자등록번호 123-45-6789 <br />
+                    (주)Steam100 | 대표: 박병주 | 사업자등록번호 123-45-6789 <br />
+
+                    (00000) 서울시 강동구 천호동 123-45 Steam100 <br />
+
+                    이메일: jisub11@nate.com <br />
+                    <br />
+                    Copyright© 2023. DigiCAP Corp. All rights reserved.
+                    </FooterP>
+                    <FooterP>
+                    (주)Steam100 | 대표: 구진완 | 사업자등록번호 123-45-6789 <br />
+
+                    (00000) 서울시 강동구 천호동 123-45 Steam100 <br />
+
+                    이메일: jisub11@nate.com <br />
+                    <br />
+                    Copyright© 2023. DigiCAP Corp. All rights reserved.
+                    </FooterP>
+                    <FooterP>
+                    (주)Steam100 | 대표: 황지섭 | 사업자등록번호 123-45-6789 <br />
 
                     (00000) 서울시 강동구 천호동 123-45 Steam100 <br />
 

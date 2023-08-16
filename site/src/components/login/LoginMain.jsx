@@ -1,12 +1,14 @@
 import React from 'react'
-import { LoginBox } from './LoginMain.styled'
+import { LoginBox, LoginMainBox } from './LoginMain.styled'
 
 const LoginMain = ({children}) => {
   return (
     <div>
-      <LoginBox>
-        {children}
-      </LoginBox>
+      <LoginMainBox>
+        <LoginBox>
+          {children}
+        </LoginBox>
+      </LoginMainBox>
     </div>
   )
 }

@@ -24,7 +24,7 @@ const Detail = () => {
             console.log(error);
         }
     };
-    // fetchAppList();
+    fetchAppList();
 
     return (
         <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap"}} className='Main'>

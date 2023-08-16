@@ -17,6 +17,7 @@
     "redux": "^4.2.1",
     "redux-toolkit": "^1.1.2",
     "styled-components": "^6.0.7",
+    "styled-reset": "^4.5.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -42,6 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://api.steampowered.com"
+  }
 }
