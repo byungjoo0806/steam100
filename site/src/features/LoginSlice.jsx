@@ -5,7 +5,7 @@ export const LoginSlice = createSlice({
     initialState : {
         isLogin : false,
         nickname : '',
-        age : 15,
+        age : 0,
         gender : '',
         access : 0
     },
@@ -13,7 +13,11 @@ export const LoginSlice = createSlice({
         isLoginTrue : (state) => {
             state.isLogin = true;
         },
-        isLoginFalse : (state) => {
+        isLoginFalse : (state) => {            
+            state.nickname = '';
+            state.age = 0;
+            state.gender = '';
+            state.access = 0;
             state.isLogin = false;
         },
         setUserInfo : (state, action) => {
