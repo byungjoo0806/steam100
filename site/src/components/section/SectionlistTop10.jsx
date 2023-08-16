@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { loadingGIF } from '../../img';
 
-const Sectionlist = () => {
+const SectionlistTop10 = () => {
     const [gameList, setGameList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -31,29 +31,6 @@ const Sectionlist = () => {
                 console.log(newTenGames);
                 setGameList(newTenGames);
                 setIsLoading(false);
-                
-                
-                // const info = await axios.get("http://localhost:8080/api/appInfo",{
-                //     withCredentials : true,
-                // });
-                // console.log(info.data);
-                // const newTenGames = info.data.splice(info.data.length - 10, 10);
-                // console.log(newTenGames);
-
-                // let gameImgTitleSet = [];
-                // newTenGames.map((el,index)=>{
-                //     let games = {
-                //         img : newTenGames[index].capsule_image,
-                //         title : newTenGames[index].name,
-                //     };
-                //     console.log(games);
-                //     gameImgTitleSet.push(games);
-                // });
-                // // console.log(gameImgTitleSet);
-                // setGameList(gameImgTitleSet);
-
-                // // setGameList(data);
-                // setIsLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -81,4 +58,4 @@ const Sectionlist = () => {
     )
 };
 
-export default Sectionlist;
+export default SectionlistTop10;
