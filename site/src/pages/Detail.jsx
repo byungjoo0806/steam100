@@ -12,17 +12,14 @@ const Detail = () => {
 
     const fetchAppList = async ()=>{
         try {
-            const response = await axios.get("http://localhost:8080/api/appList",{
+            const {data} = await axios.get("http://localhost:8080/api/detailApp",{
                 withCredentials : true,
                 params : {
-                    name : game,
+                    game : game,
                 }
             });
 
-            const info = await axios.get("http://localhost:8080/api/appInfo",{
-                withCredentials : true,
-            });
-            console.log(info);
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -30,8 +27,29 @@ const Detail = () => {
     fetchAppList();
 
     return (
-        <div style={{width : "100%", height : "200px", display : "flex", justifyContent : "center", alignItems : "center"}}>
-            <button>get list</button> <br/>
+        <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap"}} className='Main'>
+            <div style={{width : "1000px", height : "500px", border : "1px solid", display : "flex", flexWrap : "wrap", position : "relative"}} className='gameIntroBox'>
+                <div className='gameTitle' style={{width : "500px", height : "10%", borderRight : "1px solid", display : "flex", justifyContent : "flex-start", alignItems : "end"}}>Game Title</div>
+                <div className='gameImgVid' style={{width : "700px", height : "70%", borderTop : "1px solid", borderRight : "1px solid", borderBottom : "1px solid"}}>Game Img/Vid</div>
+                <div className='gameImgVidSwiper' style={{width : "700px", height : "20%", borderRight : "1px solid"}}>Img/Vid Swiper</div>
+                <div className='gameIntro' style={{width : "300px", height : "90%", borderTop : "1px solid", position : "absolute", right : "0", bottom : "0", boxSizing : "border-box"}}>
+                    <div className='gameIntroImg' style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
+                    <div className='gameIntroText' style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
+                    <div className='gameCompany'>
+                        <div className='gameReleaseDate'></div>
+                        <div className='gameDeveloper'></div>
+                        <div className='gamePublisher'></div>
+                    </div>
+                </div>
+            </div>
+            <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameIntroBox'>
+                <div style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
+                <div style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
+                <div style={{width : "100%", height : "34%"}}></div>
+            </div>
+            <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameIntroBox'>
+
+            </div>
         </div>
     )
 }

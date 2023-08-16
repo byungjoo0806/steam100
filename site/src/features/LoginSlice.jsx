@@ -7,6 +7,7 @@ export const LoginSlice = createSlice({
         isLoginTrue : (state) => {
             state.isLogin = true;
         },
+        
         isLoginFalse : (state) => {
             state.isLogin = false
         },

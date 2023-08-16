@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { loadingGIF } from '../../img';
 
-const Sectionlist = () => {
+const SectionlistTop10 = () => {
     const [gameList, setGameList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -26,27 +26,10 @@ const Sectionlist = () => {
                         game : tenGames,
                     }
                 });
-                // console.log(appIdList);
-                
-                
-                const info = await axios.get("http://localhost:8080/api/appInfo",{
-                    withCredentials : true,
-                });
-                console.log(info.data);
-
-                let gameImgTitleSet = [];
-                tenGames.map((el,index)=>{
-                    let games = {
-                        img : info.data[index].capsule_image,
-                        title : el,
-                    };
-                    console.log(games);
-                    gameImgTitleSet.push(games);
-                });
-                // console.log(gameImgTitleSet);
-                setGameList(gameImgTitleSet);
-
-                // setGameList(data);
+                console.log(appIdList);
+                const newTenGames = appIdList.data.splice(appIdList.length - 10,10);
+                console.log(newTenGames);
+                setGameList(newTenGames);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
@@ -60,11 +43,11 @@ const Sectionlist = () => {
             {isLoading ? (<img src={loadingGIF} alt='loading' />) : (
                 <>
                     {gameList.map((el,index)=>(
-                        <Link to={`/detail/${el.title}`} key={index} state={{gameName : el.title}}>
+                        <Link to={`/detail/${el.name}`} key={index} state={{gameName : el.name}}>
                             <SectionMainLi>{index + 1}
                                 <SectionMainSpan>
-                                    <SectionMainImg src={el.img} alt={`${el.title} image`} />
-                                    <SectionMainText>{el.title}</SectionMainText>
+                                    <SectionMainImg src={el.capsule_image} alt={`${el.name} image`} />
+                                    <SectionMainText>{el.name}</SectionMainText>
                                 </SectionMainSpan>
                             </SectionMainLi>
                         </Link>
@@ -75,4 +58,4 @@ const Sectionlist = () => {
     )
 };
 
-export default Sectionlist;
+export default SectionlistTop10;

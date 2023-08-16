@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isLoginFalse, isLoginTrue, setUserInfo } from './features/LoginSlice';
 import { add, edit, deleted } from './features/BorderSlice'
 import { useState } from 'react';
-import { Login, Border, Main, SignUp, Mypage, AdminPage } from './pages';
+import { Login, Border, Main, SignUp, Mypage, AdminPage, Top10 } from './pages';
 import { Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Detail from './pages/Detail';
 import Menu from './components/menu/Menu';
+import SectionlistTop10 from './components/section/SectionlistTop10';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,9 +29,8 @@ function App() {
       />
 
       <Routes>
-        <Route path='' element={<Main 
-        
-        />}>  
+        <Route path='' element={<Main />}>  
+        <Route exact path={"/"} element={<SectionlistTop10 />} />
         </Route>
 
         <Route path='login' element={<Login 
@@ -56,6 +56,7 @@ function App() {
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/mypage' element={<Mypage />}></Route>
         <Route path='/admin' element={<AdminPage />}></Route>
+        <Route path='/top10' element={<Top10 />}></Route>
 
         <Route path='/detail/:id' element={<Detail />} />
 

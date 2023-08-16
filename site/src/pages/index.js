@@ -3,6 +3,8 @@ import { Login } from './Login'
 import { Main } from './Main';
 import SignUp from './Signup';
 import Mypage from './Mypage';
-import AdminPage from './AdminPage';
+import AdminPage from './AdminPage'
+import Detail from './Detail'
+import Top10 from './Top10';
 
-export { Border, Login, Main, SignUp, Mypage, AdminPage };
+export { Border, Login, Main, SignUp, Mypage, AdminPage, Detail, Top10 };
