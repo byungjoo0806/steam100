@@ -7,6 +7,8 @@ import axios from "axios";
 import { loadingGIF } from '../../img';
 
 const SectionlistTop100 = () => {
+    const backend = process.env.REACT_APP_BACKEND_SERVER;
+
     const [gameList, setGameList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -14,13 +16,13 @@ const SectionlistTop100 = () => {
         const fetchTop100 = async ()=>{
             try {
                 // top100 게임 이름 가져오기
-                const {data} = await axios.get("http://localhost:8080/api/top100");
+                const {data} = await axios.get(`${backend}/api/top100`);
                 console.log(data);
                 const tenGames = data.splice(0,10);
                 console.log(tenGames);
 
                 // top100 게임 이름에 따른 스팀 게임 아이디 찾기
-                const appIdList = await axios.get("http://localhost:8080/api/appList",{
+                const appIdList = await axios.get(`${backend}/api/appList`,{
                     withCredentials : true,
                     params : {
                         game : tenGames,

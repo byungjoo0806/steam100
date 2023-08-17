@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const SignUp = () => {
+    const backend = process.env.REACT_APP_BACKEND_SERVER;
     const navi = useNavigate();
     
     // 리렌더링을 위한 변수 설정
@@ -49,7 +50,7 @@ const SignUp = () => {
         }else if(nickname === ''){
             alert('닉네임을 입력해 주시기 바랍니다.')
         }else{
-            await axios.post('http://localhost:8080/signUp',{
+            await axios.post(`${backend}/signUp`,{
                 user_id,
                 user_pw,
                 nickname,

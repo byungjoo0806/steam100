@@ -9,13 +9,15 @@ const Detail = () => {
     const game = location.state.gameName;
     console.log(game);
 
+    const backend = process.env.REACT_APP_BACKEND_SERVER;
+
     const [gameInfo, setGameInfo] = useState(null);
 
     useEffect(()=>{
         const fetchAppList = async ()=>{
             try {
                 // --------------------- 백에서 api 가져오기 -----------------------
-                const {data} = await axios.get("http://localhost:8080/api/detailApp",{
+                const {data} = await axios.get(`${backend}/api/detailApp`,{
                     withCredentials : true,
                     params : {
                         game : game,

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUserInfo } from '../features/LoginSlice';
 
 export const Login = () => {
+  const backend = process.env.REACT_APP_BACKEND_SERVER;
   const navi = useNavigate();
   let user_id = '';
   let user_pw = '';
@@ -15,7 +16,7 @@ export const Login = () => {
 
   // 어드민 계정 생성
   const CreateAdmin = async() =>{
-    await axios.get('http://localhost:8080/login',{ withCredentials: true });
+    await axios.get(`${backend}/login`,{ withCredentials: true });
   }
 
   useEffect(()=>{
@@ -32,7 +33,7 @@ export const Login = () => {
 
   const LoginFtn = ()=>{
 
-    axios.post('http://localhost:8080/login',{
+    axios.post(`${backend}/login`,{
       user_id,
       user_pw
     },{
