@@ -37,12 +37,17 @@ const Detail = () => {
     },[game]);
 
     console.log(gameInfo);
+    const gameDescription = striptags(gameInfo?.about_the_game);
+    const renderedDescription = gameDescription.replace(/&quot;/g, '"');
+    // console.log(renderedDescription);
+    const finalRenderingDescription = renderedDescription.split('\n\n');
+    console.log(finalRenderingDescription);
 
     return (
         <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap"}} className='Main'>
             <div style={{width : "1000px", height : "500px", border : "1px solid", display : "flex", flexWrap : "wrap", position : "relative"}} className='gameIntroBox'>
                 <div className='gameTitle' style={{width : "500px", height : "10%", borderRight : "1px solid", display : "flex", justifyContent : "flex-start", alignItems : "end"}}>
-                    {gameInfo ? gameInfo.name : "Loading..."}
+                    <p style={{marginLeft : "5px", fontSize : "25px"}}>{gameInfo ? gameInfo.name : "Loading..."}</p>
                 </div>
                 <div className='gameImgVid' style={{width : "700px", height : "70%", borderTop : "1px solid", borderRight : "1px solid", borderBottom : "1px solid"}}>Game Img/Vid</div>
                 <div className='gameImgVidSwiper' style={{width : "700px", height : "20%", borderRight : "1px solid"}}>Img/Vid Swiper</div>
@@ -51,17 +56,29 @@ const Detail = () => {
                         {gameInfo ? <img style={{width : "100%", height : "100%"}} src={`${gameInfo.capsule_image}`} alt='CS GO'></img> : <div>Loading...</div>}
                     </div>
                     <div className='gameIntroText' style={{width : "100%", height : "35%", borderBottom : "1px solid", overflow : "hidden", fontSize : "15px", textAlign : "start"}}>
-                        <p style={{margin : "5px"}}>{gameInfo ? gameInfo.description : "Loading..."}</p>
+                        <p style={{marginLeft : "5px"}}>{gameInfo ? renderedDescription : "Loading..."}</p>
                     </div>
                     <div className='gameCompany' style={{width : "100%", height : "30%"}}>
-                        <div className='gameReleaseDate'></div>
-                        <div className='gameDeveloper'></div>
-                        <div className='gamePublisher'></div>
+                        <div className='gameReleaseDate' style={{width : "100%", height : "20%"}}>
+                            <div>
+                                Release Date: {gameInfo ? gameInfo.release_date.date : "Loading..."}
+                            </div>
+                        </div>
+                        <div className='gameDeveloper' style={{width : "100%", height : "20%"}}>
+                            <div>
+                                Developers: {gameInfo ? gameInfo.developers.toString() : "Loading..."}
+                            </div>
+                        </div>
+                        <div className='gamePublisher' style={{width : "100%", height : "20%"}}>
+                            Publishers: {gameInfo ? gameInfo.publishers.toString() : "Loading..."}
+                        </div>
                     </div>
                 </div>
             </div>
             <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameDetailBox'>
-                <div style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
+                <div style={{width : "100%", height : "33%", borderBottom : "1px solid", display : "flex", justifyContent : "flex-start"}}>
+                    about this game : <br/> {finalRenderingDescription}
+                </div>
                 <div style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
                 <div style={{width : "100%", height : "34%"}}></div>
             </div>

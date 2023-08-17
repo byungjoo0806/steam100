@@ -16,21 +16,22 @@ const SectionlistTop100 = () => {
                 // top100 게임 이름 가져오기
                 const {data} = await axios.get("http://localhost:8080/api/top100");
                 console.log(data);
-                const tenGames = data.splice(0,10);
-                console.log(tenGames);
-
-                // top100 게임 이름에 따른 스팀 게임 아이디 찾기
-                const appIdList = await axios.get("http://localhost:8080/api/appList",{
-                    withCredentials : true,
-                    params : {
-                        game : tenGames,
-                    }
-                });
-                // console.log(appIdList);
-                const newTenGames = appIdList.data.splice(appIdList.length - 10,10);
-                console.log(newTenGames);
-                setGameList(newTenGames);
+                // const tenGames = data.splice(0,10);
+                // console.log(tenGames);
+                setGameList(data);
                 setIsLoading(false);
+                // top100 게임 이름에 따른 스팀 게임 아이디 찾기
+                // const appIdList = await axios.get("http://localhost:8080/api/appList",{
+                //     withCredentials : true,
+                //     params : {
+                //         game : tenGames,
+                //     }
+                // });
+                // // console.log(appIdList);
+                // const newTenGames = appIdList.data.splice(appIdList.length - 10,10);
+                // console.log(newTenGames);
+                // setGameList(newTenGames);
+                // setIsLoading(false);
             } catch (error) {
                 console.log(error);
             }
