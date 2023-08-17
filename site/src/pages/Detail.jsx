@@ -84,7 +84,7 @@ const Detail = () => {
                     about this game : <br/> {finalRenderingDescription}
                 </div>
                 <div style={{width : "100%", height : "auto", borderBottom : "1px solid"}}>
-                    
+                    Hello
                 </div>
                 <div style={{width : "100%", height : "auto"}}>
 
