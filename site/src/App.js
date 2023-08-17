@@ -11,6 +11,7 @@ import Footer from './components/footer/Footer';
 import Detail from './pages/Detail';
 import Menu from './components/menu/Menu';
 import SectionlistTop10 from './components/section/SectionlistTop10';
+import Swipertest from './pages/Swipertest';
 
 function App() {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ function App() {
         <Route path='/top10' element={<Top10 />}></Route>
 
         <Route path='/detail/:id' element={<Detail />} />
-
+        <Route path='/swipertest' element={<Swipertest />}/>  
       </Routes>
     <Footer />
     </div>
