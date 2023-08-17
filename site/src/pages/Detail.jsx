@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import striptags from "striptags";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, Scrollbar, Ally } from "swiper";
 
 const Detail = () => {
     const location = useLocation();
@@ -46,7 +48,7 @@ const Detail = () => {
     console.log(finalRenderingDescription);
 
     return (
-        <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap"}} className='Main'>
+        <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap", marginTop : "10px"}} className='Main'>
             <div style={{width : "1000px", height : "500px", border : "1px solid", display : "flex", flexWrap : "wrap", position : "relative"}} className='gameIntroBox'>
                 <div className='gameTitle' style={{width : "500px", height : "10%", borderRight : "1px solid", display : "flex", justifyContent : "flex-start", alignItems : "end"}}>
                     <p style={{marginLeft : "5px", fontSize : "25px"}}>{gameInfo ? gameInfo.name : "Loading..."}</p>
@@ -78,14 +80,15 @@ const Detail = () => {
                 </div>
             </div>
             <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameDetailBox'>
-                <div style={{width : "100%", height : "33%", borderBottom : "1px solid", display : "flex", justifyContent : "flex-start"}}>
+                <div style={{width : "100%", height : "auto", borderBottom : "1px solid", display : "flex", justifyContent : "flex-start"}}>
                     about this game : <br/> {finalRenderingDescription}
                 </div>
-                <div style={{width : "100%", height : "33%", borderBottom : "1px solid"}}></div>
-                <div style={{width : "100%", height : "34%"}}></div>
-            </div>
-            <div style={{width : "1000px", height : "700px", border : "1px solid"}} className='gameCommunityBox'>
+                <div style={{width : "100%", height : "auto", borderBottom : "1px solid"}}>
+                    
+                </div>
+                <div style={{width : "100%", height : "auto"}}>
 
+                </div>
             </div>
         </div>
     )
