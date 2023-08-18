@@ -104,7 +104,7 @@ const Detail = () => {
                 <div className='gameTitle' style={{width : "500px", height : "10%", borderRight : "1px solid", display : "flex", justifyContent : "flex-start", alignItems : "end"}}>
                     <p style={{marginLeft : "5px", fontSize : "25px"}}>{gameInfo ? gameInfo.name : "Loading..."}</p>
                 </div>
-                <Testswiper />
+                <Testswiper imgs={gameInfo?.screenshots} vids={gameInfo?.movies} />
                 <div className='gameIntro' style={{width : "310px", height : "90%", borderTop : "1px solid", position : "absolute", right : "0", bottom : "0", boxSizing : "border-box"}}>
                     <div className='gameIntroImg' style={{width : "100%", height : "35%", borderBottom : "1px solid"}}>
                         {gameInfo ? <img style={{width : "100%", height : "100%"}} src={`${gameInfo.capsule_image}`} alt='CS GO'></img> : <div>Loading...</div>}
