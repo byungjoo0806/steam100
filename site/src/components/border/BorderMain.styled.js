@@ -7,6 +7,7 @@ export const BorderBox = styled.div`
     height: 800px;
     border: 1px solid;
     background-color: whitesmoke;
+    overflow: auto;
 
     & h1 {
         font-size: 4em;

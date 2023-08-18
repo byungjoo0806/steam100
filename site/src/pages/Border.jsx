@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react'
 import { BorderMain } from '../components'
 import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { addPost } from '../features/BorderSlice';
+import { addPost, editPost } from '../features/BorderSlice';
 
 export const Border = ({ postContent, setPostContent, edit, deleted }) => {
   const dispatch = useDispatch();
+  const nickname = useSelector(state => state.login.nickname);
 
+  // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
     const response = await axios.get('http://localhost:8080/post', {
       withCredentials : true
     });
-    console.log("백엔드에서 가져온 글 목록",response);
+    // console.log("백엔드에서 가져온 글 목록",response);
     return response.data;
   };
-   // useQuery로 데이터를 가져옴
+
+   // useQuery로 글 목록, 닉네임을 가져옴
    const { data : Posts, isLoading, isError, error } = useQuery('posts', fetchPosts);
 
    // 가져온 데이터를 콘솔에 로깅
@@ -30,6 +33,9 @@ export const Border = ({ postContent, setPostContent, edit, deleted }) => {
 
    if (isLoading) return <p>Loading...</p>;
    if (isError) return <p>로딩중 에러</p>
+
+
+
 
   return (
     <>
@@ -49,13 +55,14 @@ export const Border = ({ postContent, setPostContent, edit, deleted }) => {
 
         {Posts.map((post, index)=>(
           <div key={index}>
-            <h1>{post.userId}</h1>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
+            <h1>{post.userId ? post.userId : 'Cant find your ID'}</h1>
+            <h2>{post.title ? post.usertitle : 'Cant find your title'}</h2>
+            <p>{post.content ? post.content : 'Cant find your content'}</p>
+            <p>{post.User ? post.User.nickname : 'Cant find your nickname'}</p>
           {/* <button onClick={()=>{
-            const newContent = prompt("수정할 내용을 입력하세요", content)
+            const newContent = prompt("수정할 내용을 입력하세요", post.content)
             if(newContent){
-              dispatch(edit({index, content : newContent}))
+              dispatch(editPost({index}))
             }
           }}>수정</button> */}
 

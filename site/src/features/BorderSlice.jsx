@@ -1,18 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";;
 
+// 글 추가 
 export const addPost = createAsyncThunk('/border/addPost', async (postContent, thunkAPI) => {
     const user = thunkAPI.getState().login; // store에 있는 로그인 리듀서
     
     const response = await axios.post('http://localhost:8080/post/insert', {
       title: postContent.title,
       content : postContent.content,
-      userId: user.nickname, 
+      userId: user.id
+      
       // 여기에 필요한 다른 사용자 정보 추가
-    },{withCredentials : true});
+    }, {withCredentials : true});
   
     return response.data;
   });
+
+// 글 수정
+export const editPost = createAsyncThunk('/border/editPost', async(postContent, thunkAPI) => {
+    const user = thunkAPI.getState().login;
+
+    const response = await axios.post('http://localhost:8080/post/update', {
+        userId: user.nickname,
+        title: postContent.title,
+        content: postContent.content
+    },{withCredentials : true});
+    console.log("글 수정",response)
+    return response.data;
+})
 
 export const BorderSlice = createSlice({
     name : "Border",
@@ -34,9 +49,13 @@ export const BorderSlice = createSlice({
     extraReducers : builder => {
         builder
             .addCase(addPost.fulfilled, (state, action) => {
-                console.log("ad",action)
                 state.Posts.push(action.payload);
-            });
+            })
+            .addCase(editPost.fulfilled, (state, action) => {
+                console.log(action)
+                const { userId, title, content, index } = action.payload;
+                state.Posts[index] = userId && title && content;
+            })
     }
 })
 

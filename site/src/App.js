@@ -22,7 +22,7 @@ function App() {
     title : '',
     content : ''
   });
-
+  
   return (
     <div className="App">
 

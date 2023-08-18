@@ -1,8 +1,13 @@
-const {Post} = require('../models');
+const {Post, User} = require('../models');
 
 exports.PostViewAll = async(req,res)=>{
     try {
-        const post = await Post.findAll();
+        const post = await Post.findAll({
+            include: [{
+                model: User,
+                attributes: ['nickname'] // 닉네임 가져올 수 있도록 설정
+            }]
+        });
 
         res.send(post);
     } catch (error) {
@@ -29,6 +34,7 @@ exports.PostInsert = async(req,res)=>{
         console.log("ㅁㄴㅇㅁㅇㄴ",req.body);
         const {title, content, userId} = req.body;
         console.log(title, content, userId);
+
         await Post.create({
             title,
             content,
