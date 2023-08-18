@@ -18,7 +18,7 @@ const SectionTop100 = () => {
                   </SectionMainUl>
               </SectionMain>
               <SectionFooter>  
-                <Link to={'border'} className='Link'>
+                <Link to={'/border'} className='Link'>
                   <FooterLink>전체 게시판으로 이동</FooterLink>
                 </Link>
               </SectionFooter>

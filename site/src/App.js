@@ -11,12 +11,17 @@ import Footer from './components/footer/Footer';
 import Detail from './pages/Detail';
 import Menu from './components/menu/Menu';
 import SectionlistTop10 from './components/section/SectionlistTop10';
+import { useQuery } from 'react-query';
 
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.login.isLogin)
   const posts = useSelector(state=> state.border.posts);
-  const [postContent, setPostContent] = useState('');
+  const Posts = useSelector(state=> state.border.Posts);
+  const [postContent, setPostContent] = useState({
+    title : '',
+    content : ''
+  });
 
   return (
     <div className="App">
@@ -24,6 +29,7 @@ function App() {
       <Header 
       Link={Link}
       />
+      
       <Menu 
       Link={Link}
       />
@@ -47,9 +53,12 @@ function App() {
           postContent={postContent}
           setPostContent={setPostContent}
           posts={posts}
+          Posts={Posts}
           add={add}
           edit={edit}
-          deleted={deleted}        
+          deleted={deleted}    
+          useQuery={useQuery}
+
         />}>
         </Route>
 

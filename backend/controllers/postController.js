@@ -26,14 +26,16 @@ exports.PostViewOne = async(req,res)=>{
 
 exports.PostInsert = async(req,res)=>{
     try {
-        const {title,content} = req.body;
-
+        console.log("ㅁㄴㅇㅁㅇㄴ",req.body);
+        const {title, content, userId} = req.body;
+        console.log(title, content, userId);
         await Post.create({
             title,
-            content
+            content,
+            userId
         })
 
-        res.send();
+        res.send('http://localhost:3000');
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 추가하다가 에러남');
         console.log(error);
@@ -46,7 +48,7 @@ exports.PostUpdate = async(req,res)=>{
 
         await Post.update({title,content},{where : {id}});
 
-        res.send();
+        res.send('http://localhost:3000');
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 수정하다가 에러남');
         console.log(error);
@@ -59,7 +61,7 @@ exports.PostDelete = async(req,res)=>{
 
         await Post.destroy({where : {id}});
 
-        res.send();
+        res.send('http://localhost:3000');
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 삭제하다가 에러남');
         console.log(error);
