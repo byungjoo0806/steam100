@@ -104,14 +104,7 @@ const Detail = () => {
                 <div className='gameTitle' style={{width : "500px", height : "10%", borderRight : "1px solid", display : "flex", justifyContent : "flex-start", alignItems : "end"}}>
                     <p style={{marginLeft : "5px", fontSize : "25px"}}>{gameInfo ? gameInfo.name : "Loading..."}</p>
                 </div>
-                <div className='gameImgVid' style={{width : "690px", height : "70%", borderTop : "1px solid", borderRight : "1px solid", borderBottom : "1px solid"}}>
-                    <Link to={"/swipertest"}>
-                        <button>swiper</button>
-                    </Link>
-                </div>
-                <div className='gameImgVidSwiper' style={{width : "690px", height : "20%", borderRight : "1px solid"}}>
-                    <Testswiper />
-                </div>
+                <Testswiper />
                 <div className='gameIntro' style={{width : "310px", height : "90%", borderTop : "1px solid", position : "absolute", right : "0", bottom : "0", boxSizing : "border-box"}}>
                     <div className='gameIntroImg' style={{width : "100%", height : "35%", borderBottom : "1px solid"}}>
                         {gameInfo ? <img style={{width : "100%", height : "100%"}} src={`${gameInfo.capsule_image}`} alt='CS GO'></img> : <div>Loading...</div>}
@@ -138,12 +131,13 @@ const Detail = () => {
                     </div>
                 </div>
             </div>
+            <div style={{width : "1000px", height : "100px", borderRight : "1px solid", borderLeft : "1px solid"}}></div>
             <div style={{width : "1000px", height : "auto", border : "1px solid"}} className='gameDetailBox'>
-                <div style={{width : "100%", height : "auto", borderBottom : "1px solid", display : "flex", textAlign : "left"}}>
+                <div style={{width : "100%", height : "auto", borderBottom : "1px solid", display : "flex", flexWrap : "wrap", textAlign : "left"}}>
                     <div style={{marginLeft : "5px"}}>
                         about this game : <br/>
-                        <HtmlContent htmlcontent={aboutTheGame} />
                     </div>
+                    <HtmlContent htmlcontent={aboutTheGame} />
                 </div>
                 <div className='gameMatureContent' style={{width : "100%", height : "auto", borderBottom : "1px solid", textAlign : "left"}}>
                     <div style={{marginLeft : "5px"}}>
