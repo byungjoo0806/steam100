@@ -21,9 +21,10 @@ export const editPost = createAsyncThunk('/border/editPost', async(postContent, 
     const user = thunkAPI.getState().login;
 
     const response = await axios.post('http://localhost:8080/post/update', {
-        userId: user.nickname,
         title: postContent.title,
-        content: postContent.content
+        content: postContent.content,
+        userId : user.id
+        
     },{withCredentials : true});
     console.log("글 수정",response)
     return response.data;

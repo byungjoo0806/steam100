@@ -16,7 +16,6 @@ import { useQuery } from 'react-query';
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.login.isLogin)
-  const posts = useSelector(state=> state.border.posts);
   const Posts = useSelector(state=> state.border.Posts);
   const [postContent, setPostContent] = useState({
     title : '',
@@ -52,7 +51,6 @@ function App() {
           dispatch={dispatch}
           postContent={postContent}
           setPostContent={setPostContent}
-          posts={posts}
           Posts={Posts}
           add={add}
           edit={edit}

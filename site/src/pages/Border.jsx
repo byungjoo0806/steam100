@@ -7,7 +7,6 @@ import { addPost, editPost } from '../features/BorderSlice';
 
 export const Border = ({ postContent, setPostContent, edit, deleted }) => {
   const dispatch = useDispatch();
-  const nickname = useSelector(state => state.login.nickname);
 
   // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
@@ -33,9 +32,6 @@ export const Border = ({ postContent, setPostContent, edit, deleted }) => {
 
    if (isLoading) return <p>Loading...</p>;
    if (isError) return <p>로딩중 에러</p>
-
-
-
 
   return (
     <>
