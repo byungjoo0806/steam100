@@ -31,10 +31,7 @@ exports.Login = async(req,res) => {
             expiresIn : '1h'
         })
 
-        req.session.token = token;
-
         res.cookie('token',token,{
-            httpOnly : true,
             sameSite : 'none',
             secure : true
         })
@@ -79,9 +76,13 @@ exports.Admin = async(req,res)=>{
 
 exports.Logout = async(req,res) =>{
     try {
-        req.session.token = null;
+        const {token} = req;
 
-        res.clearCookie('connect.sid');
+        res.cookie('token', token, {
+            expires: new Date(0),
+            sameSite : 'none',
+            secure : true
+        });
 
         res.send('로그아웃 되었습니다.');
     } catch (error) {
