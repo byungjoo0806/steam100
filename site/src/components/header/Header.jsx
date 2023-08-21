@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useTheme } from '../../context/themeProvider'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { isLoginFalse, isLoginTrue } from '../../features/LoginSlice';
+import { isLoginFalse, isLoginTrue, setUserInfo } from '../../features/LoginSlice';
 
 const Header = ( { Link } ) => {
   const dispatch = useDispatch();
@@ -14,13 +14,22 @@ const Header = ( { Link } ) => {
 
   const navi = useNavigate();
   
+  // 새로고침시에도 로그인 유지
   useEffect(() => {
     // 페이지 로딩 시 로그인 상태 확인
     axios.get('http://localhost:8080/mypage', { withCredentials: true })
         .then((response) => {
             if (response.data[0] !== '세') {
-              const nickname = response.data.nickname;
-                dispatch(isLoginTrue({nickname}));
+              // const nickname = response.data.nickname;
+              //   dispatch(isLoginTrue({nickname}));
+                const userInfo = {
+                  nickname: response.data.nickname,
+                  age: response.data.age,
+                  gender: response.data.gender,
+                  access: response.data.access,
+                  id: response.data.id
+              };
+                dispatch(setUserInfo(userInfo));
             } else {
                 dispatch(isLoginFalse());
             }

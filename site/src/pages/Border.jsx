@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import { BorderMain } from '../components'
 import { useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { addPost, editPost } from '../features/BorderSlice';
+import { Link } from 'react-router-dom';
 
-export const Border = ({ postContent, setPostContent, edit, deleted }) => {
-  const dispatch = useDispatch();
+export const Border = () => {
 
   // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
@@ -36,38 +34,44 @@ export const Border = ({ postContent, setPostContent, edit, deleted }) => {
   return (
     <>
       <BorderMain>
-        <h1>자유 게시판</h1>
-        <label>제목</label>
-
-        <input value={postContent.title} 
-        onChange={e => setPostContent(prevState => ({ ...prevState, title : e.target.value}))}></input>
-        <label>내용</label>
-        <input value={postContent.content} 
-        onChange={e => setPostContent(prevState => ({ ...prevState, content : e.target.value}))}></input>
-        <button onClick={()=> {
-          dispatch(addPost(postContent));
-          setPostContent({title : '', content : ''});
-        }}>확인</button>
-
-        {Posts.map((post, index)=>(
-          <div key={index}>
-            <h1>{post.userId ? post.userId : 'Cant find your ID'}</h1>
-            <h2>{post.title ? post.usertitle : 'Cant find your title'}</h2>
-            <p>{post.content ? post.content : 'Cant find your content'}</p>
-            <p>{post.User ? post.User.nickname : 'Cant find your nickname'}</p>
-          {/* <button onClick={()=>{
-            const newContent = prompt("수정할 내용을 입력하세요", post.content)
-            if(newContent){
-              dispatch(editPost({index}))
-            }
-          }}>수정</button> */}
-
-          {/* <button onClick={()=>{
-            dispatch(deleted(index))
-          }}>삭제</button> */}
+        <div className='border_container'>
+          <h1>자유 게시판</h1>
+          <div className='border_herder'>
+            <p>번호</p>
+            <p>제목</p>
+            <p>글쓴이</p>
+            <p>등록일</p>
+            <p>조회</p>
+            <p>추천</p>
           </div>
-        ))}
+          <div className='list_container'>
+            {Posts.map((post, index)=>(
+              <div key={index} className='border_li'>
+                <p>{post.userId}</p>
+                <p>{post.title}</p>
+                {/* <p>{post.content}</p> */}
+                <p>{post.User.nickname}</p>
+                <p>{post.createdAt.split('T')[0]}</p>
+                <p>{post.postViews}</p>
+                <p>{post.postLikes}</p>
+              {/* <button onClick={()=>{
+                const newContent = prompt("수정할 내용을 입력하세요", post.content)
+                if(newContent){
+                  dispatch(editPost({index}))
+                }
+              }}>수정</button> */}
+
+              {/* <button onClick={()=>{
+                dispatch(deleted(index))
+              }}>삭제</button> */}
+              </div>
+            ))}
+          </div>
+            <Link to={'/border_insert'}>
+              <button>작성하기</button>
+            </Link>
+        </div>
       </BorderMain>
-        </>
+    </>
   )
 }
