@@ -30,11 +30,20 @@ const Testswiper = (props)=> {
         setCurrentImgVid(slideInfo);
     };
 
-    console.log(props);
-    const images = ()=>{
-        for(const img of props.imgs){
-            console.log(img.path_thumbnail);
-        }
+    // console.log(props.imgs);
+    const Imgvid = ()=>{
+        return (
+            <Swiper navigation={true} autoplay={{delay : 5000, disableOnInteraction : false}} loop={true} modules={[Navigation, Autoplay]}
+            centeredSlides={true} slidesPerView={3} onSlideChange={handleSlideChange} className="mySwiper"
+            style={{width : "100%", height : "99%"}}>
+                {props?.imgs.map((img,index)=>(
+                    <SwiperSlide key={index} onClick={()=> getSlideIndex()}>
+                        <img src={img.path_thumbnail} alt='PUBG img/vid' />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        )
+        
     };
     // images();
 
