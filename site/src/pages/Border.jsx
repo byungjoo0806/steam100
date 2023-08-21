@@ -2,9 +2,14 @@ import React, { useEffect } from 'react'
 import { BorderMain } from '../components'
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Border = () => {
+
+  const navi = useNavigate();
+
+  // 디테일 게시판으로 이동
+  const borderDetail = (id) => navi(`/border_detail/${id}`);
 
   // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
@@ -44,29 +49,20 @@ export const Border = () => {
             <p>조회</p>
             <p>추천</p>
           </div>
-          <div className='list_container'>
-            {Posts.map((post, index)=>(
-              <div key={index} className='border_li'>
-                <p>{post.userId}</p>
-                <p>{post.title}</p>
-                {/* <p>{post.content}</p> */}
-                <p>{post.User.nickname}</p>
-                <p>{post.createdAt.split('T')[0]}</p>
-                <p>{post.postViews}</p>
-                <p>{post.postLikes}</p>
-              {/* <button onClick={()=>{
-                const newContent = prompt("수정할 내용을 입력하세요", post.content)
-                if(newContent){
-                  dispatch(editPost({index}))
-                }
-              }}>수정</button> */}
 
-              {/* <button onClick={()=>{
-                dispatch(deleted(index))
-              }}>삭제</button> */}
-              </div>
-            ))}
-          </div>
+          {Posts.map((post, index)=>(
+            <div className='list_container' onClick={()=>borderDetail(post.id)}>
+                <div key={index} className='border_li'>
+                  <p>{post.id}</p>
+                  <p>{post.title}</p>
+                  {/* <p>{post.content}</p> */}
+                  <p>{post.User.nickname}</p>
+                  <p>{post.createdAt.split('T')[0]}</p>
+                  <p>{post.postViews}</p>
+                  <p>{post.postLikes}</p>
+                </div>
+            </div>
+          ))}
             <Link to={'/border_insert'}>
               <button>작성하기</button>
             </Link>

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import { BorderMain } from '../components'
 import { useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { addPost, editPost } from '../features/BorderSlice';
-import { Link } from 'react-router-dom';
-
+import { BorderInsertBox } from '../components';
+import { useNavigate } from 'react-router-dom';
 const BorderInsert = ({ postContent, setPostContent }) => {
 
 const dispatch = useDispatch();
+const navi = useNavigate();
 
       // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
@@ -37,17 +37,23 @@ const dispatch = useDispatch();
 
   return (
     <>
+      <BorderInsertBox>
         <label>제목</label>
         <input value={postContent.title} 
         onChange={e => setPostContent(prevState => ({ ...prevState, title : e.target.value}))}></input>
         <label>내용</label>
-        <input value={postContent.content} 
-        onChange={e => setPostContent(prevState => ({ ...prevState, content : e.target.value}))}></input>
+        <input value ={postContent.content} 
+        onChange={e => setPostContent(prevState => ({ ...prevState, content : e.target.value}))}
+        className='insert_content'></input>
         <button onClick={()=> {
           dispatch(addPost(postContent));
           setPostContent({title : '', content : ''});
+          alert('글이 등록 되었습니다.');
+          navi('/border');
         }}>확인</button>
+      </BorderInsertBox>
     </>
+
   )
 }
 

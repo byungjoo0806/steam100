@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isLoginFalse, isLoginTrue, setUserInfo } from './features/LoginSlice';
 import { add, edit, deleted } from './features/BorderSlice'
 import { useState } from 'react';
-import { Login, Border, Main, SignUp, Mypage, AdminPage, Top10, BorderInsert } from './pages';
-import { Route, Routes } from 'react-router-dom';
+import { Login, Border, Main, SignUp, Mypage, AdminPage, Top10, BorderInsert, BorderDetail } from './pages';
+import { Route, Routes, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
@@ -21,6 +21,7 @@ function App() {
     title : '',
     content : ''
   });
+  const { id } = useParams();
   
   return (
     <div className="App">
@@ -70,6 +71,18 @@ function App() {
           deleted={deleted}    
           useQuery={useQuery}
         
+        />}>
+        </Route>
+
+        <Route path='/border_detail/:id' element={<BorderDetail 
+          dispatch={dispatch}
+          postContent={postContent}
+          setPostContent={setPostContent}
+          Posts={Posts}
+          add={add}
+          edit={edit}
+          deleted={deleted}    
+          useQuery={useQuery}          
         />}>
         </Route>
 

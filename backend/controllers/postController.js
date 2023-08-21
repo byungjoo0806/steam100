@@ -18,10 +18,10 @@ exports.PostViewAll = async(req,res)=>{
 
 exports.PostViewOne = async(req,res)=>{
     try {
-        const {id} = req.body;
-
-        const post = await Post.findOne({where : {id}});
-
+        const {id} = req.params;
+        console.log("req",req);
+        const post = await Post.findOne({ where : { id } });
+        console.log(post);
         res.send(post);
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 상세글 보여주다 에러남');
@@ -31,7 +31,6 @@ exports.PostViewOne = async(req,res)=>{
 
 exports.PostInsert = async(req,res)=>{
     try {
-        console.log("ㅁㄴㅇㅁㅇㄴ",req.body);
         const {title, content, userId} = req.body;
         console.log(title, content, userId);
 

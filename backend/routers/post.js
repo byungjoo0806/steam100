@@ -6,7 +6,7 @@ const {LoginCheck} = require('../middleware/loginCheck');
 
 router.get('/',PostViewAll);
 
-router.post('/detail',PostViewOne);
+router.get('/detail/:id',PostViewOne);
 
 router.post('/insert',LoginCheck,PostInsert);
 

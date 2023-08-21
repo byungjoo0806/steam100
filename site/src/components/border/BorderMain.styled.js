@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BorderBox = styled.div`
     margin: auto;
-    text-align:center;
+    text-align: center;
     width: 800px;
     height: 800px;
     border: 1px solid;
@@ -50,7 +50,11 @@ export const BorderBox = styled.div`
     }
 
     & .list_container {
-
+        cursor: pointer;
+        
+        & :hover {
+            background-color: #9e814c;
+        }
     }
 
 `
