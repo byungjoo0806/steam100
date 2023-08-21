@@ -11,8 +11,8 @@ import './styles.css';
 // import required modules
 import { Navigation, Autoplay } from 'swiper/modules';
 
-export default function App() {
-    
+const Testswiper = (props)=> {
+    // console.log(props);
     const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
     const [currentImgVid, setCurrentImgVid] = useState(null);
 
@@ -29,6 +29,14 @@ export default function App() {
         const slideInfo = clickedSlide.innerHTML;
         setCurrentImgVid(slideInfo);
     };
+
+    console.log(props);
+    const images = ()=>{
+        for(const img of props.imgs){
+            console.log(img.path_thumbnail);
+        }
+    };
+    // images();
 
     return (
         <>
@@ -52,4 +60,6 @@ export default function App() {
             </div>    
         </>
   );
-}
+};
+
+export default Testswiper;
