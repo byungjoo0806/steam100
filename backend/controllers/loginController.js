@@ -33,6 +33,12 @@ exports.Login = async(req,res) => {
 
         req.session.token = token;
 
+        res.cookie('access_token', token, {
+            httpOnly: true, // JavaScript로 접근 불가
+            secure: true, // HTTPS에서만 전송
+            maxAge: 3600000 // 1시간 유효
+        });
+
         res.send({
             status : "로그인 성공",
             user : user
