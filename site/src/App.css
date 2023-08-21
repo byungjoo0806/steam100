@@ -1,0 +1,64 @@
+/* app.js에 들어가는 가장 큰 컴포넌트는 여기에 */
+
+.Header {
+    background-color: #ffffff;
+    width: 100%;
+}
+  
+.Body {
+  width: 100%;
+  height: 100%;
+}
+
+.Link {
+  text-decoration: none;
+}
+
+.Menu {
+  background-color: whitesmoke;
+  position: sticky;
+  top: 0;  
+  z-index: 10;
+  font-size: 1.5em;
+}
+
+.Main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.login_box_btns{
+  width: 170px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.gender_box{
+  width: 170px;
+  height: 80px;  
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;  
+}
+
+.signup_btn, .mainpage_btn{
+  position: absolute;
+  bottom: 10px;
+}
+
+.mainpage_btn{
+  right: 10px;
+}
+
+.userInfo_box, .changePw_box{
+  display: flex;
+  flex-direction: column;  
+}
+
+.change_info_btn, .change_pw_btn{
+  margin-top: 10px;
+}
