@@ -33,6 +33,12 @@ exports.Login = async(req,res) => {
 
         req.session.token = token;
 
+        res.cookie('token',token,{
+            httpOnly : true,
+            sameSite : 'none',
+            secure : true
+        })
+
         res.send({
             status : "로그인 성공",
             user : user
