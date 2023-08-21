@@ -2,33 +2,29 @@ import { createSlice } from "@reduxjs/toolkit"
 
 export const LoginSlice = createSlice({
     name : 'Login',
-    initialState : {
-        isLogin : false,
-        nickname : '',
-        age : 0,
-        gender : '',
-        access : 0
-    },
+    initialState : {isLogin : false},
     reducers : {
-        isLoginTrue : (state) => {
+        isLoginTrue : (state, action) => {
+            const { nickname } = action.payload;
             state.isLogin = true;
+            state.nickname = nickname;
         },
-        isLoginFalse : (state) => {            
+        
+        isLoginFalse : (state) => {
+            state.isLogin = false
             state.nickname = '';
-            state.age = 0;
-            state.gender = '';
-            state.access = 0;
-            state.isLogin = false;
         },
         setUserInfo : (state, action) => {
-            const { nickname, age, gender, access } = action.payload;
+            const { nickname, age, gender, access, id } = action.payload;
             state.nickname = nickname;
             state.age = age;
             state.gender = gender;
             state.access = access;
             state.isLogin = true;
+            state.id = id;
         }
+
     }
 })
 
-export const { isLoginTrue, isLoginFalse, setUserInfo } = LoginSlice.actions
+export const {isLoginTrue, isLoginFalse, setUserInfo} = LoginSlice.actions

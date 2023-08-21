@@ -1,6 +1,7 @@
 import React from 'react';
 import { SectionContainer, SectionHeader, SectionMain, SectionFooter, SectionHeaderH2, SectionHeaderP, SectionMainUl, FooterLink } from './Section.styled';
 import SectionlistTop100 from './SectionlistTop100';
+import { Link } from 'react-router-dom';
 
 const SectionTop100 = () => {
 
@@ -16,8 +17,10 @@ const SectionTop100 = () => {
                     <SectionlistTop100 />
                   </SectionMainUl>
               </SectionMain>
-              <SectionFooter>
+              <SectionFooter>  
+                <Link to={'/border'} className='Link'>
                   <FooterLink>전체 게시판으로 이동</FooterLink>
+                </Link>
               </SectionFooter>
           </SectionContainer>
       </div>

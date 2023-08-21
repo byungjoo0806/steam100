@@ -5,6 +5,7 @@ const cors = require('cors');
 const {sequelize} = require('./models');
 const cookieParser = require('cookie-parser')
 const axios = require("axios");
+const path = require('path');
 
 const app = express();
 
@@ -13,6 +14,8 @@ const loginRouter = require('./routers/login');
 const postRouter = require('./routers/post');
 const mypageRouter = require('./routers/mypage');
 const apiRouter = require('./routers/webAPI');
+const replyRouter = require('./routers/reply');
+const rereplyRouter = require('./routers/rereply');
 
 sequelize.sync({force : false}).then(()=>{
     console.log('연결 성공');
@@ -41,6 +44,8 @@ app.use('/login',loginRouter);
 app.use('/post',postRouter);
 app.use('/mypage',mypageRouter);
 app.use('/api',apiRouter);
+app.use('/reply', replyRouter);
+app.use('/rereply', rereplyRouter);
 
 app.listen(8080,()=>{
     console.log('server open');
