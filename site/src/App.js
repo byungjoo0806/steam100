@@ -87,7 +87,7 @@ function App() {
         />}>
         </Route>
 
-        <Route path='/signup' element={<Signup />}></Route>
+        <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/mypage' element={<Mypage />}></Route>
         <Route path='/admin' element={<AdminPage />}></Route>
         <Route path='/top10' element={<Top10 />}></Route>
