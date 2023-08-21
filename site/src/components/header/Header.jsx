@@ -54,13 +54,8 @@ const Header = ( { Link } ) => {
     }).catch((err)=>{
       console.log(err);
     })
-<<<<<<< HEAD
   };
 
-=======
-  }
-  
->>>>>>> jisub
   const Logout = async() =>{
     await axios.get(`${backend}/login/logout`,{
       withCredentials : true
