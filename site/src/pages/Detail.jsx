@@ -61,6 +61,8 @@ const Detail = () => {
         )
     };
 
+
+    // 최소 사양 보여주는 부분을 운영체제에 따른 탭으로 구분하기
     const Tabmenu = () => {
         const [activeTab, setActiveTab] = useState(1);
     
