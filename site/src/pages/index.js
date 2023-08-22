@@ -1,10 +1,12 @@
 import { Border } from './Border'
 import { Login } from './Login'
 import { Main } from './Main';
-import Signup from './Signup';
+import SignUp from './Signup';
 import Mypage from './Mypage';
 import AdminPage from './AdminPage'
 import Detail from './Detail'
 import Top10 from './Top10';
+import BorderInsert from './BorderInsert';
+import BorderDetail from './BorderDetail';
 
-export { Border, Login, Main, Signup, Mypage, AdminPage, Detail, Top10 };
+export { Border, Login, Main, SignUp, Mypage, AdminPage, Detail, Top10, BorderInsert, BorderDetail };

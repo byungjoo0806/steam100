@@ -42,3 +42,8 @@
   .swiper-wrapper{
     width: 95%;
   }
+
+  .posterImgVid img{
+    width: 100%;
+    height: 100%;
+  }

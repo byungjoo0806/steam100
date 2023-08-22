@@ -33,6 +33,7 @@ export const FooterTopRight = styled.ul`
 export const FooterLangBtn = styled.button`
     border: none;
     background: none;
+    cursor: pointer;
 `
 export const FooterBottom = styled.div`
     display: flex;

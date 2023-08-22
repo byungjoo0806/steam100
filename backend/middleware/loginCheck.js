@@ -6,6 +6,7 @@ exports.LoginCheck = (req,res,next)=>{
 
         jwt.verify(access_token,process.env.ACCESS_TOKEN_KEY,(err,acc_decoded)=>{
             if(err){
+                console.log('로그인?')
                 res.send('세션 만료. 다시 로그인해주세요.');
             }else{
                 req.acc_decoded = acc_decoded;
