@@ -72,7 +72,7 @@ exports.PostDelete = async(req,res)=>{
 
         res.send();
     } catch (error) {
-        console.log('포스트 컨트롤러에서 게시판 글 삭제하다가 에러남');
+        console.log('포스트 컨트롤러에서 게시판 글 삭제하다가 에러남dsaadsdas');
         console.log(error);
     }
 }
