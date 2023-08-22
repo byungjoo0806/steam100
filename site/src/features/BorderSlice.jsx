@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";;
+import axios from "axios";
+
+const backend = process.env.REACT_APP_BACKEND_SERVER;
 
 // 글 추가 
 export const addPost = createAsyncThunk('/border/addPost', async (postContent, thunkAPI) => {
     const user = thunkAPI.getState().login; // store에 있는 로그인 리듀서
     
-    const response = await axios.post('http://localhost:8080/post/insert', {
+    const response = await axios.post(`${backend}/post/insert`, {
       title: postContent.title,
       content : postContent.content,
       userId: user.id
@@ -20,7 +22,7 @@ export const addPost = createAsyncThunk('/border/addPost', async (postContent, t
 export const editPost = createAsyncThunk('/border/editPost', async(postContent, thunkAPI) => {
     const user = thunkAPI.getState().login;
 
-    const response = await axios.post('http://localhost:8080/post/update', {
+    const response = await axios.post(`${backend}/post/update`, {
         title: postContent.title,
         content: postContent.content,
         userId : user.id
