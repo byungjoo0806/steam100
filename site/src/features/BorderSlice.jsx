@@ -39,14 +39,14 @@ export const BorderSlice = createSlice({
     },
     reducers : {
         add : (state, action) => {
-            state.posts.push(action.payload)
+            state.Posts.push(action.payload)
         },
         edit : (state, action) => {
             const { content, index } = action.payload;
-            state.posts[index] = content;
+            state.Posts[index] = content;
         },
         deleted : (state, action) => {
-            state.posts.splice(action.payload, 1);
+            state.Posts.splice(action.payload, 1);
         }
     }, 
     extraReducers : builder => {

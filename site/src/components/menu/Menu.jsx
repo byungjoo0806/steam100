@@ -10,11 +10,8 @@ const Menu = ({ Link }) => {
           <Link to={'/'}> 
             <MenuLi>Top 100</MenuLi>
           </Link>
-          <Link to={'/top10'}>
-            <MenuLi>Top 10</MenuLi>
-          </Link>  
           <Link to={'/border'}>
-            <MenuLi>자유 게시판</MenuLi>
+            <MenuLi>Post</MenuLi>
           </Link>
         </MenuUl>
       </MenuBar>

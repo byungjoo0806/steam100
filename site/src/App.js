@@ -10,9 +10,9 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Detail from './pages/Detail';
 import Menu from './components/menu/Menu';
-import SectionlistTop10 from './components/section/SectionlistTop10';
 import Swipertest from './pages/Swipertest';
 import { useQuery } from 'react-query';
+import { SectionlistTop100 } from './components';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function App() {
 
       <Routes>
         <Route path='' element={<Main />}>  
-        <Route exact path={"/"} element={<SectionlistTop10 />} />
+        <Route exact path={"/"} element={<SectionlistTop100 />} />
         </Route>
 
         <Route path='login' element={<Login 
@@ -49,7 +49,7 @@ function App() {
         />}>
         </Route>
 
-        <Route path='border' element={<Border 
+        <Route path='/border' element={<Border 
           dispatch={dispatch}
           postContent={postContent}
           setPostContent={setPostContent}
@@ -90,7 +90,6 @@ function App() {
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/mypage' element={<Mypage />}></Route>
         <Route path='/admin' element={<AdminPage />}></Route>
-        <Route path='/top10' element={<Top10 />}></Route>
 
         <Route path='/detail/:id' element={<Detail />} />
         <Route path='/swipertest' element={<Swipertest />}/>  
