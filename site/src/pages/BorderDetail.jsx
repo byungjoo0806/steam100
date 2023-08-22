@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { BorderDetailBox } from '../components'
 import { useDispatch } from 'react-redux'
 import axios from 'axios';
@@ -42,23 +42,19 @@ const focusContent = useRef(null);
 
 const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
 
-useEffect(()=> {
-    if(postDetail) {
-        setBorderEdit({
-            title : postDetail.title,
-            content : postDetail.content
-        });
-    }
-}, [postDetail]);
-
-if (isLoading) return <p>Loading...</p>;
-if (isError) return <p>Error occurred</p>;
 
 // 수정 버튼 
 const updateHandler = () => {
     setBorderUpdate(true);
     focusContent.current.focus();
 }
+
+const toggleUpdate = useCallback(()=>{
+    setBorderUpdate(prevState => !prevState);
+    if(!borderUpdate) {
+        focusContent.current.focus();
+    }
+},[borderUpdate, focusContent]);
 
 // 확인 버튼
 const confirmHandler = async () => {
@@ -84,7 +80,19 @@ const deleteHandler = async () => {
     }
 };
 
-  return (
+useEffect(()=> {
+    if(postDetail) {
+        setBorderEdit({
+            title : postDetail.title,
+            content : postDetail.content
+        });
+    }
+}, [postDetail]);
+
+if (isLoading) return <p>Loading...</p>;
+if (isError) return <p>Error occurred</p>;
+
+return (
     <>
         <BorderDetailBox>
             <label>제목</label>
@@ -97,13 +105,19 @@ const deleteHandler = async () => {
             ref={focusContent}>
             </input>
 
-            <button onClick={updateHandler}>수정</button>
+            <div className='border_detail_btns'>
+                <button onClick={toggleUpdate}>
+                    {borderUpdate ? '수정 취소' : '수정'}
+                </button>
 
-            <button onClick={borderUpdate ? confirmHandler : null}>
-                {borderUpdate ? '수정 완료' : '확인'}
-            </button>
-            
-            <button onClick={deleteHandler}>삭제</button>
+                {borderUpdate && (
+                <button onClick={confirmHandler}>
+                    수정 완료
+                </button>
+                )}
+
+                <button onClick={deleteHandler}>글 삭제</button>
+            </div>
         </BorderDetailBox>
     </>
   )

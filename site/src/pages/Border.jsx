@@ -18,7 +18,7 @@ export const Border = () => {
     const response = await axios.get(`${backend}/post`, {
       withCredentials : true
     });
-    console.log("백엔드에서 가져온 글 목록",response);
+    // console.log("백엔드에서 가져온 글 목록",response);
     return response.data;
   };
 
@@ -28,7 +28,7 @@ export const Border = () => {
    // 가져온 데이터를 콘솔에 로깅
    useEffect(()=> {
      if (Posts) {
-       console.log("글 목록", Posts);
+      //  console.log("글 목록", Posts);
      }
      if (isError) {
        console.error("에러:", error);
