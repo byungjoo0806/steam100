@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { addPost, editPost } from '../features/BorderSlice';
 import { useParams } from 'react-router-dom';
 
+const backend = process.env.REACT_APP_BACKEND_SERVER;
 const fetchPostbyId = async (postId) => {
-    const backend = process.env.REACT_APP_BACKEND_SERVER;
 
     const response = await axios.get(`${backend}/post/detail/${postId}`, {
         withCredentials: true,
