@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 export const Border = () => {
   const backend = process.env.REACT_APP_BACKEND_SERVER;
 
+  const backend = process.env.REACT_APP_BACKEND_SERVER;
+
   const navi = useNavigate();
 
   // 디테일 게시판으로 이동
@@ -27,7 +29,7 @@ export const Border = () => {
    // 가져온 데이터를 콘솔에 로깅
    useEffect(()=> {
      if (Posts) {
-       console.log("글 목록", Posts);
+      //  console.log("글 목록", Posts);
      }
      if (isError) {
        console.error("에러:", error);

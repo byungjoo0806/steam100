@@ -4,7 +4,7 @@ export const InsertBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
+    width: 60%;
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #e0e0e0;
@@ -48,5 +48,10 @@ export const InsertBox = styled.div`
         &:hover {
             background-color: #0056b3;
         }
+    }
+
+    .border_detail_btns{
+        display: flex;
+        gap: 20px;
     }
 `;
