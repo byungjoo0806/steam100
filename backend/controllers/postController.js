@@ -76,3 +76,18 @@ exports.PostDelete = async(req,res)=>{
         console.log(error);
     }
 }
+
+exports.PostViewNumUp = async(req,res)=>{
+    try {
+        const { id } = req.params;
+
+        const post = await Post.findOne({where : {id}});
+
+        await Post.update({postViews : post.postViews + 1},{where : {id}});
+
+        res.send();
+    } catch (error) {
+        console.log('포스트 컨트롤러에서 게시판 글 조회수 올리다 에러남');
+        console.log(error);
+    }
+}
