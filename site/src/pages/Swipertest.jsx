@@ -1,11 +1,11 @@
 import React from 'react';
 import Swiper from 'swiper';
-import Testswiper from "../components/swiper/Testswiper";
+import Mediaswiper from "../components/swiper/Mediaswiper";
 
 const Swipertest = () => {
   return (
     <div>
-        <Testswiper />
+        <Mediaswiper />
     </div>
   )
 }
