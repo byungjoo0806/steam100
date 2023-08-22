@@ -13,7 +13,7 @@ const fetchPostbyId = async (postId) => {
         withCredentials: true,
     });
     return response.data;
-}
+};
 
 const updatePostbyId = async (id, data) => {
     await axios.put(`${backend}/post/update/${id}`, data, {
@@ -74,6 +74,12 @@ const deleteHandler = async () => {
     }
 };
 
+{/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
+
+const fetchReply = async () => {
+    
+}
+
 useEffect(()=> {
     if(postDetail) {
         setBorderEdit({
@@ -98,7 +104,8 @@ return (
             className='insert_content'
             ref={focusContent}>
             </input>
-
+            
+            {/* 수정 버튼 */}
             {postDetail.userId === currentUser.id && (
             <div className='border_detail_btns'>
                 <button onClick={toggleUpdate}>
@@ -106,9 +113,9 @@ return (
                 </button>
 
                 {borderUpdate && (
-                <button onClick={confirmHandler}>
-                    수정 완료
-                </button>
+                    <button onClick={confirmHandler}>
+                        수정 완료
+                    </button>
                 )}
 
                 <button onClick={deleteHandler}>글 삭제</button>
@@ -116,6 +123,12 @@ return (
 
             )}
 
+{/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
+
+        <label>댓글</label>
+        <input type="text">
+        </input>
+            <button>작성</button>
         </BorderDetailBox>
     </>
   )

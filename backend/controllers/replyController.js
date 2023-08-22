@@ -1,4 +1,4 @@
-const { Reply, User, Rereply} = require('../models');
+const { Reply, User } = require('../models');
 
 exports.ReplyViewAll = async (req, res) => {
     try {
@@ -29,7 +29,7 @@ exports.ReplyInsert = async (req, res) => {
 
         req.session.pageId = postId; //  ??? 
 
-        res.send('http://localhost:3000/')
+        res.send()
 
     } catch (error) {
         console.log(error);
@@ -46,7 +46,7 @@ exports.ReplyUpdate = async (req, res) => {
 
         req.session.pageId = reply.postId; // ???
 
-        res.send('http://localhost:3000')
+        res.send()
     } catch (error) {
         console.log(error);
     }
@@ -62,7 +62,7 @@ exports.ReplyDelete = async (req, res) => {
 
         await Reply.destroy({where : {id}});
 
-        res.send('http://localhost:3000')
+        res.send()
     } catch (error) {
         console.log(error)
     }
