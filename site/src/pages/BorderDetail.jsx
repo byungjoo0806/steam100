@@ -7,21 +7,23 @@ import { useNavigate } from 'react-router-dom';
 import { addPost, editPost } from '../features/BorderSlice';
 import { useParams } from 'react-router-dom';
 
+const backend = process.env.REACT_APP_BACKEND_SERVER;
+
 const fetchPostbyId = async (postId) => {
-    const response = await axios.get(`http://localhost:8080/post/detail/${postId}`, {
+    const response = await axios.get(`${backend}/post/detail/${postId}`, {
         withCredentials: true,
     });
     return response.data;
 }
 
 const updatePostbyId = async (id, data) => {
-    await axios.put(`http://localhost:8080/post/update/${id}`, data, {
+    await axios.put(`${backend}/post/update/${id}`, data, {
         withCredentials : true
     });
 };
 
 const deletePostbyId = async (id) => {
-    await axios.delete(`http://localhost:8080/post/delete/${id}`, {
+    await axios.delete(`${backend}/post/delete/${id}`, {
         withCredentials : true
     });
 };
@@ -31,6 +33,10 @@ const BorderDetail = ({ postContent, setPostContent }) => {
 const dispatch = useDispatch();
 const navi = useNavigate();
 const { id } = useParams();
+const [borderEdit, setBorderEdit] = useState({
+    title : postContent.title,
+    content : postContent.content
+});
 const [borderUpdate, setBorderUpdate] = useState(false);
 const focusContent = useRef(null);
 
@@ -38,7 +44,7 @@ const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], 
 
 useEffect(()=> {
     if(postDetail) {
-        setPostContent({
+        setBorderEdit({
             title : postDetail.title,
             content : postDetail.content
         });
@@ -57,7 +63,7 @@ const updateHandler = () => {
 // 확인 버튼
 const confirmHandler = async () => {
     try {
-        await updatePostbyId(id, postContent);
+        await updatePostbyId(id, borderEdit);
         alert('글이 수정 되었습니다.');
         setBorderUpdate(false);
         navi('/border');
@@ -82,11 +88,11 @@ const deleteHandler = async () => {
     <>
         <BorderDetailBox>
             <label>제목</label>
-            <input type='text' value={postContent.title} readOnly={!borderUpdate}
-            onChange={e => setPostContent(prevState => ({ ...prevState, title : e.target.value}))}></input>
+            <input type='text' value={borderEdit.title} readOnly={!borderUpdate}
+            onChange={e => setBorderEdit(prevState => ({ ...prevState, title : e.target.value}))}></input>
             <label>내용</label>
-            <input type='text' value ={postContent.content} readOnly={!borderUpdate} 
-            onChange={e => setPostContent(prevState => ({ ...prevState, content : e.target.value}))}
+            <input type='text' value ={borderEdit.content} readOnly={!borderUpdate} 
+            onChange={e => setBorderEdit(prevState => ({ ...prevState, content : e.target.value}))}
             className='insert_content'
             ref={focusContent}>
             </input>

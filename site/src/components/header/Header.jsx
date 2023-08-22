@@ -18,7 +18,7 @@ const Header = ( { Link } ) => {
   // 새로고침시에도 로그인 유지
   useEffect(() => {
     // 페이지 로딩 시 로그인 상태 확인
-    axios.get('http://localhost:8080/mypage', { withCredentials: true })
+    axios.get(`${backend}/mypage`, { withCredentials: true })
         .then((response) => {
             if (response.data[0] !== '세') {
               // const nickname = response.data.nickname;
