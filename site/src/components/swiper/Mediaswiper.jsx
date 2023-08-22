@@ -49,7 +49,7 @@ const Testswiper = (props)=> {
             // console.log(imgTag);
             const vidLink = imgTag.getAttribute('vidsrc');
             // console.log(vidLink);
-            setBigImgVid(`<video autoplay controls width="100%" height="100%" onPlay={${handleStopSwiperAutoplay}} onPause={${handleStopSwiperAutoplay}} onEnded={${handleStartSwiperAutoplay}}><source src=${vidLink} type="video/mp4" /></video>`)
+            setBigImgVid(`<video autoplay controls width="100%" height="100%"><source src=${vidLink} type="video/mp4" /></video>`)
         }
     };
 
@@ -58,7 +58,7 @@ const Testswiper = (props)=> {
         const clickedSlide = event.target;
         // console.log(clickedSlide);
         const sanitizedHtml = DOMPurify.sanitize(clickedSlide);
-        console.log(sanitizedHtml);
+        // console.log(sanitizedHtml);
         setBigImgVid(sanitizedHtml);
     };
 
@@ -67,7 +67,7 @@ const Testswiper = (props)=> {
         const clickedSlide = event.target;
         // console.log(clickedSlide);
         const vidLink = clickedSlide.getAttribute('vidsrc');
-        setBigImgVid(`<video autoplay controls width="100%" height="100%" onPlay={${handleStopSwiperAutoplay}} onPause={${handleStopSwiperAutoplay}} onEnded={${handleStartSwiperAutoplay}}><source src=${vidLink} type="video/mp4" /></video>`);
+        setBigImgVid(`<video autoplay controls width="100%" height="100%"><source src=${vidLink} type="video/mp4" /></video>`);
     };
 
     // html 형식으로 들어온 값들을 그 형식 그대로 보여주기 위한 함수/컴포넌트
