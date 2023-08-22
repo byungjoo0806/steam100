@@ -8,20 +8,22 @@ import { addPost, editPost } from '../features/BorderSlice';
 import { useParams } from 'react-router-dom';
 
 const fetchPostbyId = async (postId) => {
-    const response = await axios.get(`http://localhost:8080/post/detail/${postId}`, {
+    const backend = process.env.REACT_APP_BACKEND_SERVER;
+
+    const response = await axios.get(`${backend}/post/detail/${postId}`, {
         withCredentials: true,
     });
     return response.data;
 }
 
 const updatePostbyId = async (id, data) => {
-    await axios.put(`http://localhost:8080/post/update/${id}`, data, {
+    await axios.put(`${backend}/post/update/${id}`, data, {
         withCredentials : true
     });
 };
 
 const deletePostbyId = async (id) => {
-    await axios.delete(`http://localhost:8080/post/delete/${id}`, {
+    await axios.delete(`${backend}/post/delete/${id}`, {
         withCredentials : true
     });
 };

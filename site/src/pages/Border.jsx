@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Border = () => {
+  const backend = process.env.REACT_APP_BACKEND_SERVER;
 
   const navi = useNavigate();
 
@@ -13,7 +14,7 @@ export const Border = () => {
 
   // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
-    const response = await axios.get('http://localhost:8080/post', {
+    const response = await axios.get(`${backend}/post`, {
       withCredentials : true
     });
     // console.log("백엔드에서 가져온 글 목록",response);

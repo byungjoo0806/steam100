@@ -6,13 +6,14 @@ import { addPost, editPost } from '../features/BorderSlice';
 import { BorderInsertBox } from '../components';
 import { useNavigate } from 'react-router-dom';
 const BorderInsert = ({ postContent, setPostContent }) => {
+  const backend = process.env.REACT_APP_BACKEND_SERVER;
 
-const dispatch = useDispatch();
-const navi = useNavigate();
+  const dispatch = useDispatch();
+  const navi = useNavigate();
 
       // 백에서 글 목록 가져옴
   const fetchPosts = async () => {
-    const response = await axios.get('http://localhost:8080/post', {
+    const response = await axios.get(`${backend}/post`, {
       withCredentials : true
     });
     // console.log("백엔드에서 가져온 글 목록",response);
