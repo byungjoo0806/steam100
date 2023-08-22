@@ -12,7 +12,7 @@ const SectionTop100 = () => {
                  <SectionHeaderH2>Steam Top 100</SectionHeaderH2>
                  <SectionHeaderP>Top 100 best Steam games of all time according to gamer reviews.</SectionHeaderP>
               </SectionHeader>
-              <SectionMain>
+              <SectionMain> 
                   <SectionMainUl>
                     <SectionlistTop100 />
                   </SectionMainUl>
