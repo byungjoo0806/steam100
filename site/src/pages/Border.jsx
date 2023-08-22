@@ -50,9 +50,9 @@ export const Border = () => {
             <p>추천</p>
           </div>
 
-          {Posts.map((post, index)=>(
-            <div className='list_container' onClick={()=>borderDetail(post.id)}>
-                <div key={index} className='border_li'>
+          {Posts.map((post)=>(
+            <div key={post.id} className='list_container' onClick={()=>borderDetail(post.id)}>
+                <div className='border_li'>
                   <p>{post.id}</p>
                   <p>{post.title}</p>
                   {/* <p>{post.content}</p> */}

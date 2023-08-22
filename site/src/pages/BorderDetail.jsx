@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { BorderDetailBox } from '../components'
 import { useDispatch } from 'react-redux'
 import axios from 'axios';
@@ -32,6 +32,7 @@ const dispatch = useDispatch();
 const navi = useNavigate();
 const { id } = useParams();
 const [borderUpdate, setBorderUpdate] = useState(false);
+const focusContent = useRef(null);
 
 const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
 
@@ -42,46 +43,61 @@ useEffect(()=> {
             content : postDetail.content
         });
     }
-    if(borderUpdate) {
-        setBorderUpdate(false);
-    }
-}, [postDetail, borderUpdate]);
+}, [postDetail]);
 
 if (isLoading) return <p>Loading...</p>;
 if (isError) return <p>Error occurred</p>;
 
-const updateHandler = async () => {
+// 수정 버튼 
+const updateHandler = () => {
+    setBorderUpdate(true);
+    focusContent.current.focus();
+}
+
+// 확인 버튼
+const confirmHandler = async () => {
     try {
         await updatePostbyId(id, postContent);
-        setBorderUpdate(true);
-        alert('게시글이 수정되었습니다.')
+        alert('글이 수정 되었습니다.');
+        setBorderUpdate(false);
+        navi('/border');
     } catch (error) {
-        alert('게시글 수정에 실패했습니다.')
+        alert('글 수정에 실패하였습니다.');
+        console.log(error);
     }
-}
+};
+// 삭제 버튼
+const deleteHandler = async () => {
+    try {
+        await deletePostbyId(id);
+        alert('글이 정상적으로 삭제되었습니다.');
+        navi('/border');
+    } catch (error) {
+        alert('글 삭제를 실패하였습니다.')
+        console.log(error);
+    }
+};
 
   return (
     <>
         <BorderDetailBox>
             <label>제목</label>
-            <input type='text' value={postContent.title} 
+            <input type='text' value={postContent.title} readOnly={!borderUpdate}
             onChange={e => setPostContent(prevState => ({ ...prevState, title : e.target.value}))}></input>
             <label>내용</label>
-            <input type='text' value ={postContent.content} 
+            <input type='text' value ={postContent.content} readOnly={!borderUpdate} 
             onChange={e => setPostContent(prevState => ({ ...prevState, content : e.target.value}))}
-            className='insert_content'></input>
-            <button onClick={()=> {
-              dispatch(addPost(postContent));
-              setPostContent({title : '', content : ''});
-              alert('글이 등록 되었습니다.');
-              navi('/border');
-            }}>확인</button>
-            
+            className='insert_content'
+            ref={focusContent}>
+            </input>
+
             <button onClick={updateHandler}>수정</button>
+
+            <button onClick={borderUpdate ? confirmHandler : null}>
+                {borderUpdate ? '수정 완료' : '확인'}
+            </button>
             
-            <button onClick={()=>{
-            //   dispatch(deleted(index))
-            }}>삭제</button>
+            <button onClick={deleteHandler}>삭제</button>
         </BorderDetailBox>
     </>
   )

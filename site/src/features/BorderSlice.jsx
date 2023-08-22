@@ -60,4 +60,4 @@ export const BorderSlice = createSlice({
     }
 })
 
-export const { add, edit, deleted} = BorderSlice.actions
+export const { add, edit, deleted } = BorderSlice.actions
