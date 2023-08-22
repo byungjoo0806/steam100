@@ -37,7 +37,7 @@ exports.PostInsert = async(req,res)=>{
             userId
         })
 
-        res.send('http://localhost:3000');
+        res.send();
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 추가하다가 에러남');
         console.log(error);
@@ -56,7 +56,7 @@ exports.PostUpdate = async(req,res)=>{
 
             { where : { id } });
 
-        res.send('http://localhost:3000');
+        res.send();
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 수정하다가 에러남');
         console.log(error);
@@ -70,7 +70,7 @@ exports.PostDelete = async(req,res)=>{
 
         await Post.destroy({where : {id}});
 
-        res.send('http://localhost:3000');
+        res.send();
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 삭제하다가 에러남');
         console.log(error);
