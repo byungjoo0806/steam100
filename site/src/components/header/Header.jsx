@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useTheme } from '../../context/themeProvider'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { isLoginFalse, isLoginTrue, setUserInfo } from '../../features/LoginSlice';
+import { isLoginFalse, setUserInfo } from '../../features/LoginSlice';
 
 const Header = ( { Link } ) => {
   const backend = process.env.REACT_APP_BACKEND_SERVER;
@@ -14,22 +14,24 @@ const Header = ( { Link } ) => {
   // console.log(user)
 
   const navi = useNavigate();
+
+  useEffect(()=>{
+    console.log(user);
+  },[user])
   
   // 새로고침시에도 로그인 유지
-  useEffect(() => {
+  useEffect(() => {    
     // 페이지 로딩 시 로그인 상태 확인
     axios.get(`${backend}/mypage`, { withCredentials: true })
         .then((response) => {
             if (response.data[0] !== '세') {
-              // const nickname = response.data.nickname;
-              //   dispatch(isLoginTrue({nickname}));
                 const userInfo = {
                   nickname: response.data.nickname,
                   age: response.data.age,
                   gender: response.data.gender,
                   access: response.data.access,
                   id: response.data.id
-              };
+                };
                 dispatch(setUserInfo(userInfo));
             } else {
                 dispatch(isLoginFalse());
@@ -38,7 +40,7 @@ const Header = ( { Link } ) => {
         .catch((error) => {
             console.log(error);
         });
-}, [dispatch]);
+  }, [dispatch]);
 
   
   const LoginCheck = async()=>{
@@ -47,7 +49,14 @@ const Header = ( { Link } ) => {
     }).then((e)=>{
       if(e.data[0] !== '세'){
         navi('/mypage');
-        dispatch(isLoginTrue());
+        const userInfo = {
+          nickname: e.data.nickname,
+          age: e.data.age,
+          gender: e.data.gender,
+          access: e.data.access,
+          id: e.data.id
+        };
+        dispatch(setUserInfo(userInfo));
       }else{
         navi('/login');
       }
