@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { BorderDetailBox } from '../components'
-import { useDispatch } from 'react-redux'
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { addPost, editPost } from '../features/BorderSlice';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const backend = process.env.REACT_APP_BACKEND_SERVER;
 
@@ -30,9 +29,10 @@ const deletePostbyId = async (id) => {
 
 const BorderDetail = ({ postContent, setPostContent }) => {
 
-const dispatch = useDispatch();
+const currentUser = useSelector(state => state.login);
 const navi = useNavigate();
 const { id } = useParams();
+
 const [borderEdit, setBorderEdit] = useState({
     title : postContent.title,
     content : postContent.content
@@ -42,13 +42,7 @@ const focusContent = useRef(null);
 
 const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
 
-
-// 수정 버튼 
-const updateHandler = () => {
-    setBorderUpdate(true);
-    focusContent.current.focus();
-}
-
+// 수정 버튼
 const toggleUpdate = useCallback(()=>{
     setBorderUpdate(prevState => !prevState);
     if(!borderUpdate) {
@@ -105,6 +99,7 @@ return (
             ref={focusContent}>
             </input>
 
+            {postDetail.userId === currentUser.id && (
             <div className='border_detail_btns'>
                 <button onClick={toggleUpdate}>
                     {borderUpdate ? '수정 취소' : '수정'}
@@ -118,6 +113,9 @@ return (
 
                 <button onClick={deleteHandler}>글 삭제</button>
             </div>
+
+            )}
+
         </BorderDetailBox>
     </>
   )
