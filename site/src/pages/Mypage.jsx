@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const MyPage = () => {
+    const backend = process.env.REACT_APP_BACKEND_SERVER;
     const navi = useNavigate();
 
     // input 초기화 설정
@@ -33,7 +34,7 @@ const MyPage = () => {
     let loginData = {};
     
     const LoginUserData = async()=>{
-        await axios.get('http://localhost:8080/mypage',{
+        await axios.get(`${backend}/mypage`,{
             withCredentials : true
         }).then((e)=>{
             if(e.data[0] !== '세'){
@@ -82,7 +83,7 @@ const MyPage = () => {
         if(nickname === ''){
             alert('닉네임을 입력해 주시기 바랍니다.');
         }else{
-            await axios.post('http://localhost:8080/mypage',{
+            await axios.post(`${backend}/mypage`,{
                 nickname,
                 age,
                 gender
@@ -149,7 +150,7 @@ const MyPage = () => {
 
     // 비밀 번호 변경 함수
     const ChangePw = async()=>{
-        await axios.post('http://localhost:8080/mypage/changePw',{
+        await axios.post(`${backend}/mypage/changePw`,{
             currentPw,
             changePw
         },{

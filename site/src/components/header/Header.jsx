@@ -7,6 +7,7 @@ import axios from 'axios';
 import { isLoginFalse, isLoginTrue, setUserInfo } from '../../features/LoginSlice';
 
 const Header = ( { Link } ) => {
+  const backend = process.env.REACT_APP_BACKEND_SERVER;
   const dispatch = useDispatch();
   const user = useSelector(state => state.login);
   const [ThemeMode, toggleTheme] = useTheme();
@@ -41,7 +42,7 @@ const Header = ( { Link } ) => {
 
   
   const LoginCheck = async()=>{
-    await axios.get('http://localhost:8080/mypage',{
+    await axios.get(`${backend}/mypage`,{
       withCredentials : true
     }).then((e)=>{
       if(e.data[0] !== '세'){
@@ -53,10 +54,10 @@ const Header = ( { Link } ) => {
     }).catch((err)=>{
       console.log(err);
     })
-  }
-  
+  };
+
   const Logout = async() =>{
-    await axios.get('http://localhost:8080/login/logout',{
+    await axios.get(`${backend}/login/logout`,{
       withCredentials : true
     }).then((e)=>{
       if(e.data[0] !== '세'){

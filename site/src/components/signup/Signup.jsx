@@ -14,4 +14,4 @@ const Signup = ({ children }) => {
   )
 }
 
-export default Signup
+export default Signup;

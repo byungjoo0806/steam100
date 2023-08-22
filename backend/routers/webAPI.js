@@ -73,30 +73,42 @@ router.get("/appList", async (req,res)=>{
 router.get("/top100", async (req,res)=>{
     try {
         let rankById = [];
+        let appInfo = [];
         const {data} = await axios.get("https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/");
         const rankArr = data.response.ranks;
 
         rankArr.map((el,index)=>{
             rankById.push(el.appid);
-        })
+        });
         console.log(rankById);
 
-        const {data : response} = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
-        const applist = response.applist;
-        const appObject = applist.apps;
-        // console.log(appObject);
-        // console.log(game.name);
-        let topGameNameArr = [];
-        rankById.map((rank,rankIdx)=>{
-            appObject.map((game,gameIdx)=>{
-                if(rank === game.appid){
-                    topGameNameArr.push(game.name);
-                };
-            });
-        });
-        console.log(topGameNameArr);
-        // console.log(appID);
-        res.json(topGameNameArr);
+        const topTen = rankById.splice(0,10);
+        console.log(topTen);
+
+        for (const id of topTen){
+            const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${id}`);
+            // console.log(data);
+            appInfo.push(data[id].data);
+        };
+
+        res.json(appInfo);
+
+        // const {data : response} = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
+        // const applist = response.applist;
+        // const appObject = applist.apps;
+        // // console.log(appObject);
+        // // console.log(game.name);
+        // let topGameNameArr = [];
+        // rankById.map((rank,rankIdx)=>{
+        //     appObject.map((game,gameIdx)=>{
+        //         if(rank === game.appid){
+        //             topGameNameArr.push(game.name);
+        //         };
+        //     });
+        // });
+        // console.log(topGameNameArr);
+        // // console.log(appID);
+        // res.json(topGameNameArr);
     } catch (error) {
         console.log(error);
     }
