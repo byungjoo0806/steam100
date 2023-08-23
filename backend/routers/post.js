@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const {PostDelete,PostInsert,PostUpdate,PostViewAll,PostViewOne,PostViewNumUp} = require('../controllers/postController');
+const {PostDelete,PostInsert,PostUpdate,PostViewAll,PostViewOne,PostViewNumUp,PostLikeChange} = require('../controllers/postController');
 
 const {LoginCheck} = require('../middleware/loginCheck');
 
@@ -15,5 +15,7 @@ router.put('/update/:id',LoginCheck,PostUpdate);
 router.delete('/delete/:id',LoginCheck,PostDelete);
 
 router.get('/viewUp/:id',PostViewNumUp);
+
+router.get('/like/:id',LoginCheck,PostLikeChange);
 
 module.exports = router;

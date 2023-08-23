@@ -2,9 +2,10 @@ const { Reply, User } = require('../models');
 
 exports.ReplyViewAll = async (req, res) => {
     try {
-        const id = req.body.data;
+        const postId = req.query.postId;
+        // console.log("postId야 어딧니?",postId);
         const reply = await Reply.findAll({
-            where : { postId : id },
+            where : { postId : postId },
             include : {
                 model : User
             }
@@ -24,10 +25,10 @@ exports.ReplyInsert = async (req, res) => {
         await Reply.create({
             content,
             postId,
-            uesrId
+            userId
         })
 
-        req.session.pageId = postId; //  ??? 
+        req.session.pageId = postId; 
 
         res.send()
 
@@ -44,7 +45,7 @@ exports.ReplyUpdate = async (req, res) => {
 
         await Reply.update({content}, {where : {id}});
 
-        req.session.pageId = reply.postId; // ???
+        req.session.pageId = reply.postId; 
 
         res.send()
     } catch (error) {
@@ -54,13 +55,13 @@ exports.ReplyUpdate = async (req, res) => {
 
 exports.ReplyDelete = async (req, res) => {
     try {
-        const id = req.body.data;
-        
+        const id = req.body.id;
         const reply = await Reply.findOne({where:{id}});
-
+        
         req.session.pageId = reply.postId;
 
         await Reply.destroy({where : {id}});
+        console.log("백 리플 아이디?", id);
 
         res.send()
     } catch (error) {
