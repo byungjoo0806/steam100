@@ -2,9 +2,10 @@ const { Reply, User } = require('../models');
 
 exports.ReplyViewAll = async (req, res) => {
     try {
-        const id = req.body.data;
+        const postId = req.query.postId;
+        // console.log("postId야 어딧니?",postId);
         const reply = await Reply.findAll({
-            where : { postId : id },
+            where : { postId : postId },
             include : {
                 model : User
             }
@@ -24,10 +25,10 @@ exports.ReplyInsert = async (req, res) => {
         await Reply.create({
             content,
             postId,
-            uesrId
+            userId
         })
 
-        req.session.pageId = postId; //  ??? 
+        req.session.pageId = postId; 
 
         res.send()
 
@@ -44,7 +45,7 @@ exports.ReplyUpdate = async (req, res) => {
 
         await Reply.update({content}, {where : {id}});
 
-        req.session.pageId = reply.postId; // ???
+        req.session.pageId = reply.postId; 
 
         res.send()
     } catch (error) {

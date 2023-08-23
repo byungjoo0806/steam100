@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";;
+import axios from "axios";
 
 const backend = process.env.REACT_APP_BACKEND_SERVER;
 
@@ -14,8 +14,10 @@ export const addPost = createAsyncThunk('/border/addPost', async (postContent, t
       
       // 여기에 필요한 다른 사용자 정보 추가
     }, {withCredentials : true});
+
+    const postId = response.data.id;
   
-    return response.data;
+    return { ...response.data, postId };
   });
 
 // 글 수정
@@ -35,7 +37,8 @@ export const editPost = createAsyncThunk('/border/editPost', async(postContent, 
 export const BorderSlice = createSlice({
     name : "Border",
     initialState : {
-        Posts : []
+        Posts : [],
+        currentPostId: null 
     },
     reducers : {
         add : (state, action) => {
@@ -47,12 +50,16 @@ export const BorderSlice = createSlice({
         },
         deleted : (state, action) => {
             state.posts.splice(action.payload, 1);
+        },
+        setCurrentPostId: (state, action) => {
+            state.currentPostId = action.payload;
         }
     }, 
     extraReducers : builder => {
         builder
             .addCase(addPost.fulfilled, (state, action) => {
                 state.Posts.push(action.payload);
+                state.currentPostId = action.payload.postId;
             })
             .addCase(editPost.fulfilled, (state, action) => {
                 console.log(action)
@@ -62,4 +69,4 @@ export const BorderSlice = createSlice({
     }
 })
 
-export const { add, edit, deleted } = BorderSlice.actions
+export const { add, edit, deleted, setCurrentPostId } = BorderSlice.actions

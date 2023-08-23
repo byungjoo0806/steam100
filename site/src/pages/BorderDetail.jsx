@@ -4,23 +4,25 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReplyPost } from '../features/ReplySlice';
+import { setCurrentPostId } from '../features/BorderSlice';
 
 const backend = process.env.REACT_APP_BACKEND_SERVER;
-
+// 읽기
 const fetchPostbyId = async (postId) => {
     const response = await axios.get(`${backend}/post/detail/${postId}`, {
         withCredentials: true,
     });
     return response.data;
 };
-
+// 수정
 const updatePostbyId = async (id, data) => {
     await axios.put(`${backend}/post/update/${id}`, data, {
         withCredentials : true
     });
 };
-
+// 삭제
 const deletePostbyId = async (id) => {
     await axios.delete(`${backend}/post/delete/${id}`, {
         withCredentials : true
@@ -28,11 +30,24 @@ const deletePostbyId = async (id) => {
 };
 
 const BorderDetail = ({ postContent, setPostContent }) => {
-
-const currentUser = useSelector(state => state.login);
-const navi = useNavigate();
-const { id } = useParams();
-
+    
+    const currentUser = useSelector(state => state.login);
+    const navi = useNavigate();
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const [replyContent, setReplyContent] = useState('');
+    const postId = useSelector(state => state.border.currentPostId); 
+    
+    ///////////////// 댓글 //////////////////
+    const fetchReply = async () => {
+        
+        const response = await axios.get(`${backend}/reply?postId=${postId}`, {
+            withCredentials : true
+        });
+        console.log(response);
+        return response.data;
+    }
+    
 const [borderEdit, setBorderEdit] = useState({
     title : postContent.title,
     content : postContent.content
@@ -76,9 +91,21 @@ const deleteHandler = async () => {
 
 {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
-const fetchReply = async () => {
-    
-}
+
+const { data : replys } = useQuery('replys', fetchReply);
+
+useEffect(() => {
+    if (postDetail && postDetail.id) {
+      dispatch(setCurrentPostId(postDetail.id));  // Redux에 postId 저장
+    }
+  }, [postDetail, dispatch]);
+
+useEffect(()=> {
+    console.log(replys)
+},[replys])
+
+
+/////////////////////////////////////////
 
 useEffect(()=> {
     if(postDetail) {
@@ -126,9 +153,23 @@ return (
 {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
         <label>댓글</label>
-        <input type="text">
+        <input value={replyContent}
+        onChange={e => setReplyContent(e.target.value)}>
         </input>
-            <button>작성</button>
+            <button onClick={()=> {
+                dispatch(addReplyPost(replyContent));
+                setReplyContent('');
+                alert('댓글이 작성되었습니다.')
+            }}>작성</button>
+
+        {replys && replys.map((reply, index)=>(
+            <div key={index}>
+                <p>{reply.User.nickname}</p> 
+                <p>{reply.content}</p>
+                <p>{reply.replyLikes}</p>
+            </div>
+        ))}
+        
         </BorderDetailBox>
     </>
   )
