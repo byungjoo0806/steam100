@@ -91,3 +91,33 @@ exports.PostViewNumUp = async(req,res)=>{
         console.log(error);
     }
 }
+
+exports.PostLikeChange = async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const {acc_decoded} = req;
+
+        const postBefore = await Post.findOne({where : {id}});
+
+        let postLike = postBefore.postLikes.split(',');
+        let changeLike = '';
+        let clickUser = acc_decoded.id.toString();
+
+        if(postLike.includes(clickUser)){
+            postLike.splice(postLike.indexOf(clickUser),1);
+        }else{
+            postLike.push(clickUser);
+        }
+
+        changeLike = postLike.join(',');
+
+        await Post.update({postLikes : changeLike},{where : {id}});
+
+        const post = await Post.findOne({where : {id}});
+
+        res.send(post);
+    } catch (error) {
+        console.log('포스트 컨트롤러에서 게시판 글 좋아요 변경하다 에러남');
+        console.log(error);
+    }
+}
