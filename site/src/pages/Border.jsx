@@ -66,7 +66,7 @@ export const Border = () => {
                   <p>{post.User.nickname}</p>
                   <p>{post.createdAt.split('T')[0]}</p>
                   <p>{post.postViews}</p>
-                  <p>{post.postLikes}</p>
+                  <p>{post.postLikes.split(',').length - 1}</p>
                 </div>
             </div>
           ))}

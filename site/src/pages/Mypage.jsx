@@ -176,12 +176,18 @@ const MyPage = () => {
                     <input onChange={ChangeNick} ref={inputNick}></input>
                     <label>나이 : {userInfo.age}</label>
                     <input type='number' onChange={ChangeAge} ref={inputAge}></input>
-                    <div onChange={ChangeGender}>
+                    <div onChange={ChangeGender} className='genderbox'>
                         <p>성별</p>
-                        <label>남성</label>
-                        <input type='radio' name='gender' value={'male'} ref={inputMale}></input>
-                        <label>여성</label>
-                        <input type='radio' name='gender' value={'female'} ref={inputFemale}></input>
+                        <div className='select_area'>
+                            <div>
+                                <label>남성</label>
+                                <input type='radio' name='gender' value={'male'} ref={inputMale}></input>
+                            </div>
+                            <div>
+                                <label>여성</label>
+                                <input type='radio' name='gender' value={'female'} ref={inputFemale}></input>
+                            </div>
+                        </div>
                     </div>
                     <button onClick={ChangeInfo} className='change_info_btn'>개인 정보 변경</button>
                 </div>
