@@ -36,6 +36,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [replyContent, setReplyContent] = useState('');
+    const [likeNum, setLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
     
     ///////////////// 댓글 //////////////////
