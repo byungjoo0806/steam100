@@ -96,12 +96,12 @@ const Testswiper = (props)=> {
                 style={{width : "100%", height : "99%"}} >
                     {props?.imgs?.map((img,index)=>(
                         <SwiperSlide key={index} onClick={getImgSlide} className='image-slides'>
-                            <img src={img.path_thumbnail} alt='img' />
+                            <img src={img.path_thumbnail} alt='image thumbnail' />
                         </SwiperSlide>
                     ))}
                     {props?.vids?.map((vid,index)=>(
                         <SwiperSlide key={index} onClick={getVidSlide} className='video-slides'>
-                            <img src={vid.thumbnail} alt='vid' vidsrc={vid.mp4.max} />
+                            <img src={vid.thumbnail} alt='video thumbnail' vidsrc={vid.mp4.max} />
                         </SwiperSlide>
                     ))}
                 </Swiper>
