@@ -105,6 +105,7 @@ export const SectionFooter = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    position: relative;
 `
 export const FooterLink = styled.div`
     background-color: #9e814c;

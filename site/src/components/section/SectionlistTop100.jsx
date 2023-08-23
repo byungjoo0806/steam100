@@ -6,9 +6,9 @@ import axios from "axios";
 
 import { loadingGIF } from '../../img';
 
-const SectionlistTop100 = () => {
+const SectionlistTop100 = (props) => {
     const backend = process.env.REACT_APP_BACKEND_SERVER;
-
+    console.log(props);
     const [gameList, setGameList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -18,22 +18,8 @@ const SectionlistTop100 = () => {
                 // top100 게임 이름 가져오기
                 const {data} = await axios.get(`${backend}/api/top100`);
                 console.log(data);
-                // const tenGames = data.splice(0,10);
-                // console.log(tenGames);
                 setGameList(data);
                 setIsLoading(false);
-                // top100 게임 이름에 따른 스팀 게임 아이디 찾기
-                // const appIdList = await axios.get("http://localhost:8080/api/appList",{
-                //     withCredentials : true,
-                //     params : {
-                //         game : tenGames,
-                //     }
-                // });
-                // // console.log(appIdList);
-                // const newTenGames = appIdList.data.splice(appIdList.length - 10,10);
-                // console.log(newTenGames);
-                // setGameList(newTenGames);
-                // setIsLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -41,20 +27,38 @@ const SectionlistTop100 = () => {
         fetchTop100();
     },[]);
 
+    useEffect(()=>{
+        if(props.data && props.data.length > 0){
+            setGameList(prevGameList => [...prevGameList, ...props.data]);
+        }
+    },[props.data]);
+
     return (
         <>
             {isLoading ? (<img src={loadingGIF} alt='loading' />) : (
                 <>
-                    {gameList.map((el,index)=>(
-                        <Link to={`/detail/${el.name}`} key={index} state={{gameName : el.name}}>
-                            <SectionMainLi>{index + 1}
-                                <SectionMainSpan>
-                                    <SectionMainImg src={el.capsule_image} alt={`${el.name} image`} />
-                                    <SectionMainText>{el.name}</SectionMainText>
-                                </SectionMainSpan>
-                            </SectionMainLi>
-                        </Link>
-                    ))}
+                    {gameList.map((el,index)=>{
+                        if(el === null){
+                            return (
+                                <SectionMainLi key={index}>{index + 1}
+                                    <SectionMainSpan>
+                                        <SectionMainText>unavailable in your region</SectionMainText>
+                                    </SectionMainSpan>
+                                </SectionMainLi>
+                            )
+                        }else{
+                            return (
+                                <Link to={`/detail/${el.name}`} key={index} state={{gameName : el.name}}>
+                                    <SectionMainLi>{index + 1}
+                                        <SectionMainSpan>
+                                            <SectionMainImg src={el.capsule_image} alt={`${el.name} image`} />
+                                            <SectionMainText>{el.name}</SectionMainText>
+                                        </SectionMainSpan>
+                                    </SectionMainLi>
+                                </Link>
+                            )
+                        }
+                    })}
                 </>
             )}
         </>

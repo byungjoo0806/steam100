@@ -25,13 +25,6 @@ router.get("/appList", async (req,res)=>{
                     appID = el.appid;
                     console.log(appID);
                     idCount.push(appID);
-                    // idNumCheck.push(appID);
-                    // console.log(idNumCheck);
-                    // if(idNumCheck.length >= 2){
-                    //     appIDArr.push(idNumCheck[idNumCheck.length - 1]);
-                    // }else{
-                    //     appIDArr.push(appID);
-                    // }
                 }
             });
             console.log(idCount);
@@ -54,22 +47,8 @@ router.get("/appList", async (req,res)=>{
     }
 });
 
-// 해당 스팀 게임 아이디를 통해 해당 게임 정보 불러오기
-// router.get("/appInfo", async (req,res)=>{
-//     try {
-//         // appID = req.query.id;
-//         for(const appid of appIDArr){
-//             const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
-//             // console.log(data[appid].data);
-//             appInfoArr.push(data[appid].data);
-//         };
-//         res.json(appInfoArr);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
-// 스팀 top 100 리스트
+// 스팀 top 100 리스트에서 첫 10개 가져오기
+let tenLess;
 router.get("/top100", async (req,res)=>{
     try {
         let rankById = [];
@@ -83,6 +62,8 @@ router.get("/top100", async (req,res)=>{
         console.log(rankById);
 
         const topTen = rankById.splice(0,10);
+        // console.log(rankById);
+        tenLess = rankById;
         console.log(topTen);
 
         for (const id of topTen){
@@ -92,23 +73,25 @@ router.get("/top100", async (req,res)=>{
         };
 
         res.json(appInfo);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
-        // const {data : response} = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
-        // const applist = response.applist;
-        // const appObject = applist.apps;
-        // // console.log(appObject);
-        // // console.log(game.name);
-        // let topGameNameArr = [];
-        // rankById.map((rank,rankIdx)=>{
-        //     appObject.map((game,gameIdx)=>{
-        //         if(rank === game.appid){
-        //             topGameNameArr.push(game.name);
-        //         };
-        //     });
-        // });
-        // console.log(topGameNameArr);
-        // // console.log(appID);
-        // res.json(topGameNameArr);
+// 첫 10개 가져온 후, 10개씩 가져오기
+router.get("/tenByTen", async (req,res)=>{
+    try {
+        let newTenInfo = [];
+        // console.log(tenLess);
+        const newTen = tenLess.splice(0,10);
+        console.log(newTen);
+        console.log(tenLess);
+
+        for(const id of newTen){
+            const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${id}`);
+            newTenInfo.push(data[id].data);
+        };
+        res.json(newTenInfo);
     } catch (error) {
         console.log(error);
     }
