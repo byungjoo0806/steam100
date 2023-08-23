@@ -55,13 +55,13 @@ exports.ReplyUpdate = async (req, res) => {
 
 exports.ReplyDelete = async (req, res) => {
     try {
-        const id = req.body.data;
-        
+        const id = req.body.id;
         const reply = await Reply.findOne({where:{id}});
-
+        
         req.session.pageId = reply.postId;
 
         await Reply.destroy({where : {id}});
+        console.log("백 리플 아이디?", id);
 
         res.send()
     } catch (error) {

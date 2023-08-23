@@ -3,6 +3,7 @@ import axios from "axios";
 
 const backend = process.env.REACT_APP_BACKEND_SERVER;
 
+// 댓글 작성 기능 
 export const addReplyPost = createAsyncThunk('border/replyPost', async (replyContent, thunkAPI) => {
     const user = thunkAPI.getState().login;
     const postId = thunkAPI.getState().border.currentPostId;
@@ -12,10 +13,18 @@ export const addReplyPost = createAsyncThunk('border/replyPost', async (replyCon
         userId : user.id,
         postId : postId
     }, {withCredentials : true});
-
     return response.data;
 })
-
+// 댓글 수정 기능
+export const editReply = createAsyncThunk('border/editReply', async (updateData) => {
+    const response = await axios.put(`${backend}/reply/update`, updateData, {withCredentials:true})
+    return response.data;
+});
+// 댓글 삭제 기능
+export const deleteReply = createAsyncThunk('border/deleteReply', async (id) => {
+    const response = await axios.delete(`${backend}/reply/delete`, {data : {id}, withCredentials:true });
+    return response.data;
+})
 export const ReplySlice = createSlice({
     name : "Reply",
     initialState : {
@@ -28,6 +37,15 @@ export const ReplySlice = createSlice({
         builder
         .addCase(addReplyPost.fulfilled, (state, action) => {
             state.Replys.push(action.payload);
+        })
+        .addCase(editReply.fulfilled, (state, action) => {
+            const index = state.Replys.findIndex(reply => reply.id === action.payload.id);
+            if(index !== -1){
+                state.Replys[index] = action.payload;
+            }
+        })
+        .addCase(deleteReply.fulfilled, (state, action) => {
+            state.Replys = state.Replys.filter(reply => reply.id !== action.payload.id);
         })
     }
 })

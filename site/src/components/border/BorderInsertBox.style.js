@@ -54,4 +54,32 @@ export const InsertBox = styled.div`
         display: flex;
         gap: 20px;
     }
-`;
+
+    //////////////////////////////댓글///////////////////////////////
+    .reply_herder {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr 1fr;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 10px;
+        border: 1px solid;
+        font-weight: bold;
+        text-align: center;
+        overflow: auto;
+    }
+
+    .reply_li {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr 1fr;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 10px;
+        border: 1px solid;
+        text-align: center;
+        overflow: auto;
+    }
+
+    
+    `;
+
+
