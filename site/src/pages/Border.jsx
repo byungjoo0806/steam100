@@ -3,9 +3,12 @@ import { BorderMain } from '../components'
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 export const Border = () => {
   const backend = process.env.REACT_APP_BACKEND_SERVER;
+
+  const currentUser = useSelector(state => state.login);
 
   const navi = useNavigate();
 
@@ -67,9 +70,12 @@ export const Border = () => {
                 </div>
             </div>
           ))}
+          {currentUser.id && (
             <Link to={'/border_insert'}>
               <button>작성하기</button>
             </Link>
+          )}
+            
         </div>
       </BorderMain>
     </>

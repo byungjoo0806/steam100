@@ -1,13 +1,15 @@
 const router = require('express').Router();
 
-const { ReplyViewAll, ReplyInsert, ReplyUpdate, ReplyDelete} = require('../controllers/replyController');
+const { ReplyViewAll, ReplyInsert, ReplyUpdate, ReplyDelete } = require('../controllers/replyController');
 
-router.post('/', ReplyViewAll);
+const { LoginCheck } = require('../middleware/loginCheck');
 
-router.post('/insert', ReplyInsert);
+router.get('/', ReplyViewAll);
 
-router.post('/update', ReplyUpdate);
+router.post('/insert', LoginCheck, ReplyInsert);
 
-router.post('/delete', ReplyDelete);
+router.put('/update', LoginCheck, ReplyUpdate);
+
+router.delete('/delete', LoginCheck, ReplyDelete);
 
 module.exports = router;
