@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const backend = process.env.REACT_APP_BACKEND_SERVER;
 const fetchPostbyId = async (postId) => {
