@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import DOMPurify from 'dompurify';
@@ -13,22 +13,18 @@ import './styles.css';
 import { Navigation, Autoplay } from 'swiper/modules';
 
 const Testswiper = (props)=> {
-    // console.log(props.vids);
-
     const swiperRef = useRef(null);
-    const videoRef = useRef(null);
     
     const [bigImgVid, setBigImgVid] = useState(null);
-    const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
     // 스와이퍼 자동 넘기기 관리
     const handleStartSwiperAutoplay = ()=>{
         swiperRef.current.swiper.autoplay.start();
     };
-
     const handleStopSwiperAutoplay = ()=>{
         swiperRef.current.swiper.autoplay.stop();
     };
+    
 
     // 스와이퍼가 넘어갈때 현재 슬라이드를 가져오는 함수
     const handleSlideChange = ()=>{
@@ -49,7 +45,7 @@ const Testswiper = (props)=> {
             // console.log(imgTag);
             const vidLink = imgTag.getAttribute('vidsrc');
             // console.log(vidLink);
-            setBigImgVid(`<video autoplay controls width="100%" height="100%"><source src=${vidLink} type="video/mp4" /></video>`)
+            setBigImgVid(vidLink);
         }
     };
 
@@ -67,14 +63,28 @@ const Testswiper = (props)=> {
         const clickedSlide = event.target;
         // console.log(clickedSlide);
         const vidLink = clickedSlide.getAttribute('vidsrc');
-        setBigImgVid(`<video autoplay controls width="100%" height="100%"><source src=${vidLink} type="video/mp4" /></video>`);
+        // console.log(vidLink);
+        setBigImgVid(vidLink);
     };
 
     // html 형식으로 들어온 값들을 그 형식 그대로 보여주기 위한 함수/컴포넌트
     const HtmlImgVidContent = ()=>{
-        return (
-            <div style={{width : "100%", height : "100%"}} dangerouslySetInnerHTML={{__html : bigImgVid}} className='posterImgVid'></div>
-        )
+        if(bigImgVid?.includes('<img')){
+            return (
+                <div style={{width : "100%", height : "100%"}} 
+                dangerouslySetInnerHTML={{__html : bigImgVid}} className='posterImgVid'
+                ></div>
+            )
+        }else{
+            return (
+                <div style={{width : "100%", height : "100%"}}>
+                    <video autoPlay controls width="100%" height="100%"
+                    onPlay={handleStopSwiperAutoplay} onPause={handleStopSwiperAutoplay} onEnded={handleStartSwiperAutoplay}>
+                        <source src={bigImgVid} type='video/mp4' />
+                    </video>
+                </div>
+            )
+        }
     };
 
     return (
@@ -96,12 +106,12 @@ const Testswiper = (props)=> {
                 style={{width : "100%", height : "99%"}} >
                     {props?.imgs?.map((img,index)=>(
                         <SwiperSlide key={index} onClick={getImgSlide} className='image-slides'>
-                            <img src={img.path_thumbnail} alt='image thumbnail' />
+                            <img src={img.path_thumbnail} alt='img thumbnail' />
                         </SwiperSlide>
                     ))}
                     {props?.vids?.map((vid,index)=>(
                         <SwiperSlide key={index} onClick={getVidSlide} className='video-slides'>
-                            <img src={vid.thumbnail} alt='video thumbnail' vidsrc={vid.mp4.max} />
+                            <img src={vid.thumbnail} alt='vid thumbnail' vidsrc={vid.mp4.max} />
                         </SwiperSlide>
                     ))}
                 </Swiper>

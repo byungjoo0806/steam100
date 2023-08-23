@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Section } from '../components';
 import { Link } from "react-router-dom";
 import axios from "axios";
