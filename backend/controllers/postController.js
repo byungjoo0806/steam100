@@ -19,9 +19,7 @@ exports.PostViewAll = async(req,res)=>{
 exports.PostViewOne = async(req,res)=>{
     try {
         const {id} = req.params;
-        console.log("req",req);
         const post = await Post.findOne({ where : { id } });
-        console.log(post);
         res.send(post);
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 상세글 보여주다 에러남');
@@ -32,7 +30,6 @@ exports.PostViewOne = async(req,res)=>{
 exports.PostInsert = async(req,res)=>{
     try {
         const {title, content, userId} = req.body;
-        console.log(title, content, userId);
 
         await Post.create({
             title,
@@ -40,7 +37,7 @@ exports.PostInsert = async(req,res)=>{
             userId
         })
 
-        res.send('http://localhost:3000');
+        res.send();
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 추가하다가 에러남');
         console.log(error);
@@ -49,11 +46,17 @@ exports.PostInsert = async(req,res)=>{
 
 exports.PostUpdate = async(req,res)=>{
     try {
-        const {id,title,content} = req.body;
+        const {title, content} = req.body;
+        const { id } = req.params;
 
-        await Post.update({title,content},{where : {id}});
+        await Post.update({
+             title, 
+             content
+            },
 
-        res.send('http://localhost:3000');
+            { where : { id } });
+
+        res.send();
     } catch (error) {
         console.log('포스트 컨트롤러에서 게시판 글 수정하다가 에러남');
         console.log(error);
@@ -62,13 +65,29 @@ exports.PostUpdate = async(req,res)=>{
 
 exports.PostDelete = async(req,res)=>{
     try {
-        const {id} = req.body;
+        const { id } = req.params;
+        console.log("있나", id);
 
         await Post.destroy({where : {id}});
 
-        res.send('http://localhost:3000');
+        res.send();
     } catch (error) {
-        console.log('포스트 컨트롤러에서 게시판 글 삭제하다가 에러남');
+        console.log('포스트 컨트롤러에서 게시판 글 삭제하다가 에러남dsaadsdas');
+        console.log(error);
+    }
+}
+
+exports.PostViewNumUp = async(req,res)=>{
+    try {
+        const { id } = req.params;
+
+        const post = await Post.findOne({where : {id}});
+
+        await Post.update({postViews : post.postViews + 1},{where : {id}});
+
+        res.send();
+    } catch (error) {
+        console.log('포스트 컨트롤러에서 게시판 글 조회수 올리다 에러남');
         console.log(error);
     }
 }
