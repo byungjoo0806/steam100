@@ -48,13 +48,14 @@ const BorderDetail = ({ postContent, setPostContent }) => {
         console.log(response);
         return response.data;
     }
-// 게시글 수정
-const [borderEdit, setBorderEdit] = useState({
-    title : postContent.title,
-    content : postContent.content
-});
-const [borderUpdate, setBorderUpdate] = useState(false);
-const focusContent = useRef(null); // 게시글 포커스
+
+    // 게시글 수정
+    const [borderEdit, setBorderEdit] = useState({
+        title : postContent.title,
+        content : postContent.content
+    });
+    const [borderUpdate, setBorderUpdate] = useState(false);
+    const focusContent = useRef(null); // 게시글 포커스
 
     const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
 
@@ -123,76 +124,118 @@ const focusContent = useRef(null); // 게시글 포커스
 
     {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
-// 댓글 수정 버튼 기능
-const [replyEdit, setReplyEdit] = useState(replyContent);
-const [replyUpdate, setReplyUpdate] = useState('');
-const [replyContentUpdate, setReplyContentUpdate] = useState(null);
-const focusReplyContent = useRef(null);
+    // 댓글 수정 버튼 기능
+    const [replyEdit, setReplyEdit] = useState(replyContent);
+    const [replyUpdate, setReplyUpdate] = useState('');
+    const [replyContentUpdate, setReplyContentUpdate] = useState(null);
+    const focusReplyContent = useRef(null);
 
-const { data : replys } = useQuery(['replys', postId], fetchReply);
+    const { data : replys } = useQuery(['replys', postId], fetchReply);
+    
+    useEffect(()=>{
+        if(replys){
+            const replyLike = [];
 
-// 수정 버튼
-const toggleReplyUpdate = useCallback((replyId, content)=>{
-    if (replyUpdate === replyId) {
-        setReplyUpdate(null); // 수정 취소
-        setReplyEdit('');
-    }else {
-        setReplyUpdate(replyId); // 수정 시작
-        setReplyEdit(content);
+            replys.map((el)=>{
+                replyLike.push(el.replyLikes.split(',').length - 1);
+            })
+
+            setReplyLikeNum(replyLike);
+        }
+    },[])
+
+    // 수정 버튼
+    const toggleReplyUpdate = useCallback((replyId, content)=>{
+        if (replyUpdate === replyId) {
+            setReplyUpdate(null); // 수정 취소
+            setReplyEdit('');
+        }else {
+            setReplyUpdate(replyId); // 수정 시작
+            setReplyEdit(content);
+        }
+    },[replyUpdate]);
+
+    // 확인 버튼
+    const confirmHandlerReply = async () => {
+        try {
+            const updateData = { content : replyEdit, id : replyUpdate};
+            await dispatch(editReply(updateData));
+            setReplyUpdate(null);
+            alert('댓글이 수정되었습니다.')
+        } catch (error) {
+            alert('댓글 수정 실패')
+            console.log(error)
+        }
     }
-},[replyUpdate]);
 
-// 확인 버튼
-const confirmHandlerReply = async () => {
-    try {
-        const updateData = { content : replyEdit, id : replyUpdate};
-        await dispatch(editReply(updateData));
-        setReplyUpdate(null);
-        alert('댓글이 수정되었습니다.')
-    } catch (error) {
-        alert('댓글 수정 실패')
-        console.log(error)
+    // 삭제 버튼
+    const deleteHandlerReply = async (replyId) => {
+        try {
+            console.log("삭제 아이디 있니?",replyId);
+            await dispatch(deleteReply(replyId))
+            alert('댓글이 삭제되었습니다.')
+        } catch (error) {
+            alert('댓글 삭제 실패')
+            console.log(error)
+        }
     }
-}
+    
+    // 댓글 좋아요
+    const [replyLikeNum, setReplyLikeNum] = useState([]);
 
-// 삭제 버튼
-const deleteHandlerReply = async (replyId) => {
-    try {
-        console.log("삭제 아이디 있니?",replyId);
-        await dispatch(deleteReply(replyId))
-        alert('댓글이 삭제되었습니다.')
-    } catch (error) {
-        alert('댓글 삭제 실패')
-        console.log(error)
+    const replyLikeUpdate = async(id,index)=>{
+        await axios.get(`${backend}/reply/like/${id}`,{
+            withCredentials : true
+        }).then((e)=>{
+            if(e.data[0] !== '세'){
+                let changeNum = [...replyLikeNum]
+                const changeIndexNum = e.data.replyLikes.split(',').length - 1;
+                changeNum[index] = changeIndexNum;
+                setReplyLikeNum(changeNum);
+            }else{
+                alert(e.data);
+                navi('/login');
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
-}
 
-/////////////////////////////////////////
+    const likeHandlerReply = async(id,index)=>{
+        try {
+            await replyLikeUpdate(id,index);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    /////////////////////////////////////////
 
-// Redux에 postId 저장
-useEffect(() => {
-    if (postDetail && postDetail.id) {
-      dispatch(setCurrentPostId(postDetail.id)); 
-    }
-  }, [postDetail, dispatch]);
+    // Redux에 postId 저장
+    useEffect(() => {
+        if (postDetail && postDetail.id) {
+        dispatch(setCurrentPostId(postDetail.id)); 
+        }
+    }, [postDetail, dispatch]);
 
-//게시판 수정 저장 
-useEffect(()=> {
-    if(postDetail) {
-        setBorderEdit({
-            title : postDetail.title,
-            content : postDetail.content
-        });
-    }
-}, [postDetail]);
-// 댓글 수정 저장 
-useEffect(()=>{
-    if(replys) {
-        setReplyEdit({
-            content : replys.content
-        });
-    }
-},[replys])
+    //게시판 수정 저장 
+    useEffect(()=> {
+        if(postDetail) {
+            setBorderEdit({
+                title : postDetail.title,
+                content : postDetail.content
+            });
+        }
+    }, [postDetail]);
+    
+    // 댓글 수정 저장 
+    useEffect(()=>{
+        if(replys) {
+            setReplyEdit({
+                content : replys.content
+            });
+        }
+        console.log(replys)
+    },[replys])
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error occurred</p>;
@@ -263,21 +306,35 @@ useEffect(()=>{
                     }
                     
                     <p>{reply.createdAt.split('T')[0]}</p>
-                    <p>{reply.replyLikes}</p>
-                    <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
-                        {replyUpdate === reply.id ? '수정 취소' : '수정'}
-                    </button>
+                    <p>{replyLikeNum[index]}</p>
+                    {reply.userId === currentUser.id && (
+                        <>
+                            <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
+                                {replyUpdate === reply.id ? '수정 취소' : '수정'}
+                            </button>
+        
+                            {replyUpdate === reply.id && (
+                                <button onClick={confirmHandlerReply}>
+                                수정 완료
+                                </button>
+                            )}             
+        
+                            <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                        </>
+                    )}
 
-                    {replyUpdate === reply.id && (
-                        <button onClick={confirmHandlerReply}>
-                        수정 완료
-                        </button>
-                    )}             
-
-                    <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                    {reply.userId !== currentUser.id && (
+                        <>
+                            <div></div>
+                            <div></div>
+                        </>
+                    )}
+                    <div></div>
+                    <button onClick={()=>likeHandlerReply(reply.id,index)}>좋아요 : {replyLikeNum[index]}</button>
                 </div>
 
             ))}
+            
         </div>
         
         </BorderDetailBox>
