@@ -126,7 +126,6 @@ const confirmHandlerReply = async () => {
 // 삭제 버튼
 const deleteHandlerReply = async (replyId) => {
     try {
-        console.log("삭제 아이디 있니?",replyId);
         await dispatch(deleteReply(replyId))
         alert('댓글이 삭제되었습니다.')
     } catch (error) {
@@ -216,7 +215,7 @@ return (
               </div>
 
             {replys && replys.map((reply, index)=>(
-
+            
                 <div key={index} className='reply_li'>
                     <p>{reply.User.nickname}</p> 
                     {replyUpdate === reply.id ? 
@@ -230,19 +229,30 @@ return (
                     
                     <p>{reply.createdAt.split('T')[0]}</p>
                     <p>{reply.replyLikes}</p>
-                    <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
-                        {replyUpdate === reply.id ? '수정 취소' : '수정'}
-                    </button>
 
-                    {replyUpdate === reply.id && (
-                        <button onClick={confirmHandlerReply}>
-                        수정 완료
-                        </button>
-                    )}             
+                    {/* 댓글 수정 로그인 식별 */}
+                    {reply.User.id === currentUser.id && (
+                        <>
+                            <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
+                                {replyUpdate === reply.id ? '수정 취소' : '수정'}
+                            </button>
 
-                    <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                            {replyUpdate === reply.id && (
+                                <button onClick={confirmHandlerReply}>
+                                수정 완료
+                                </button>
+                            )}             
+
+                            <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                        </>
+                    )}
+                    <button>댓글</button>
+
                 </div>
-
+                
+                // 대댓글
+                
+                
             ))}
         </div>
         
