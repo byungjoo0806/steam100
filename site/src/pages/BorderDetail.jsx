@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReplyPost, deleteReply, editReply } from '../features/ReplySlice';
+import { addRereplypost } from '../features/RereplySlice'
 import { setCurrentPostId } from '../features/BorderSlice';
+import { setCurrentReplyId } from '../features/ReplySlice';
 
 const backend = process.env.REACT_APP_BACKEND_SERVER;
 // 읽기
@@ -36,13 +38,21 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [replyContent, setReplyContent] = useState('');
+    const [rereplyContent, setRereplyContent] = useState('');
     const [likeNum, setLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
+    const replyId = useSelector(state => state.reply.currentReplyId);
     
-    ///////////////// 댓글 //////////////////
+    ///////////////// 댓글 view //////////////////
     const fetchReply = async () => {
-        
         const response = await axios.get(`${backend}/reply?postId=${postId}`, {
+            withCredentials : true
+        });
+        return response.data;
+    }
+    /////////////// 대댓글 view ///////////////////
+    const fetchRereply = async () => {
+        const response = await axios.get(`${backend}/rereply?replyId=${replyId}`, {
             withCredentials : true
         });
         console.log(response);
@@ -126,10 +136,10 @@ const focusContent = useRef(null); // 게시글 포커스
 // 댓글 수정 버튼 기능
 const [replyEdit, setReplyEdit] = useState(replyContent);
 const [replyUpdate, setReplyUpdate] = useState('');
-const [replyContentUpdate, setReplyContentUpdate] = useState(null);
 const focusReplyContent = useRef(null);
 
 const { data : replys } = useQuery(['replys', postId], fetchReply);
+console.log("댓글", replys);
 
 // 수정 버튼
 const toggleReplyUpdate = useCallback((replyId, content)=>{
@@ -165,15 +175,43 @@ const deleteHandlerReply = async (replyId) => {
         console.log(error)
     }
 }
+////////////////////////대댓글/////////////////////
+const [rereplyEdit, setRereplyEdit] = useState(rereplyContent);
+const [rereplyUpdate, setRereplyUpdate] = useState();
+const focusRereplyContent = useRef(null);
+const [activeReplyId, setActiveReplyId] = useState(null);
+
+
+const {data : rereplys } = useQuery(['rereplys', replyId], fetchRereply);
+console.log("대댓글 rereplys",rereplys);
+
+// 댓글 클릭 핸들러
+const handleCommentButtonClick = (replyId) => {
+    if (activeReplyId === replyId) {
+        setActiveReplyId(null); // 이미 활성화된 댓글의 버튼을 다시 클릭하면 숨김
+    } else {
+        setActiveReplyId(replyId); // 해당 댓글의 대댓글 작성 버튼 활성화
+        dispatch(setCurrentReplyId(replyId));
+    }
+};
+
 
 /////////////////////////////////////////
 
-// Redux에 postId 저장
+// Redux에 postId 저장 (댓글 뷰)
 useEffect(() => {
     if (postDetail && postDetail.id) {
       dispatch(setCurrentPostId(postDetail.id)); 
     }
   }, [postDetail, dispatch]);
+
+// Redux에 replyId 저장 (대댓글 뷰)
+useEffect(() => {
+    if(rereplys && rereplys.id){
+        dispatch(setCurrentReplyId(rereplys.id));
+    }
+    console.log(rereplys)
+},[rereplys, dispatch]);
 
 //게시판 수정 저장 
 useEffect(()=> {
@@ -249,7 +287,6 @@ useEffect(()=>{
               </div>
 
             {replys && replys.map((reply, index)=>(
-            
                 <div key={index} className='reply_li'>
                     <p>{reply.User.nickname}</p> 
                     {replyUpdate === reply.id ? 
@@ -263,6 +300,16 @@ useEffect(()=>{
                     
                     <p>{reply.createdAt.split('T')[0]}</p>
                     <p>{reply.replyLikes}</p>
+
+                        {/* 대댓글 렌더링 */}
+                        {reply.Rereplies && reply.Rereplies.map((rereply, rIndex) => (
+                            <div key={rIndex} className='rereply_li'>
+                                <p>{reply.User.nickname}</p> 
+                                <p>{rereply.content}</p>
+                                <p>{rereply.createdAt.split('T')[0]}</p>
+                                <p>{rereply.rereplyLikes}</p>
+                            </div>
+                        ))}
 
                     {/* 댓글 수정 로그인 식별 */}
                     {reply.User.id === currentUser.id && (
@@ -280,13 +327,40 @@ useEffect(()=>{
                             <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
                         </>
                     )}
-                    <button>댓글</button>
+                    {/* 대댓글 */}
+                    
+                    <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글</button>
 
+                    {activeReplyId === reply.id && (
+                        <>
+                            <input 
+                                value={rereplyContent}
+                                onChange={e => setRereplyContent(e.target.value)}
+                                ref={focusRereplyContent}
+                                />
+                            <button onClick={()=> {
+                                dispatch(addRereplypost(rereplyContent));
+                                setRereplyContent('');
+                                alert('대댓글이 작성되었습니다.')
+                            }}>확인</button>
+                        </>
+                    )}
+                    {/* {reply.id && rereplys && rereplys.map((rereply) => (
+                        <React.Fragment key={rereply.id}>
+                            <div className='rereply_li'>
+                                <p>{rereply.User.nickname}</p>
+                                {rereplyUpdate === rereply.id ?
+                                    <input 
+                                        value={rereplyEdit}
+                                        onChange={e=> setRereplyEdit(e.target.value)}
+                                        ref={focusRereplyContent}
+                                    />
+                                    :<p>{rereply.content}</p>
+                                }
+                            </div>
+                        </React.Fragment>
+                    ))} */}
                 </div>
-                
-                // 대댓글
-                
-                
             ))}
         </div>
         

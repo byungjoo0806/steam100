@@ -59,6 +59,7 @@ export const BorderSlice = createSlice({
         builder
             .addCase(addPost.fulfilled, (state, action) => {
                 state.Posts.push(action.payload);
+                console.log("게시판리듀서",action.payload);
                 state.currentPostId = action.payload.postId;
             })
             .addCase(editPost.fulfilled, (state, action) => {

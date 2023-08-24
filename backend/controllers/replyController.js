@@ -1,16 +1,14 @@
-const { Reply, User } = require('../models');
+const { Reply, User, Post, Rereply } = require('../models');
 
 exports.ReplyViewAll = async (req, res) => {
     try {
         const postId = req.query.postId;
-        // console.log("postId야 어딧니?",postId);
         const reply = await Reply.findAll({
             where : { postId : postId },
-            include : {
-                model : User
-            }
+            include : [
+                {model : User},{model : Post} ,{model : Rereply}
+            ]
         })
-
         res.json(reply);
 
     } catch (error) {
@@ -61,7 +59,6 @@ exports.ReplyDelete = async (req, res) => {
         req.session.pageId = reply.postId;
 
         await Reply.destroy({where : {id}});
-        console.log("백 리플 아이디?", id);
 
         res.send()
     } catch (error) {
