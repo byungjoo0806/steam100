@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 // 섹션 전체 컴포넌트 컨테이너
 export const SectionContainer = styled.div`
-    background-color: #faf3e6;;
+    background-color: #faf3e6;
     width: 450px;
     height: 570px;
     text-align: center;

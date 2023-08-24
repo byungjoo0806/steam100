@@ -96,11 +96,15 @@ const SignUp = () => {
                 <input type='number' min={15} step={1} onChange={CreateAge} ref={inputAge}></input>
                 <div onChange={CreateGender} className='gender_box'>
                     <p>성별</p>
-                    <div>
-                        <label htmlFor="male">남성</label>
-                        <input type='radio' id='male' name='gender' value={'male'} defaultChecked ref={inputGender}></input>
-                        <label htmlFor="female">여성</label>
-                        <input type='radio' id='female' name='gender' value={'female'}></input>
+                    <div className='select_area'>
+                        <div>
+                            <label htmlFor="male">남성</label>
+                            <input type='radio' id='male' name='gender' value={'male'} defaultChecked ref={inputGender}></input>
+                        </div>
+                        <div>
+                            <label htmlFor="female">여성</label>
+                            <input type='radio' id='female' name='gender' value={'female'}></input>
+                        </div>
                     </div>
                 </div>
                 <button onClick={CreateUserData} className='signup_btn'>회원 가입</button>

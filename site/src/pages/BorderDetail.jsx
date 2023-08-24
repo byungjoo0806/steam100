@@ -36,6 +36,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [replyContent, setReplyContent] = useState('');
+    const [likeNum, setLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
     
     ///////////////// 댓글 //////////////////
@@ -55,41 +56,72 @@ const [borderEdit, setBorderEdit] = useState({
 const [borderUpdate, setBorderUpdate] = useState(false);
 const focusContent = useRef(null); // 게시글 포커스
 
-const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
+    const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
 
-// 수정 버튼
-const toggleUpdate = useCallback(()=>{
-    setBorderUpdate(prevState => !prevState);
-    if(!borderUpdate) {
-        focusContent.current.focus();
-    }
-},[borderUpdate, focusContent]);
+    useEffect(()=>{
+        if(postDetail){
+            const postLike = postDetail.postLikes.split(',').length - 1;
+            setLikeNum(postLike);
+        }
+    },[])
 
-// 확인 버튼
-const confirmHandler = async () => {
-    try {
-        await updatePostbyId(id, borderEdit);
-        alert('글이 수정 되었습니다.');
-        setBorderUpdate(false);
-        navi('/border');
-    } catch (error) {
-        alert('글 수정에 실패하였습니다.');
-        console.log(error);
-    }
-};
-// 삭제 버튼
-const deleteHandler = async () => {
-    try {
-        await deletePostbyId(id);
-        alert('글이 정상적으로 삭제되었습니다.');
-        navi('/border');
-    } catch (error) {
-        alert('글 삭제를 실패하였습니다.')
-        console.log(error);
-    }
-};
+    // 수정 버튼
+    const toggleUpdate = useCallback(()=>{
+        setBorderUpdate(prevState => !prevState);
+        if(!borderUpdate) {
+            focusContent.current.focus();
+        }
+    },[borderUpdate, focusContent]);
+    
+    // 확인 버튼
+    const confirmHandler = async () => {
+        try {
+            await updatePostbyId(id, borderEdit);
+            alert('글이 수정 되었습니다.');
+            setBorderUpdate(false);
+            navi('/border');
+        } catch (error) {
+            alert('글 수정에 실패하였습니다.');
+            console.log(error);
+        }
+    };
+    // 삭제 버튼
+    const deleteHandler = async () => {
+        try {
+            await deletePostbyId(id);
+            alert('글이 정상적으로 삭제되었습니다.');
+            navi('/border');
+        } catch (error) {
+            alert('글 삭제를 실패하였습니다.')
+            console.log(error);
+        }
+    };
 
-{/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
+    const likePostUpdatebyId = async(id)=>{
+        await axios.get(`${backend}/post/like/${id}`,{
+            withCredentials : true
+        }).then((e)=>{
+            if(e.data[0] !== '세'){
+                const result = e.data.postLikes.split(',').length - 1;
+                setLikeNum(result);
+            }else{
+                alert(e.data);
+                navi('/login');
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+
+    const likeHandler = async()=>{
+        try {
+            await likePostUpdatebyId(id);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
 // 댓글 수정 버튼 기능
 const [replyEdit, setReplyEdit] = useState(replyContent);
@@ -161,39 +193,41 @@ useEffect(()=>{
     }
 },[replys])
 
-if (isLoading) return <p>Loading...</p>;
-if (isError) return <p>Error occurred</p>;
+    if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error occurred</p>;
 
-return (
-    <>
-        <BorderDetailBox>
-            <label>제목</label>
-            <input type='text' value={borderEdit.title} readOnly={!borderUpdate}
-            onChange={e => setBorderEdit(prevState => ({ ...prevState, title : e.target.value}))}></input>
-            <label>내용</label>
-            <input type='text' value ={borderEdit.content} readOnly={!borderUpdate} 
-            onChange={e => setBorderEdit(prevState => ({ ...prevState, content : e.target.value}))}
-            className='insert_content'
-            ref={focusContent}>
-            </input>
-            
-            {/* 수정 버튼 */}
-            {postDetail.userId === currentUser.id && (
-            <div className='border_detail_btns'>
-                <button onClick={toggleUpdate}>
-                    {borderUpdate ? '수정 취소' : '수정'}
-                </button>
-
-                {borderUpdate && (
-                    <button onClick={confirmHandler}>
-                        수정 완료
+    return (
+        <>
+            <BorderDetailBox>
+                <label>제목</label>
+                <input type='text' value={borderEdit.title} readOnly={!borderUpdate}
+                onChange={e => setBorderEdit(prevState => ({ ...prevState, title : e.target.value}))}></input>
+                <label>내용</label>
+                <input type='text' value ={borderEdit.content} readOnly={!borderUpdate} 
+                onChange={e => setBorderEdit(prevState => ({ ...prevState, content : e.target.value}))}
+                className='insert_content'
+                ref={focusContent}>
+                </input>
+                
+                {/* 수정 버튼 */}
+                {postDetail.userId === currentUser.id && (
+                <div className='border_detail_btns'>
+                    <button onClick={toggleUpdate}>
+                        {borderUpdate ? '수정 취소' : '수정'}
                     </button>
+
+                    {borderUpdate && (
+                        <button onClick={confirmHandler}>
+                            수정 완료
+                        </button>
+                    )}
+
+                    <button onClick={deleteHandler}>글 삭제</button>
+                </div>
+
                 )}
 
-                <button onClick={deleteHandler}>글 삭제</button>
-            </div>
-
-            )}
+                <button onClick={likeHandler}>좋아요 : {likeNum}</button>
 
 {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
