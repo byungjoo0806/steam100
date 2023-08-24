@@ -91,7 +91,10 @@ const Testswiper = (props)=> {
     return (
         <>
             <Imgvidviewer className='gameImgVid'>
-                <HtmlImgVidContent />
+                {bigImgVid ? <HtmlImgVidContent /> : 
+                <div style={{width : "100%", height : "100%"}} className='posterImgVid'>
+                    <img src={props.imgs[0].path_thumbnail} alt='Initial Image' />    
+                </div>}
             </Imgvidviewer>
             <Swiperbox className='gameImgVidSwiper'>
                 <Swiper 
