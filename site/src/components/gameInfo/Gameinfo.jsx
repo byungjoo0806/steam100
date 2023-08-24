@@ -6,6 +6,7 @@ import DOMPurify from 'dompurify';
 
 import Mediaswiper from "../swiper/Mediaswiper";
 import { loadingGIF } from '../../img';
+import { Aboutthegame, Aboutthegametext, Companybox, Detailtitle, Developers, Developersbox, Gamedetailbox, Gameinfopage, Gameintro, Gameintrobox, Gametitle, Gametitlebox, Introimgbox, Introtext, Introtextbox, Mainbox, Maturecontent, Maturecontenttext, Publisher, Publisherbox, Releasedate, Releasedatebox, Specrequirements } from './Gameinfo.styled';
 
 const Gameinfo = () => {
     const location = useLocation();
@@ -44,13 +45,17 @@ const Gameinfo = () => {
 
     console.log(gameInfo);
 
+    // 게임 출시 날짜
+    const gameReleaseDate = gameInfo?.release_date.date;
+
+    // 게임 개발 회사
+    const gameDevelopers = gameInfo?.developers.toString().replace(",",", ");
+
+    // 게임 배급 회사
+    const gamePublisher = gameInfo?.publishers.toString().replace(",",", ");
+
     // 게임 내용
     const aboutTheGame = gameInfo?.about_the_game;
-
-    // 운영체제에 따른 최소 사양
-    const windowsRequirements = gameInfo?.pc_requirements?.minimum;
-    const macRequirements = gameInfo?.mac_requirements?.minimum;
-    const linuxRequirements = gameInfo?.linux_requirements?.minimum
 
 
     // html 형식으로 들어온 값들을 그 형식 그대로 보여주기 위한 함수/컴포넌트
@@ -62,6 +67,18 @@ const Gameinfo = () => {
         )
     };
 
+    // -------------------------- pc 최소 권장 사양 ------------------------------
+
+    // 운영체제에 따른 최소 사양
+    const windowsMinRequirements = gameInfo?.pc_requirements?.minimum;
+    const macMinRequirements = gameInfo?.mac_requirements?.minimum;
+    const linuxMinRequirements = gameInfo?.linux_requirements?.minimum;
+
+    // 운영체제에 따른 권장 사양
+    const windowsRecRequirements = gameInfo?.pc_requirements?.recommended;
+    const macRecRequirements = gameInfo?.mac_requirements?.recommended;
+    const linuxRecRequirements = gameInfo?.linux_requirements?.recommended;
+
 
     // 최소 사양 보여주는 부분을 운영체제에 따른 탭으로 구분하기
     const Tabmenu = () => {
@@ -71,92 +88,111 @@ const Gameinfo = () => {
             setActiveTab(tabIndex);
         };
     
-        let content;
+        let minimum;
+        let recommended;
 
         switch (activeTab) {
             case 1:
-                content = <HtmlContent htmlcontent={windowsRequirements} />
+                minimum = windowsMinRequirements ? <HtmlContent htmlcontent={windowsMinRequirements} /> : null;
+                recommended = windowsRecRequirements ? <HtmlContent htmlcontent={windowsRecRequirements} /> : null;
                 break;
             case 2:
-                content = <HtmlContent htmlcontent={macRequirements} />
+                minimum = macMinRequirements ? <HtmlContent htmlcontent={macMinRequirements} /> : null;
+                recommended = macRecRequirements ? <HtmlContent htmlcontent={macRecRequirements} /> : null;
                 break;
             case 3:
-                content = <HtmlContent htmlcontent={linuxRequirements} />
+                minimum = linuxMinRequirements ? <HtmlContent htmlcontent={linuxMinRequirements} /> : null;
+                recommended = linuxRecRequirements ? <HtmlContent htmlcontent={linuxRecRequirements} /> : null;
                 break;
             default:
-                content = <div>No content available</div>
+                minimum = <div>No content available</div>
         }
     
         return (
             <div>
                 <div>
-                    <button onClick={()=>handleTabClick(1)}>Windows</button>
-                    <button onClick={()=>handleTabClick(2)}>Mac</button>
-                    <button onClick={()=>handleTabClick(3)}>Linux</button>
+                    {windowsMinRequirements && <button onClick={()=>handleTabClick(1)}>Windows</button>}
+                    {macMinRequirements && <button onClick={()=>handleTabClick(2)}>Mac</button>}
+                    {linuxMinRequirements && <button onClick={()=>handleTabClick(3)}>Linux</button>}
                 </div>
-                <div>
-                    {content}
+                <div style={{display : "flex", fontSize : "15px"}}>
+                    <div className='minRequirements' style={{marginRight : "10px"}}>
+                        {minimum}
+                    </div>
+                    <div className='recRequirements'>
+                        {recommended}
+                    </div>
                 </div>
             </div>
         )
     };
 
     return (
-        <div style={{display : "flex", justifyContent : "center"}}>
+        <Gameinfopage className='gameInfoPage'>
             {gameInfo ? (
-                <div style={{width : "100%", height : "100%", display : "flex", flexWrap : "wrap", marginTop : "10px"}} className='Main'>
-                    <div style={{width : "1000px", height : "500px", border : "1px solid", display : "flex", flexWrap : "wrap", position : "relative"}} className='gameIntroBox'>
-                        <div className='gameTitle' style={{width : "500px", height : "10%", borderRight : "1px solid", display : "flex", justifyContent : "flex-start", alignItems : "end"}}>
-                            <p style={{marginLeft : "5px", fontSize : "25px"}}>{gameInfo.name}</p>
-                        </div>
+                <Mainbox className='mainInfoBox'>
+                    <Gameintrobox className='gameIntroBox'>
+                        <Gametitlebox className='gameTitleBox'>
+                            <Gametitle className='gameTitle'>
+                                {gameInfo.name}
+                            </Gametitle>
+                        </Gametitlebox>
                         <Mediaswiper imgs={gameInfo.screenshots} vids={gameInfo.movies} />
-                        <div className='gameIntro' style={{width : "310px", height : "90%", borderTop : "1px solid", position : "absolute", right : "0", bottom : "0", boxSizing : "border-box"}}>
-                            <div className='gameIntroImg' style={{width : "100%", height : "35%", borderBottom : "1px solid"}}>
+                        <Gameintro className='gameIntroInfo'>
+                            <Introimgbox className='introImgBox'>
                                 <img style={{width : "100%", height : "100%"}} src={`${gameInfo.capsule_image}`} alt='CS GO'></img>
-                            </div>
-                            <div className='gameIntroText' style={{width : "100%", height : "35%", borderBottom : "1px solid", overflow : "hidden", fontSize : "15px", textAlign : "start"}}>
-                                <p style={{marginLeft : "5px"}}>{gameInfo.short_description}</p>
-                            </div>
-                            <div className='gameCompany' style={{width : "100%", height : "30%", display : "flex", flexWrap : "wrap", alignContent : "center"}}>
-                                <div className='gameReleaseDate' style={{width : "100%", height : "20%"}}>
-                                    <div style={{display : "flex", justifyContent : "flex-start", alignItems : "center", marginLeft : "5px"}}>
-                                        Release Date: {gameInfo.release_date.date}
-                                    </div>
-                                </div>
-                                <div className='gameDeveloper' style={{width : "100%", height : "20%"}}>
-                                    <div style={{display : "flex", justifyContent : "flex-start", alignItems : "center", marginLeft : "5px"}}>
-                                        Developers: {gameInfo.developers.toString()}
-                                    </div>
-                                </div>
-                                <div className='gamePublisher' style={{width : "100%", height : "20%"}}>
-                                    <div style={{display : "flex", justifyContent : "flex-start", alignItems : "center", marginLeft : "5px"}}>
-                                        Publishers: {gameInfo.publishers.toString()}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div style={{width : "1000px", height : "auto", border : "1px solid"}} className='gameDetailBox'>
-                        <div style={{width : "100%", height : "auto", borderBottom : "1px solid", display : "flex", flexWrap : "wrap", textAlign : "left"}}>
-                            <div style={{marginLeft : "5px"}}>
-                                about this game : <br/>
-                            </div>
-                            <HtmlContent htmlcontent={aboutTheGame} />
-                        </div>
-                        <div className='gameMatureContent' style={{width : "100%", height : "auto", borderBottom : "1px solid", textAlign : "left"}}>
-                            <div style={{marginLeft : "5px"}}>
-                                mature content description : <br/>
+                            </Introimgbox>
+                            <Introtextbox className='introTextBox'>
+                                <Introtext className='introText'>
+                                    {gameInfo.short_description}
+                                </Introtext>
+                            </Introtextbox>
+                            <Companybox className='companyBox'>
+                                <Releasedatebox className='releaseDateBox'>
+                                    <Releasedate className='releaseDate'>
+                                        Release Date: {gameReleaseDate}
+                                    </Releasedate>
+                                </Releasedatebox>
+                                <Developersbox className='devlopersBox'>
+                                    <Developers className='developers'>
+                                        Developers: {gameDevelopers}
+                                    </Developers>
+                                </Developersbox>
+                                <Publisherbox className='publisherBox'>
+                                    <Publisher className='publisher'>
+                                        Publisher: {gamePublisher}
+                                    </Publisher>
+                                </Publisherbox>
+                            </Companybox>
+                        </Gameintro>
+                    </Gameintrobox>
+                    <Gamedetailbox className='gameDetailBox'>
+                        <Aboutthegame className='aboutTheGame'>
+                            <Aboutthegametext className='aboutTheGameText'>
+                                <Detailtitle>
+                                    about this game : 
+                                </Detailtitle>
+                                <HtmlContent htmlcontent={aboutTheGame} />
+                            </Aboutthegametext>
+                        </Aboutthegame>
+                        <Maturecontent className='matureContent'>
+                            <Detailtitle>
+                                mature content description : 
+                            </Detailtitle>
+                            <Maturecontenttext className='matureContentText'>
                                 {gameInfo.content_descriptors.notes}
-                            </div>
-                        </div>
-                        <div className='gameSystemRequirements' style={{width : "100%", height : "auto", textAlign : "left"}}>
+                            </Maturecontenttext>
+                        </Maturecontent>
+                        <Specrequirements className='specRequirements'>
+                            <Detailtitle>
+                                System Requirements
+                            </Detailtitle>
                             <Tabmenu />
-                        </div>
-                    </div>
-                </div>
+                        </Specrequirements>
+                    </Gamedetailbox>
+                </Mainbox>
             ) : (<img src={loadingGIF} alt='loading' />) }
-        </div>
+        </Gameinfopage>
     )
 }
 

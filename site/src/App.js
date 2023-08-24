@@ -94,8 +94,6 @@ function App() {
         <Route path='/detail/:id' element={<Detail />} />
         <Route path='/swipertest' element={<Swipertest />}/>  
 
-        
-
       </Routes>
     <Footer />
     </div>

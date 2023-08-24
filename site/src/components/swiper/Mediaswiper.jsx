@@ -11,6 +11,7 @@ import './styles.css';
 
 // import required modules
 import { Navigation, Autoplay } from 'swiper/modules';
+import { Imgvidviewer, Swiperbox } from './Mediaswiper.styled';
 
 const Testswiper = (props)=> {
     const swiperRef = useRef(null);
@@ -89,10 +90,10 @@ const Testswiper = (props)=> {
 
     return (
         <>
-            <div className='gameImgVid' style={{width : "690px", height : "70%", borderTop : "1px solid", borderRight : "1px solid", borderBottom : "1px solid"}}>
+            <Imgvidviewer className='gameImgVid'>
                 <HtmlImgVidContent />
-            </div>
-            <div className='gameImgVidSwiper' style={{width : "690px", height : "20%", borderRight : "1px solid"}}>
+            </Imgvidviewer>
+            <Swiperbox className='gameImgVidSwiper'>
                 <Swiper 
                 ref={swiperRef} 
                 navigation={true} 
@@ -115,7 +116,7 @@ const Testswiper = (props)=> {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>    
+            </Swiperbox> 
         </>
   );
 };
