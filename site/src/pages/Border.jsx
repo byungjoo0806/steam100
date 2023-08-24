@@ -70,7 +70,7 @@ export const Border = () => {
                 </div>
             </div>
           ))}
-          {currentUser.id && (
+          {currentUser.isLogin === true && (
             <Link to={'/border_insert'}>
               <button>작성하기</button>
             </Link>

@@ -73,16 +73,6 @@ const Header = ( { Link } ) => {
         alert(e.data);
         navi('/');
         dispatch(isLoginFalse());
-        const updatedUser = {
-          ...user,
-          access: 0
-        };
-        const updatedNickname = {
-          ...user.nickname,
-          nickname:undefined
-        }
-        dispatch(setUserInfo(updatedUser));
-        dispatch(setUserInfo(updatedNickname));
       }
 
     }).catch((err)=>{
