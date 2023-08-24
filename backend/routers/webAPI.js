@@ -109,10 +109,13 @@ router.get("/detailApp", async (req,res)=>{
         const wholeList = data.applist.apps;
 
         let appID = "";
+        let appList = [];
         wholeList.map((el,index)=>{
             if(el.name === game){
                 console.log(el);
-                appID = el.appid;
+                appList.push(el);
+                console.log(appList);
+                appID = appList[appList.length - 1].appid;
             }
         });
 

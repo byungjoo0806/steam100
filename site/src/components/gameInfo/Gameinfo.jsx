@@ -116,10 +116,10 @@ const Gameinfo = () => {
                     {linuxMinRequirements && <button onClick={()=>handleTabClick(3)}>Linux</button>}
                 </div>
                 <div style={{display : "flex", fontSize : "15px"}}>
-                    <div className='minRequirements' style={{marginRight : "10px"}}>
+                    <div className='minRequirements' style={{marginRight : "10px", width : "50%"}}>
                         {minimum}
                     </div>
-                    <div className='recRequirements'>
+                    <div className='recRequirements' style={{width : "50%"}}>
                         {recommended}
                     </div>
                 </div>
