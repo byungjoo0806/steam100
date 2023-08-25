@@ -3,8 +3,6 @@ const { Rereply, User, Reply} = require('../models');
 exports.RereplyView = async (req, res) => {
     try {
         const replyId = req.query.replyId;
-        // console.log(req.query);
-        // console.log("대댓글 id?", replyId);
         const rereply = await Rereply.findAll({
             where : {replyId : replyId},
             include : 
@@ -33,8 +31,6 @@ exports.RereplyInsert = async (req, res) => {
         req.session.pageId = rereply.Reply.replyId;
 
         res.json({ replyId: rereply.replyId });
-        // res.send();
-        // res.json(rereply);
 
     } catch (error) {
         console.log(error);

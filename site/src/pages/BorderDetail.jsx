@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReplyPost, deleteReply, editReply } from '../features/ReplySlice';
-import { addRereplypost } from '../features/RereplySlice'
+import { addRereplypost, deleteRereply, editRereply } from '../features/RereplySlice';
 import { setCurrentPostId } from '../features/BorderSlice';
 import { setCurrentReplyId } from '../features/ReplySlice';
 
@@ -185,7 +185,7 @@ const [activeReplyId, setActiveReplyId] = useState(null);
 const {data : rereplys } = useQuery(['rereplys', replyId], fetchRereply);
 console.log("대댓글 rereplys",rereplys);
 
-// 댓글 클릭 핸들러
+// 대댓글 클릭 핸들러
 const handleCommentButtonClick = (replyId) => {
     if (activeReplyId === replyId) {
         setActiveReplyId(null); // 이미 활성화된 댓글의 버튼을 다시 클릭하면 숨김
@@ -194,6 +194,40 @@ const handleCommentButtonClick = (replyId) => {
         dispatch(setCurrentReplyId(replyId));
     }
 };
+// 대댓글 수정 버튼
+const toggleRereplyUpdate = useCallback((rereplyId, content) => {
+    if(rereplyUpdate === rereplyId) {
+        setRereplyUpdate(null);
+        setRereplyEdit('');
+    }else {
+        setRereplyUpdate(rereplyId);
+        setRereplyEdit(content);
+    }
+}, [rereplyUpdate]);
+
+// 대댓글 확인 버튼
+const confirmhandlerRereply = async () => {
+    try {
+        const updateData = { content : rereplyEdit, id : rereplyUpdate};
+        await dispatch(editRereply(updateData));
+        setRereplyUpdate(null);
+        alert('대댓글이 수정 되었습니다.')
+    } catch (error) {
+        alert('대댓글 수정 실패')
+        console.log(error)
+    }
+}
+
+// 대댓글 삭제 버튼
+const deleteHandlerRereply = async (rereplyId) => {
+    try {
+        await dispatch(deleteRereply(rereplyId))
+        alert('댓글이 삭제되었습니다.')
+    } catch (error) {
+        alert('댓글 삭제 실패')
+        console.log(error)
+    }
+}
 
 
 /////////////////////////////////////////
@@ -230,6 +264,15 @@ useEffect(()=>{
         });
     }
 },[replys])
+
+// 대댓글 수정 저장 
+useEffect(()=>{
+    if(rereplys) {
+        setRereplyEdit({
+            content : rereplys.content
+        });
+    }
+},[rereplys])
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error occurred</p>;
@@ -323,14 +366,6 @@ useEffect(()=>{
 
                         {/* 대댓글 렌더링 */}
                         <div className='rereply_conteiner' >
-                        {reply.Rereplies && reply.Rereplies.map((rereply, rIndex) => (
-                            <div key={rIndex} className='rereply_li'>
-                                    <p>{reply.User.nickname}</p> 
-                                    <p>{rereply.content}</p>
-                                    <p>{rereply.createdAt.split('T')[0]}</p>
-                                    <p>{rereply.rereplyLikes}</p>
-                                </div>
-                        ))}
                             <div className='rereply_btns_container'>
                             {activeReplyId === reply.id && (
                                 <div className='rereply_input'>
@@ -343,10 +378,44 @@ useEffect(()=>{
                                         dispatch(addRereplypost(rereplyContent));
                                         setRereplyContent('');
                                         alert('대댓글이 작성되었습니다.')
-                                    }}>확인</button>
+                                    }}>작성</button>
                                 </div>
                             )}
                             </div>
+                            {reply.Rereplies && reply.Rereplies.map((rereply, rIndex) => (
+                                <div key={rIndex} className='rereply_li'>
+                                        <p>{reply.User.nickname}</p> 
+                                        {rereplyUpdate === rereply.id ? 
+                                            <input 
+                                                value={rereplyEdit}
+                                                onChange={e=>setRereplyEdit(e.target.value)}
+                                                ref={focusRereplyContent}
+                                            />
+                                            : <p>{rereply.content}</p>
+                                        }
+                                        <p>{rereply.createdAt.split('T')[0]}</p>
+                                        <p>{rereply.rereplyLikes}</p>
+                                        <div>
+                                            {/* 대댓글 수정 로그인 식별 */}
+                                             {rereply.userId === currentUser.id && (
+                                                <>
+                                                    <button onClick={()=>toggleRereplyUpdate(rereply.id, rereply.content)}>
+                                                        {rereplyUpdate === rereply.id ? "수정 취소" : '수정'}
+                                                    </button>
+
+                                                    {rereplyUpdate === rereply.id && (
+                                                        <button onClick={confirmhandlerRereply}>
+                                                            수정 완료
+                                                        </button>
+                                                    )}
+
+                                                    <button onClick={()=>deleteHandlerRereply(rereply.id)}>댓글 삭제</button>
+                                                </>
+                                             )}         
+                                        </div>
+                                </div>
+                                
+                            ))}
                         </div>
                 </div>
             ))}

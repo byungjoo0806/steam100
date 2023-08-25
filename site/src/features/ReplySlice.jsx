@@ -39,8 +39,7 @@ export const ReplySlice = createSlice({
     extraReducers : builder => {
         builder
         .addCase(addReplyPost.fulfilled, (state, action) => {
-            state.Replys.push(action.payload);
-            console.log("댓글리듀서액션", action.payload.replyId); 
+            state.Replys.push(action.payload); 
             state.currentReplyId = action.payload.replyId;
         })
         .addCase(editReply.fulfilled, (state, action) => {
