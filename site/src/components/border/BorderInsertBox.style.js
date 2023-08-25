@@ -56,7 +56,29 @@ export const InsertBox = styled.div`
     }
 
     //////////////////////////////댓글///////////////////////////////
-    .reply_herder {
+    .reply_insert_container {
+        display: flex;
+        align-items: baseline;
+        text-align: center;
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin: 15px;
+        & label {
+            width: 10%;
+        }
+        & input {
+            width: 70%;
+        }
+        & button {
+            width: 10%;
+        }
+    }
+    .reply_container {
+        width: 100%;
+        height: auto;
+    }
+    .reply_header {
         display: grid;
         grid-template-columns: 1fr 3fr 1fr 1fr;
         flex-direction: row;
@@ -77,9 +99,49 @@ export const InsertBox = styled.div`
         border: 1px solid;
         text-align: center;
         overflow: auto;
+        position: relative;
+        width: 100%;
+        
+        & p {
+            
+        }
+
+        & input {
+
+        }
+        & button {
+
+        }
+    }
+    /////////////////// 대댓글 /////////////////
+    .rereply_li {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr 1fr;
+        margin : 20px;
+        overflow: auto;
     }
 
-    
-    `;
+    .rereply_btns {
+        display: flex;
+        width: 100%;
+
+        & button {
+            width: 100px;
+            height: 40px;
+            margin: 10px;
+        }
+        
+    }
+    .rerely_btn{
+        display: flex;
+        width: 100%;
+
+
+    }
+
+    .rereply_btns_container{
+        
+    }
+`;
 
 

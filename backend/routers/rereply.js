@@ -1,12 +1,15 @@
 const router = require('express').Router();
+
 const { RereplyView, RereplyInsert, RereplyUpdate, RereplyDelete} = require('../controllers/rereplyController');
 
-router.post('/', RereplyView);
+const { LoginCheck } = require('../middleware/loginCheck');
 
-router.post('/insert', RereplyInsert);
+router.get('/', RereplyView);
 
-router.post('/update', RereplyUpdate);
+router.post('/insert', LoginCheck, RereplyInsert);
 
-router.post('/delete', RereplyDelete);
+router.put('/update', LoginCheck, RereplyUpdate);
+
+router.delete('/delete', LoginCheck, RereplyDelete);
 
 module.exports = router;

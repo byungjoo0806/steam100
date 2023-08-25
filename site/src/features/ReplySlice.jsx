@@ -28,15 +28,19 @@ export const deleteReply = createAsyncThunk('border/deleteReply', async (id) => 
 export const ReplySlice = createSlice({
     name : "Reply",
     initialState : {
-        Replys : []
+        Replys : [],
+        currentReplyId : null
     },
     reducers : {
-
+        setCurrentReplyId: (state, action) => {
+            state.currentReplyId = action.payload;
+        }
     },
     extraReducers : builder => {
         builder
         .addCase(addReplyPost.fulfilled, (state, action) => {
-            state.Replys.push(action.payload);
+            state.Replys.push(action.payload); 
+            state.currentReplyId = action.payload.replyId;
         })
         .addCase(editReply.fulfilled, (state, action) => {
             const index = state.Replys.findIndex(reply => reply.id === action.payload.id);
@@ -49,3 +53,5 @@ export const ReplySlice = createSlice({
         })
     }
 })
+
+export const { setCurrentReplyId } = ReplySlice.actions

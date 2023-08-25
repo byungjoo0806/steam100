@@ -30,7 +30,7 @@ export const editPost = createAsyncThunk('/border/editPost', async(postContent, 
         userId : user.id
         
     },{withCredentials : true});
-    console.log("글 수정",response)
+    
     return response.data;
 })
 
@@ -59,10 +59,11 @@ export const BorderSlice = createSlice({
         builder
             .addCase(addPost.fulfilled, (state, action) => {
                 state.Posts.push(action.payload);
+                
                 state.currentPostId = action.payload.postId;
             })
             .addCase(editPost.fulfilled, (state, action) => {
-                console.log(action)
+                
                 const { userId, title, content, index } = action.payload;
                 state.Posts[index] = userId && title && content;
             })
