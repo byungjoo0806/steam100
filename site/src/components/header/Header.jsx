@@ -14,10 +14,6 @@ const Header = ( { Link } ) => {
   // console.log(user)
 
   const navi = useNavigate();
-
-  useEffect(()=>{
-    console.log(user);
-  },[user])
   
   // 새로고침시에도 로그인 유지
   useEffect(() => {    

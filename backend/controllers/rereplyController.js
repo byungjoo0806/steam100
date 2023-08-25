@@ -27,7 +27,7 @@ exports.RereplyInsert = async (req, res) => {
         })
 
         const rereply = await Rereply.findOne({where : {replyId}, include : {model : Reply}});
-        console.log("rereply",rereply)
+        
         req.session.pageId = rereply.Reply.replyId;
 
         res.json({ replyId: rereply.replyId });
@@ -62,7 +62,7 @@ exports.RereplyDelete = async (req, res) => {
         req.session.pageId = rereply.Reply.postId;
 
         await Rereply.destroy({where : {id}});
-        console.log("대댓글 삭제 아이디?", id);
+        
 
         res.send()
     } catch (error) {

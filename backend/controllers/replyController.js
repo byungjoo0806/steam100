@@ -65,3 +65,33 @@ exports.ReplyDelete = async (req, res) => {
         console.log(error)
     }
 }
+
+exports.ReplyLikeChange = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const {acc_decoded} = req;
+
+        const replyBefore = await Reply.findOne({where: {id}});
+
+        let replyLike = replyBefore.replyLikes.split(',');
+        let changeLike = '';
+        let clickUser = acc_decoded.id.toString();
+        
+        if(replyLike.includes(clickUser)){
+            replyLike.splice(replyLike.indexOf(clickUser), 1);
+        }else {
+            replyLike.push(clickUser);
+        }
+
+        changeLike = replyLike.join(',');
+
+        await Reply.update({replyLikes : changeLike}, {where : {id}});
+
+        const reply = await Reply.findOne({where : {id}});
+
+        res.send(reply);
+    } catch (error) {
+        console.log('리플 컨트롤러에서 댓글 좋아요 변경하다 에러남');
+        console.log(error);
+    }
+}

@@ -40,6 +40,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const [replyContent, setReplyContent] = useState('');
     const [rereplyContent, setRereplyContent] = useState('');
     const [likeNum, setLikeNum] = useState(0);
+    const [replyLikeNum, setReplyLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
     const replyId = useSelector(state => state.reply.currentReplyId);
     
@@ -55,7 +56,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
         const response = await axios.get(`${backend}/rereply?replyId=${replyId}`, {
             withCredentials : true
         });
-        console.log(response);
+
         return response.data;
     }
 // 게시글 수정
@@ -106,7 +107,7 @@ const focusContent = useRef(null); // 게시글 포커스
             console.log(error);
         }
     };
-
+    // 좋아요
     const likePostUpdatebyId = async(id)=>{
         await axios.get(`${backend}/post/like/${id}`,{
             withCredentials : true
@@ -122,7 +123,7 @@ const focusContent = useRef(null); // 게시글 포커스
             console.log(err);
         })
     }
-
+    // 좋아요 버튼
     const likeHandler = async()=>{
         try {
             await likePostUpdatebyId(id);
@@ -139,7 +140,7 @@ const [replyUpdate, setReplyUpdate] = useState('');
 const focusReplyContent = useRef(null);
 
 const { data : replys } = useQuery(['replys', postId], fetchReply);
-console.log("댓글", replys);
+
 
 // 수정 버튼
 const toggleReplyUpdate = useCallback((replyId, content)=>{
@@ -175,6 +176,31 @@ const deleteHandlerReply = async (replyId) => {
         console.log(error)
     }
 }
+
+// 댓글 좋아요
+const likeReplyPostUpdateId = async(id) => {
+    await axios.get(`${backend}/reply/replylike/${id}`, {
+        withCredentials : true
+    }).then((e)=> {
+        if(e.data[0] !== '세') {
+            const result = e.data.replyLikes.split(',').length -1;
+            setReplyLikeNum(result);
+        }else {
+            alert(e.data);
+            navi('/login');
+        }
+    }).catch((err)=>{
+        console.log(err);
+    })
+}
+// 댓글 좋아요 버튼
+const replyLikeHandler = async (id) => {
+    try {
+        await likeReplyPostUpdateId(id);
+    } catch (error) {
+        console.log(error)
+    }
+}
 ////////////////////////대댓글/////////////////////
 const [rereplyEdit, setRereplyEdit] = useState(rereplyContent);
 const [rereplyUpdate, setRereplyUpdate] = useState();
@@ -183,7 +209,7 @@ const [activeReplyId, setActiveReplyId] = useState(null);
 
 
 const {data : rereplys } = useQuery(['rereplys', replyId], fetchRereply);
-console.log("대댓글 rereplys",rereplys);
+
 
 // 대댓글 클릭 핸들러
 const handleCommentButtonClick = (replyId) => {
@@ -274,6 +300,12 @@ useEffect(()=>{
     }
 },[rereplys])
 
+// useEffect(()=>{
+//     if(replyLikeNum){
+//         setReplyLikeNum
+//     }
+// },[replyLikeNum])
+
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error occurred</p>;
 
@@ -291,8 +323,10 @@ useEffect(()=>{
                 </input>
                 
                 {/* 수정 버튼 */}
+                <button onClick={likeHandler}>추천 : {likeNum}</button>
                 {postDetail.userId === currentUser.id && (
                 <div className='border_detail_btns'>
+                    
                     <button onClick={toggleUpdate}>
                         {borderUpdate ? '수정 취소' : '수정'}
                     </button>
@@ -308,10 +342,10 @@ useEffect(()=>{
 
                 )}
 
-                <button onClick={likeHandler}>좋아요 : {likeNum}</button>
 
 {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
+        <div className='reply_insert_container'>
         <label>댓글</label>
         <input value={replyContent}
         onChange={e => setReplyContent(e.target.value)}>
@@ -321,13 +355,14 @@ useEffect(()=>{
                 setReplyContent('');
                 alert('댓글이 작성되었습니다.')
             }}>작성</button>
+        </div>
         <div className='reply_container'>
-            <div className='reply_herder'>
+            <div className='reply_header'>
                 <p>글쓴이</p>
                 <p>내용</p>
                 <p>등록일</p>
                 <p>추천</p>
-              </div>
+            </div>
             {/* 댓글 렌더링 */}
             {replys && replys.map((reply, index)=>(
                 <div key={index} className='reply_li'>
@@ -342,7 +377,8 @@ useEffect(()=>{
                     }
                     
                     <p>{reply.createdAt.split('T')[0]}</p>
-                    <p>{reply.replyLikes}</p>
+                    <button onClick={replyLikeHandler}>추천 : {replyLikeNum}</button>
+                    
                         {/* 댓글 수정 로그인 식별 */}
                         {reply.User.id === currentUser.id && (
                             <>
@@ -360,28 +396,30 @@ useEffect(()=>{
                             </>
                         )}
                                 {/* 대댓글 버튼 */}
-                                <div className='rerelybtn'>
+                                <div className='rerely_btn'>
                                     <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글</button>
+                                    {activeReplyId === reply.id && (
+                                        <div>
+                                            <input 
+                                                value={rereplyContent}
+                                                onChange={e => setRereplyContent(e.target.value)}
+                                                ref={focusRereplyContent}
+                                                />
+                                            <button onClick={()=> {
+                                                dispatch(addRereplypost(rereplyContent));
+                                                setRereplyContent('');
+                                                alert('대댓글이 작성되었습니다.')
+                                            }}>작성</button>
+                                        </div>
+                                        )}
                                 </div>
 
+
                         {/* 대댓글 렌더링 */}
-                        <div className='rereply_conteiner' >
-                            <div className='rereply_btns_container'>
-                            {activeReplyId === reply.id && (
-                                <div className='rereply_input'>
-                                    <input 
-                                        value={rereplyContent}
-                                        onChange={e => setRereplyContent(e.target.value)}
-                                        ref={focusRereplyContent}
-                                        />
-                                    <button onClick={()=> {
-                                        dispatch(addRereplypost(rereplyContent));
-                                        setRereplyContent('');
-                                        alert('대댓글이 작성되었습니다.')
-                                    }}>작성</button>
-                                </div>
-                            )}
-                            </div>
+                        
+                        
+                           
+                        
                             {reply.Rereplies && reply.Rereplies.map((rereply, rIndex) => (
                                 <div key={rIndex} className='rereply_li'>
                                         <p>{reply.User.nickname}</p> 
@@ -398,7 +436,7 @@ useEffect(()=>{
                                         <div>
                                             {/* 대댓글 수정 로그인 식별 */}
                                              {rereply.userId === currentUser.id && (
-                                                <>
+                                                <div className='rereply_btns'>
                                                     <button onClick={()=>toggleRereplyUpdate(rereply.id, rereply.content)}>
                                                         {rereplyUpdate === rereply.id ? "수정 취소" : '수정'}
                                                     </button>
@@ -410,13 +448,13 @@ useEffect(()=>{
                                                     )}
 
                                                     <button onClick={()=>deleteHandlerRereply(rereply.id)}>댓글 삭제</button>
-                                                </>
+                                                </div>
                                              )}         
                                         </div>
                                 </div>
                                 
                             ))}
-                        </div>
+                        
                 </div>
             ))}
         </div>

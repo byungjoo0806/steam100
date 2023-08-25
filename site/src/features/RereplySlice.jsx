@@ -7,7 +7,7 @@ const backend = process.env.REACT_APP_BACKEND_SERVER;
 export const addRereplypost = createAsyncThunk('border/rereplyPost', async (rereplyContent, thunkAPI) => {
     const user = thunkAPI.getState().login;
     const replyId = thunkAPI.getState().reply.currentReplyId;
-    console.log('replyId 전송:', replyId);  
+     
     
     try {
         const response = await axios.post(`${backend}/rereply/insert`, {
@@ -15,7 +15,7 @@ export const addRereplypost = createAsyncThunk('border/rereplyPost', async (rere
         userId : user.id,
         replyId : replyId
     }, {withCredentials : true});
-    console.log(response);
+    
     return response.data;
 
     } catch (error) {
@@ -31,7 +31,7 @@ export const editRereply = createAsyncThunk('border/editRereply', async (updateD
 // 대댓글 삭제 기능
 export const deleteRereply = createAsyncThunk('border/deleteRereply', async (id) => {
     const response = await axios.delete(`${backend}/rereply/delete`, {data : {id}, withCredentials:true});
-    console.log("댓글 삭제",response)
+    
     return response.data;
 })
 
@@ -46,7 +46,7 @@ export const RereplySlice = createSlice({
     extraReducers : builder => {
         builder
         .addCase(addRereplypost.fulfilled, (state, action) => {
-            console.log("대댓글리듀서액션",action);
+            
             state.Rereplys.push(action.payload);
         })
         .addCase(editRereply.fulfilled, (state, action) => {
