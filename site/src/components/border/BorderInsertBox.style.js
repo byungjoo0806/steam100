@@ -56,6 +56,10 @@ export const InsertBox = styled.div`
     }
 
     //////////////////////////////댓글///////////////////////////////
+    .reply_container {
+        width: 100%;
+        height: auto;
+    }
     .reply_herder {
         display: grid;
         grid-template-columns: 1fr 3fr 1fr 1fr;
@@ -77,9 +81,30 @@ export const InsertBox = styled.div`
         border: 1px solid;
         text-align: center;
         overflow: auto;
+        position: relative;
+    }
+    /////////////////// 대댓글 /////////////////
+    .rereply_li {
+        display: flex;
+        background-color: beige;
+        margin : 20px;
+        overflow: auto;
     }
 
-    
-    `;
+    .rereply_conteiner, .rereply_input {
+        position: absolute;
+        top: 60px;
+        width: 100%;
+        
+    }
+
+    .rerelybtn{
+
+    }
+
+    .rereply_btns_container{
+        
+    }
+`;
 
 

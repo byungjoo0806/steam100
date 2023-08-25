@@ -285,7 +285,7 @@ useEffect(()=>{
                 <p>등록일</p>
                 <p>추천</p>
               </div>
-
+            {/* 댓글 렌더링 */}
             {replys && replys.map((reply, index)=>(
                 <div key={index} className='reply_li'>
                     <p>{reply.User.nickname}</p> 
@@ -300,66 +300,54 @@ useEffect(()=>{
                     
                     <p>{reply.createdAt.split('T')[0]}</p>
                     <p>{reply.replyLikes}</p>
+                        {/* 댓글 수정 로그인 식별 */}
+                        {reply.User.id === currentUser.id && (
+                            <>
+                                <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
+                                    {replyUpdate === reply.id ? '수정 취소' : '수정'}
+                                </button>
+    
+                                {replyUpdate === reply.id && (
+                                    <button onClick={confirmHandlerReply}>
+                                    수정 완료
+                                    </button>
+                                )}             
+    
+                                <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                            </>
+                        )}
+                                {/* 대댓글 버튼 */}
+                                <div className='rerelybtn'>
+                                    <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글</button>
+                                </div>
 
                         {/* 대댓글 렌더링 */}
+                        <div className='rereply_conteiner' >
                         {reply.Rereplies && reply.Rereplies.map((rereply, rIndex) => (
                             <div key={rIndex} className='rereply_li'>
-                                <p>{reply.User.nickname}</p> 
-                                <p>{rereply.content}</p>
-                                <p>{rereply.createdAt.split('T')[0]}</p>
-                                <p>{rereply.rereplyLikes}</p>
-                            </div>
+                                    <p>{reply.User.nickname}</p> 
+                                    <p>{rereply.content}</p>
+                                    <p>{rereply.createdAt.split('T')[0]}</p>
+                                    <p>{rereply.rereplyLikes}</p>
+                                </div>
                         ))}
-
-                    {/* 댓글 수정 로그인 식별 */}
-                    {reply.User.id === currentUser.id && (
-                        <>
-                            <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
-                                {replyUpdate === reply.id ? '수정 취소' : '수정'}
-                            </button>
-
-                            {replyUpdate === reply.id && (
-                                <button onClick={confirmHandlerReply}>
-                                수정 완료
-                                </button>
-                            )}             
-
-                            <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
-                        </>
-                    )}
-                    {/* 대댓글 */}
-                    
-                    <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글</button>
-
-                    {activeReplyId === reply.id && (
-                        <>
-                            <input 
-                                value={rereplyContent}
-                                onChange={e => setRereplyContent(e.target.value)}
-                                ref={focusRereplyContent}
-                                />
-                            <button onClick={()=> {
-                                dispatch(addRereplypost(rereplyContent));
-                                setRereplyContent('');
-                                alert('대댓글이 작성되었습니다.')
-                            }}>확인</button>
-                        </>
-                    )}
-                    {/* {reply.id && rereplys && rereplys.map((rereply) => (
-                        <React.Fragment key={rereply.id}>
-                            <div className='rereply_li'>
-                                <p>{rereply.User.nickname}</p>
-                                {rereplyUpdate === rereply.id ?
+                            <div className='rereply_btns_container'>
+                            {activeReplyId === reply.id && (
+                                <div className='rereply_input'>
                                     <input 
-                                        value={rereplyEdit}
-                                        onChange={e=> setRereplyEdit(e.target.value)}
+                                        value={rereplyContent}
+                                        onChange={e => setRereplyContent(e.target.value)}
                                         ref={focusRereplyContent}
-                                    />
-                                    :<p>{rereply.content}</p>
-                                }
+                                        />
+                                    <button onClick={()=> {
+                                        dispatch(addRereplypost(rereplyContent));
+                                        setRereplyContent('');
+                                        alert('대댓글이 작성되었습니다.')
+                                    }}>확인</button>
+                                </div>
+                            )}
                             </div>
-                        </React.Fragment>
-                    ))} */}
+                        </div>
                 </div>
             ))}
         </div>
