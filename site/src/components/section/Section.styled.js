@@ -73,6 +73,18 @@ export const SectionMainLi = styled.li`
     }
 `
 
+export const SectionMainLiNull = styled.li`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 8px; 
+    border-radius: 4px; 
+    transition: background-color 0.3s ease; 
+    margin: 4px 0;
+    opacity: 0.5;
+`
+
 export const SectionMainSpan = styled.span`
     display: flex;
     align-items: center;

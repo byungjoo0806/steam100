@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText, Styledlink } from './Section.styled';
+import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText, Styledlink, SectionMainLiNull } from './Section.styled';
 
 import { Link } from 'react-router-dom';
 import axios from "axios";
@@ -40,11 +40,11 @@ const SectionlistTop100 = (props) => {
                     {gameList.map((el,index)=>{
                         if(el === null){
                             return (
-                                <SectionMainLi key={index}>{index + 1}
+                                <SectionMainLiNull key={index} className='gameListNum'>{index + 1}
                                     <SectionMainSpan>
                                         <SectionMainText>unavailable in your region</SectionMainText>
                                     </SectionMainSpan>
-                                </SectionMainLi>
+                                </SectionMainLiNull>
                             )
                         }else{
                             return (
