@@ -178,7 +178,7 @@ const Gameinfo = () => {
                         <Maturecontent className='matureContent'>
                             <Detailtitle>
                                 mature content description : 
-                            </Detailtitle>
+                            </Detailtitle> 
                             <Maturecontenttext className='matureContentText'>
                                 {gameInfo.content_descriptors.notes}
                             </Maturecontenttext>

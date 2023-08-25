@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // 섹션 전체 컴포넌트 컨테이너
 export const SectionContainer = styled.div`
@@ -95,6 +96,11 @@ export const SectionMainText = styled.span`
     margin-right: auto;
     text-align: center;
     
+`
+
+export const Styledlink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
 `
 
 /////////////////////////////////////

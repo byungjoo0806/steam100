@@ -144,7 +144,7 @@ export const Detailtitle = styled.div`
         left: 0;
         z-index: -1;
         height: -5px;
-        background-image: linear-gradient(to right, black, white);
+        background-image: linear-gradient(to right, black, #f8f7f4);
     }
 `
 

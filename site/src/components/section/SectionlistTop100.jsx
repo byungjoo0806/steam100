@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText } from './Section.styled';
+import { SectionMainLi, SectionMainSpan, SectionMainImg, SectionMainText, Styledlink } from './Section.styled';
 
 import { Link } from 'react-router-dom';
 import axios from "axios";
@@ -8,7 +8,7 @@ import { loadingGIF } from '../../img';
 
 const SectionlistTop100 = (props) => {
     const backend = process.env.REACT_APP_BACKEND_SERVER;
-    console.log(props);
+    // console.log(props);
     const [gameList, setGameList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -48,14 +48,14 @@ const SectionlistTop100 = (props) => {
                             )
                         }else{
                             return (
-                                <Link to={`/detail/${el.name}`} key={index} state={{gameName : el.name}}>
+                                <Styledlink to={`/detail/${el.name}`} key={index} state={{gameName : el.name}}>
                                     <SectionMainLi>{index + 1}
                                         <SectionMainSpan>
                                             <SectionMainImg src={el.capsule_image} alt={`${el.name} image`} />
                                             <SectionMainText>{el.name}</SectionMainText>
                                         </SectionMainSpan>
                                     </SectionMainLi>
-                                </Link>
+                                </Styledlink>
                             )
                         }
                     })}

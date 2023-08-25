@@ -20,7 +20,7 @@ router.get("/appList", async (req,res)=>{
         game.map((name,nameIdx)=>{
             const idCount = [];
             appObject.map((el,index)=>{
-                if(el.name === name){
+                if(el.name === game){
                     // console.log(el);
                     appID = el.appid;
                     console.log(appID);
