@@ -8,6 +8,7 @@ class Rereply extends Sequelize.Model{
             },
             rereplyLikes: {
                 type : Sequelize.STRING(256),
+                defaultValue : ""
             }
         },{
             sequelize,
