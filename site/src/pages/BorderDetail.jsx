@@ -138,6 +138,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const [replyEdit, setReplyEdit] = useState(replyContent);
     const [replyUpdate, setReplyUpdate] = useState('');
     const [replyContentUpdate, setReplyContentUpdate] = useState(null);
+    const [replyLikeNum, setReplyLikeNum] = useState(0);
     const focusReplyContent = useRef(null);
 
     const { data : replys } = useQuery(['replys', postId], fetchReply);
