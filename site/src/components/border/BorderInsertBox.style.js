@@ -73,7 +73,7 @@ export const InsertBox = styled.div`
     }
 
     .reply_container, .rereply_container {
-        width: 100%;
+        width: 80%;
     }
 
     .reply_header, .rereply_li {
