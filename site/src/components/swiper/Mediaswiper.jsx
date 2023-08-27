@@ -10,7 +10,8 @@ import 'swiper/css/navigation';
 import './styles.css';
 
 // import required modules
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay, Scrollbar } from 'swiper/modules';
+import { Imgvidviewer, Swiperbox } from './Mediaswiper.styled';
 
 const Testswiper = (props)=> {
     const swiperRef = useRef(null);
@@ -27,15 +28,15 @@ const Testswiper = (props)=> {
     
 
     // 스와이퍼가 넘어갈때 현재 슬라이드를 가져오는 함수
+    const currentSlide = document.querySelector('.swiper-slide-active');
     const handleSlideChange = ()=>{
-        const currentSlide = document.querySelector('.swiper-slide-active');
-        if(currentSlide.classList.contains('image-slides')){
+        if(currentSlide?.classList.contains('image-slides')){
             const currentSlideInfo = currentSlide?.innerHTML;
             // console.log(currentSlideInfo);
             const sanitizedHtml = DOMPurify.sanitize(currentSlideInfo);
             // console.log(sanitizedHtml);
             setBigImgVid(sanitizedHtml);
-        }else{
+        }else if(currentSlide?.classList.contains('video-slides')){
             const currentSlideInfo = currentSlide?.innerHTML;
             // console.log(currentSlideInfo);
             const parser = new DOMParser();
@@ -89,20 +90,25 @@ const Testswiper = (props)=> {
 
     return (
         <>
-            <div className='gameImgVid' style={{width : "690px", height : "70%", borderTop : "1px solid", borderRight : "1px solid", borderBottom : "1px solid"}}>
-                <HtmlImgVidContent />
-            </div>
-            <div className='gameImgVidSwiper' style={{width : "690px", height : "20%", borderRight : "1px solid"}}>
+            <Imgvidviewer className='gameImgVid'>
+                {bigImgVid ? <HtmlImgVidContent /> : 
+                <div style={{width : "100%", height : "100%"}} className='posterImgVid'>
+                    <img src={props.imgs[0].path_thumbnail} alt='Initial Image' />    
+                </div>}
+            </Imgvidviewer>
+            <Swiperbox className='gameImgVidSwiper'>
                 <Swiper 
                 ref={swiperRef} 
                 navigation={true} 
-                autoplay={{delay : 5000, disableOnInteraction : false}} 
+                // autoplay={{delay : 5000, disableOnInteraction : false}} 
                 loop={true} 
-                modules={[Navigation, Autoplay]} 
+                modules={[Navigation, Autoplay, Scrollbar]} 
                 slidesPerView={4} 
-                centeredSlides={true}
+                centeredSlides={false}
                 onSlideChange={handleSlideChange} 
+                spaceBetween={5}
                 className="mySwiper" 
+                scrollbar={{draggable : true}}
                 style={{width : "100%", height : "99%"}} >
                     {props?.imgs?.map((img,index)=>(
                         <SwiperSlide key={index} onClick={getImgSlide} className='image-slides'>
@@ -115,7 +121,7 @@ const Testswiper = (props)=> {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>    
+            </Swiperbox> 
         </>
   );
 };
