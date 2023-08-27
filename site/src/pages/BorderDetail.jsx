@@ -417,7 +417,12 @@ useEffect(() => {
                         : <p>{reply.content}</p>
                     }
                     
-                    <p>{reply.createdAt.split('T')[0]}</p>
+                    <p>{
+                        (() => {
+                            const date = new Date(reply.createdAt);
+                            return `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                        })()
+                    }</p>
                     <button onClick={()=>replyLikeHandler(reply.id,index)}>추천 : {replyLikeNum[index]}</button>
                 
                     {/* 댓글 수정 로그인 식별 */}
@@ -471,7 +476,19 @@ useEffect(() => {
                                         />
                                         : <p>{rereply.content}</p>
                                     }
-                                    <p>{rereply.createdAt.split('T')[0]}</p>
+                                    <p>{
+                                    (() => {
+                                        const date = new Date(rereply.createdAt);
+                                        return `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                                    })()
+                                    }</p>
+
+
+
+
+
+
+
                                     {/* <p>{rereply.rereplyLikes}</p> */}
                                     <div>
                                         {/* 대댓글 수정 로그인 식별 */}

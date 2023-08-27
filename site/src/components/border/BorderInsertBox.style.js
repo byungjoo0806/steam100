@@ -89,8 +89,11 @@ export const InsertBox = styled.div`
             text-align: center;
         }
     }
-
-    .replyli_container, .rereply_li {
+    .reply_li {
+        border: 10px solid #eee;
+        margin-bottom: 20px;
+    }
+    .replyli_container {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -99,5 +102,17 @@ export const InsertBox = styled.div`
         border: 1px solid #ccc;
         border-radius: 4px;
         margin-bottom: 12px;
+        background-color: #e6f7ff;
+    }
+    .rereply_li{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        background-color: #b3e0ff;
     }
 `;
