@@ -20,7 +20,7 @@ router.get("/appList", async (req,res)=>{
         game.map((name,nameIdx)=>{
             const idCount = [];
             appObject.map((el,index)=>{
-                if(el.name === game){
+                if(el.name === name){
                     // console.log(el);
                     appID = el.appid;
                     console.log(appID);
@@ -109,13 +109,10 @@ router.get("/detailApp", async (req,res)=>{
         const wholeList = data.applist.apps;
 
         let appID = "";
-        let appList = [];
         wholeList.map((el,index)=>{
             if(el.name === game){
                 console.log(el);
-                appList.push(el);
-                console.log(appList);
-                appID = appList[appList.length - 1].appid;
+                appID = el.appid;
             }
         });
 

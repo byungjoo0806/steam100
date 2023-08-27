@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SectionContainer, SectionHeader, SectionMain, SectionFooter, SectionHeaderH2, SectionHeaderP, SectionMainUl, FooterLink } from './Section.styled';
 import SectionlistTop100 from './SectionlistTop100';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { loadingGIF2 } from "../../img";
 
@@ -31,13 +32,14 @@ const SectionTop100 = () => {
                   </SectionMainUl>
               </SectionMain>
               <SectionFooter>
-                <div className='anotherTenGames' onClick={getTenMore}
+                <div className='anotherTenGames' 
                 style={
                   {width : "100px", height : "30px",borderRadius : "40px" , border : "1px solid", 
                   position : "absolute", top : "0", left : "50%",transform : "translate(-50%,0)",
                   display: "flex", justifyContent : "center", alignItems : "center",
                   backgroundColor : "#9e814c", color : "white",
-                  cursor : "pointer"}}>
+                  cursor : "pointer"}}
+                onClick={getTenMore}>
                   {isLoading ? <img style={{width : "25px", height : "25px"}} src={loadingGIF2} /> : "show more"}
                 </div>
               </SectionFooter>

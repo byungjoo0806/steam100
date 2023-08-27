@@ -40,6 +40,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const [replyContent, setReplyContent] = useState('');
     const [rereplyContent, setRereplyContent] = useState('');
     const [likeNum, setLikeNum] = useState(0);
+    const [replyLikeNum, setReplyLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
     const replyId = useSelector(state => state.reply.currentReplyId);
     
@@ -58,14 +59,13 @@ const BorderDetail = ({ postContent, setPostContent }) => {
 
         return response.data;
     }
-
-    // 게시글 수정
-    const [borderEdit, setBorderEdit] = useState({
-        title : postContent.title,
-        content : postContent.content
-    });
-    const [borderUpdate, setBorderUpdate] = useState(false);
-    const focusContent = useRef(null); // 게시글 포커스
+// 게시글 수정
+const [borderEdit, setBorderEdit] = useState({
+    title : postContent.title,
+    content : postContent.content
+});
+const [borderUpdate, setBorderUpdate] = useState(false);
+const focusContent = useRef(null); // 게시글 포커스
 
     const { data : postDetail, isLoading, isError, error } = useQuery(['post', id], () => fetchPostbyId(id));
 
@@ -134,49 +134,37 @@ const BorderDetail = ({ postContent, setPostContent }) => {
 
     {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
-    // 댓글 수정 버튼 기능
-    const [replyEdit, setReplyEdit] = useState(replyContent);
-    const [replyUpdate, setReplyUpdate] = useState('');
-    const [replyContentUpdate, setReplyContentUpdate] = useState(null);
-    const focusReplyContent = useRef(null);
+// 댓글 수정 버튼 기능
+const [replyEdit, setReplyEdit] = useState(replyContent);
+const [replyUpdate, setReplyUpdate] = useState('');
+const focusReplyContent = useRef(null);
 
-    const { data : replys } = useQuery(['replys', postId], fetchReply);
-    
-    useEffect(()=>{
-        if(replys){
-            const replyLike = [];
+const { data : replys } = useQuery(['replys', postId], fetchReply);
 
-            replys.map((el)=>{
-                replyLike.push(el.replyLikes.split(',').length - 1);
-            })
 
-            setReplyLikeNum(replyLike);
-        }
-    },[])
-
-    // 수정 버튼
-    const toggleReplyUpdate = useCallback((replyId, content)=>{
-        if (replyUpdate === replyId) {
-            setReplyUpdate(null); // 수정 취소
-            setReplyEdit('');
-        }else {
-            setReplyUpdate(replyId); // 수정 시작
-            setReplyEdit(content);
-        }
-    },[replyUpdate]);
-
-    // 확인 버튼
-    const confirmHandlerReply = async () => {
-        try {
-            const updateData = { content : replyEdit, id : replyUpdate};
-            await dispatch(editReply(updateData));
-            setReplyUpdate(null);
-            alert('댓글이 수정되었습니다.')
-        } catch (error) {
-            alert('댓글 수정 실패')
-            console.log(error)
-        }
+// 수정 버튼
+const toggleReplyUpdate = useCallback((replyId, content)=>{
+    if (replyUpdate === replyId) {
+        setReplyUpdate(null); // 수정 취소
+        setReplyEdit('');
+    }else {
+        setReplyUpdate(replyId); // 수정 시작
+        setReplyEdit(content);
     }
+},[replyUpdate]);
+
+// 확인 버튼
+const confirmHandlerReply = async () => {
+    try {
+        const updateData = { content : replyEdit, id : replyUpdate};
+        await dispatch(editReply(updateData));
+        setReplyUpdate(null);
+        alert('댓글이 수정되었습니다.')
+    } catch (error) {
+        alert('댓글 수정 실패')
+        console.log(error)
+    }
+}
 
 // 삭제 버튼
 const deleteHandlerReply = async (replyId) => {
@@ -270,12 +258,12 @@ const deleteHandlerRereply = async (rereplyId) => {
 
 /////////////////////////////////////////
 
-    // Redux에 postId 저장
-    useEffect(() => {
-        if (postDetail && postDetail.id) {
-        dispatch(setCurrentPostId(postDetail.id)); 
-        }
-    }, [postDetail, dispatch]);
+// Redux에 postId 저장 (댓글 뷰)
+useEffect(() => {
+    if (postDetail && postDetail.id) {
+      dispatch(setCurrentPostId(postDetail.id)); 
+    }
+  }, [postDetail, dispatch]);
 
 // Redux에 replyId 저장 (대댓글 뷰)
 useEffect(() => {
@@ -285,7 +273,7 @@ useEffect(() => {
     console.log(rereplys)
 },[rereplys, dispatch]);
 
-    //게시판 수정 저장 
+//게시판 수정 저장 
 useEffect(()=> {
     if(postDetail) {
         setBorderEdit({
@@ -301,7 +289,7 @@ useEffect(()=>{
             content : replys.content
         });
     }
-},[replys]);
+},[replys])
 
 // 대댓글 수정 저장 
 useEffect(()=>{
@@ -311,6 +299,12 @@ useEffect(()=>{
         });
     }
 },[rereplys])
+
+// useEffect(()=>{
+//     if(replyLikeNum){
+//         setReplyLikeNum
+//     }
+// },[replyLikeNum])
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error occurred</p>;
@@ -463,7 +457,6 @@ useEffect(()=>{
                         
                 </div>
             ))}
-            
         </div>
         
         </BorderDetailBox>

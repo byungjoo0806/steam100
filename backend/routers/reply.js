@@ -12,8 +12,6 @@ router.put('/update', LoginCheck, ReplyUpdate);
 
 router.delete('/delete', LoginCheck, ReplyDelete);
 
-router.get('/like/:id',LoginCheck,ReplyLikeChange);
-
 router.get('/replylike/:id', LoginCheck, ReplyLikeChange);
 
 module.exports = router;

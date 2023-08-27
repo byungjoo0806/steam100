@@ -1,36 +1,13 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from 'react';
+import Swiper from 'swiper';
+import Mediaswiper from "../components/swiper/Mediaswiper";
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/scrollbar';
-
-import '../components/swiper/styles.css';
-
-// import required modules
-import { Scrollbar } from 'swiper/modules';
-
-export default function App() {
+const Swipertest = () => {
   return (
-    <>
-      <Swiper
-        scrollbar={{
-          draggable: true,
-        }}
-        modules={[Scrollbar]}
-        className="mySwiper"
-      >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
-      </Swiper>
-    </>
-  );
+    <div>
+        <Mediaswiper />
+    </div>
+  )
 }
+
+export default Swipertest;
