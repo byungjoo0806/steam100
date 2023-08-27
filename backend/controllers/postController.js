@@ -66,7 +66,7 @@ exports.PostUpdate = async(req,res)=>{
 exports.PostDelete = async(req,res)=>{
     try {
         const { id } = req.params;
-        console.log("있나", id);
+        
 
         await Post.destroy({where : {id}});
 

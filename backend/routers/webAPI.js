@@ -7,29 +7,14 @@ let appInfoArr = [];
 // 프론트와 연결시키는 부분
 // 해당 게임 이름을 가진 스팀 고유 번호 불러오기
 router.get("/appList", async (req,res)=>{
-    const {game} = req.query;
-    console.log(game);
-
     try {
-        const {data : response} = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
-        const applist = response.applist;
-        const appObject = applist.apps;
-        // console.log(appObject);
-        // console.log(game.name);
+        let rankById = [];
+        let appName = [];
+        const {data} = await axios.get("https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/");
+        const rankArr = data.response.ranks;
 
-        game.map((name,nameIdx)=>{
-            const idCount = [];
-            appObject.map((el,index)=>{
-                if(el.name === name){
-                    // console.log(el);
-                    appID = el.appid;
-                    console.log(appID);
-                    idCount.push(appID);
-                }
-            });
-            console.log(idCount);
-
-            appIDArr.push(idCount[0]);
+        rankArr.map((el,index)=>{
+            rankById.push(el.appid);
         });
         // console.log(appID);
         // appIDArr.push(appID);
@@ -41,7 +26,7 @@ router.get("/appList", async (req,res)=>{
             appInfoArr.push(data[appid].data);
         };
 
-        res.json(appInfoArr);
+        res.json(appName);
     } catch (error) {
         console.log(error);
     }
@@ -59,12 +44,12 @@ router.get("/top100", async (req,res)=>{
         rankArr.map((el,index)=>{
             rankById.push(el.appid);
         });
-        console.log(rankById);
+        // console.log(rankById);
 
         const topTen = rankById.splice(0,10);
         // console.log(rankById);
         tenLess = rankById;
-        console.log(topTen);
+        // console.log(topTen);
 
         for (const id of topTen){
             const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${id}`);
