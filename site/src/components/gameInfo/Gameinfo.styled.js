@@ -25,7 +25,7 @@ export const Gameintrobox = styled.div`
 `
 
 export const Gametitlebox = styled.div`
-    width : 500px;
+    width : 700px;
     height : 10%;
     display : flex;
     justify-content : flex-start;

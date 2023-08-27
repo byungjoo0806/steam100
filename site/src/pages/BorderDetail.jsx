@@ -152,7 +152,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
             let replyLike = [];
 
             replys.map((el)=>{
-                replyLike.push(el.replyLikes.split(',').length - 1);
+                replyLike.push(el.replyLikes?.split(',').length - 1);
             })
 
             setReplyLikeNum(replyLike);
@@ -194,7 +194,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
         }
     }
 
-    const [replyLikeNum,setReplyLikeNum] = useState([]);
+    // const [replyLikeNum,setReplyLikeNum] = useState([]);
 
     // 댓글 좋아요
     const likeReplyPostUpdateId = async(id,index) => {
