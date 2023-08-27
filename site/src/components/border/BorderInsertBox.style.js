@@ -91,6 +91,9 @@ export const InsertBox = styled.div`
     }
 
     .reply_li {
+        
+    }
+    .replyli_container{
         display: grid;
         grid-template-columns: 1fr 3fr 1fr 1fr;
         flex-direction: row;
@@ -114,34 +117,36 @@ export const InsertBox = styled.div`
         }
     }
     /////////////////// 대댓글 /////////////////
-    .rereply_li {
-        display: grid;
-        grid-template-columns: 1fr 3fr 1fr 1fr;
-        margin : 20px;
-        overflow: auto;
-    }
-
-    .rereply_btns {
+    .rereply_input_container{
         display: flex;
-        width: 100%;
-
+        align-items: baseline;
+        text-align: center;
+        width: 860px;
+        flex-direction: row;
+        justify-content: flex-start;
+        margin: 15px;
+        & label {
+            width: 10%;
+        }
+        & input {
+            width: 70%;
+        }
         & button {
-            width: 100px;
-            height: 40px;
+            width: 10%;
+        }
+    }
+    .rereply_container{
+
+    }
+    .rereply_li {
+        display: flex;
+        margin: 20px;
+        width: 95%;
+        & p {
             margin: 10px;
         }
-        
     }
-    .rerely_btn{
-        display: flex;
-        width: 100%;
-
+    .rereply_btns{
 
     }
-
-    .rereply_btns_container{
-        
-    }
-`;
-
-
+    `;

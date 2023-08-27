@@ -16,18 +16,14 @@ router.get("/appList", async (req,res)=>{
         rankArr.map((el,index)=>{
             rankById.push(el.appid);
         });
-        console.log(rankById);
-
-        const name = await axios.get("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
-        const names = name.data.applist.apps
-
-        for(const id of rankById){
-            for(const name of names){
-                if(id === name.appid){
-                    console.log(name.name);
-                    appName.push(name.name);
-                }
-            }
+        // console.log(appID);
+        // appIDArr.push(appID);
+        console.log(appIDArr);
+        
+        for (const appid of appIDArr){
+            const {data} = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
+            // console.log(data);
+            appInfoArr.push(data[appid].data);
         };
 
         res.json(appName);
@@ -98,13 +94,10 @@ router.get("/detailApp", async (req,res)=>{
         const wholeList = data.applist.apps;
 
         let appID = "";
-        let appList = [];
         wholeList.map((el,index)=>{
             if(el.name === game){
                 console.log(el);
-                appList.push(el);
-                console.log(appList);
-                appID = appList[appList.length - 1].appid;
+                appID = el.appid;
             }
         });
 

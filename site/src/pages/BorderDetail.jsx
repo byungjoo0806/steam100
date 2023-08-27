@@ -40,6 +40,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const [replyContent, setReplyContent] = useState('');
     const [rereplyContent, setRereplyContent] = useState('');
     const [likeNum, setLikeNum] = useState(0);
+    // const [replyLikeNum, setReplyLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
     const replyId = useSelector(state => state.reply.currentReplyId);
     
@@ -159,29 +160,29 @@ const BorderDetail = ({ postContent, setPostContent }) => {
         }
     },[])
 
-    // 수정 버튼
-    const toggleReplyUpdate = useCallback((replyId, content)=>{
-        if (replyUpdate === replyId) {
-            setReplyUpdate(null); // 수정 취소
-            setReplyEdit('');
-        }else {
-            setReplyUpdate(replyId); // 수정 시작
-            setReplyEdit(content);
-        }
-    },[replyUpdate]);
-
-    // 확인 버튼
-    const confirmHandlerReply = async () => {
-        try {
-            const updateData = { content : replyEdit, id : replyUpdate};
-            await dispatch(editReply(updateData));
-            setReplyUpdate(null);
-            alert('댓글이 수정되었습니다.')
-        } catch (error) {
-            alert('댓글 수정 실패')
-            console.log(error)
-        }
+// 수정 버튼
+const toggleReplyUpdate = useCallback((replyId, content)=>{
+    if (replyUpdate === replyId) {
+        setReplyUpdate(null); // 수정 취소
+        setReplyEdit('');
+    }else {
+        setReplyUpdate(replyId); // 수정 시작
+        setReplyEdit(content);
     }
+},[replyUpdate]);
+
+// 확인 버튼
+const confirmHandlerReply = async () => {
+    try {
+        const updateData = { content : replyEdit, id : replyUpdate};
+        await dispatch(editReply(updateData));
+        setReplyUpdate(null);
+        alert('댓글이 수정되었습니다.')
+    } catch (error) {
+        alert('댓글 수정 실패')
+        console.log(error)
+    }
+}
 
     // 삭제 버튼
     const deleteHandlerReply = async (replyId) => {
@@ -226,7 +227,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     const [rereplyEdit, setRereplyEdit] = useState(rereplyContent);
     const [rereplyUpdate, setRereplyUpdate] = useState();
     const focusRereplyContent = useRef(null);
-    const [activeReplyId, setActiveReplyId] = useState(null);
+    // const [activeReplyId, setActiveReplyId] = useState(null);
     const [rereplyData, setRereplyData] = useState(null);
 
     const {data : rereplys } = useQuery(['rereplys', replyId], fetchRereply);
@@ -242,14 +243,14 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     },[rereplyData])
 
     // 대댓글 클릭 핸들러
-    const handleCommentButtonClick = (replyId) => {
-        if (activeReplyId === replyId) {
-            setActiveReplyId(null); // 이미 활성화된 댓글의 버튼을 다시 클릭하면 숨김
-        } else {
-            setActiveReplyId(replyId); // 해당 댓글의 대댓글 작성 버튼 활성화
-            dispatch(setCurrentReplyId(replyId));
-        }
-    };
+    // const handleCommentButtonClick = (replyId) => {
+    //     if (activeReplyId === replyId) {
+    //         setActiveReplyId(null); // 이미 활성화된 댓글의 버튼을 다시 클릭하면 숨김
+    //     } else {
+    //         setActiveReplyId(replyId); // 해당 댓글의 대댓글 작성 버튼 활성화
+    //         dispatch(setCurrentReplyId(replyId));
+    //     }
+    // };
     // 대댓글 수정 버튼
     const toggleRereplyUpdate = useCallback((rereplyId, content) => {
         if(rereplyUpdate === rereplyId) {
@@ -288,12 +289,12 @@ const BorderDetail = ({ postContent, setPostContent }) => {
 
 /////////////////////////////////////////
 
-    // Redux에 postId 저장
-    useEffect(() => {
-        if (postDetail && postDetail.id) {
-        dispatch(setCurrentPostId(postDetail.id)); 
-        }
-    }, [postDetail, dispatch]);
+// Redux에 postId 저장 (댓글 뷰)
+useEffect(() => {
+    if (postDetail && postDetail.id) {
+      dispatch(setCurrentPostId(postDetail.id)); 
+    }
+  }, [postDetail, dispatch]);
 
     // Redux에 replyId 저장 (대댓글 뷰)
     useEffect(() => {
@@ -381,7 +382,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
                     <button onClick={deleteHandler}>글 삭제</button>
                 </div>
 
-                )}
+)}
 
 
 {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
@@ -407,12 +408,13 @@ const BorderDetail = ({ postContent, setPostContent }) => {
             {/* 댓글 렌더링 */}
             {replys && replys.map((reply, index)=>(
                 <div key={index} className='reply_li'>
+                <div className='replyli_container'>
                     <p>{reply.User.nickname}</p> 
                     {replyUpdate === reply.id ? 
                         <input
-                            value={replyEdit}
-                            onChange={e=> setReplyEdit(e.target.value)}
-                            ref={focusReplyContent}
+                        value={replyEdit}
+                        onChange={e=> setReplyEdit(e.target.value)}
+                        ref={focusReplyContent}
                         />
                         : <p>{reply.content}</p>
                     }
@@ -436,12 +438,14 @@ const BorderDetail = ({ postContent, setPostContent }) => {
                             <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
                         </>
                     )}
-
+                    </div>
+                    <div className='rereply_li_container'></div>
                     {/* 대댓글 버튼 */}
-                    <div className='rerely_btn'>
-                        <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글</button>
-                        {activeReplyId === reply.id && (
-                            <div>
+                    
+                        {/* <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글 작성</button> */}
+                        {reply.id && (
+                            <div className='rereply_input_container'>
+                                <label>대댓글</label>
                                 <input 
                                     value={rereplyContent}
                                     onChange={e => setRereplyContent(e.target.value)}
@@ -454,13 +458,13 @@ const BorderDetail = ({ postContent, setPostContent }) => {
                                 }}>작성</button>
                             </div>
                         )}
-                    </div>
+                    
 
                     {/* 대댓글 렌더링 */}
                     <div className='rereply_container'>
                         {rereplyData && rereplyData[index] && rereplyData[index].map((rereply, rIndex) => (
                             <div key={rIndex} className='rereply_li'>
-                                    <p>{rereply.User.nickname}</p> 
+                                    <p>{rereply.User.nickname}</p>             
                                     {rereplyUpdate === rereply.id ? 
                                         <input 
                                             value={rereplyEdit}
@@ -470,7 +474,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
                                         : <p>{rereply.content}</p>
                                     }
                                     <p>{rereply.createdAt.split('T')[0]}</p>
-                                    <p>{rereply.rereplyLikes}</p>
+                                    {/* <p>{rereply.rereplyLikes}</p> */}
                                     <div>
                                         {/* 대댓글 수정 로그인 식별 */}
                                             {rereply.userId === currentUser.id && (
@@ -493,10 +497,8 @@ const BorderDetail = ({ postContent, setPostContent }) => {
                             
                         ))}
                     </div>
-                        
                 </div>
             ))}
-            
         </div>
         
         </BorderDetailBox>
