@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // 섹션 전체 컴포넌트 컨테이너
 export const SectionContainer = styled.div`
@@ -72,6 +73,18 @@ export const SectionMainLi = styled.li`
     }
 `
 
+export const SectionMainLiNull = styled.li`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 8px; 
+    border-radius: 4px; 
+    transition: background-color 0.3s ease; 
+    margin: 4px 0;
+    color: lightgray;
+`
+
 export const SectionMainSpan = styled.span`
     display: flex;
     align-items: center;
@@ -95,6 +108,11 @@ export const SectionMainText = styled.span`
     margin-right: auto;
     text-align: center;
     
+`
+
+export const Styledlink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
 `
 
 /////////////////////////////////////

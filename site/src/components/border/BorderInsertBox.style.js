@@ -115,4 +115,27 @@ export const InsertBox = styled.div`
         margin-bottom: 12px;
         background-color: #b3e0ff;
     }
+
+    .rereply_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .rereply_li {
+        width: 90%;
+    }
+
+    .rereply_input_box {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .rereply_input_container {
+        width: 90%;
+    }
+
+    
 `;
