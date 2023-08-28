@@ -58,7 +58,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
         if(!replyId || !Array.isArray(replyId)){
             return [];
         }
-        
+
         const rereplyData = await Promise.all(
             replyId.map(async (e) => {
                 const response = await axios.get(`${backend}/rereply?replyId=${e}`, {
@@ -250,11 +250,13 @@ useEffect(()=>{
             rereplys.map((el)=>{
                 let arr = [];
                 el.map((i)=>{
-                    arr.push(i.replyLikes?.split(',').length - 1);
+                    arr.push(i.rereplyLikes?.split(',').length - 1);
+                    console.log(i.rere)
                 })
 
                 rereplyLike.push(arr);
             })
+            console.log(rereplyLike)
 
             setRereplyLikeNum(rereplyLike);
         }
