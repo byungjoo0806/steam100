@@ -6,6 +6,7 @@ import DOMPurify from 'dompurify';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
 
 import './styles.css';
 
@@ -28,16 +29,16 @@ const Testswiper = (props)=> {
     
 
     // 스와이퍼가 넘어갈때 현재 슬라이드를 가져오는 함수
-    const currentSlide = document.querySelector('.swiper-slide-active');
     const handleSlideChange = ()=>{
+        const currentSlide = document.querySelector('.swiper-slide-active');
         if(currentSlide?.classList.contains('image-slides')){
-            const currentSlideInfo = currentSlide?.innerHTML;
+            const currentSlideInfo = currentSlide.innerHTML;
             // console.log(currentSlideInfo);
             const sanitizedHtml = DOMPurify.sanitize(currentSlideInfo);
             // console.log(sanitizedHtml);
             setBigImgVid(sanitizedHtml);
         }else if(currentSlide?.classList.contains('video-slides')){
-            const currentSlideInfo = currentSlide?.innerHTML;
+            const currentSlideInfo = currentSlide.innerHTML;
             // console.log(currentSlideInfo);
             const parser = new DOMParser();
             const imgHtml = parser.parseFromString(currentSlideInfo, 'text/html');
@@ -48,6 +49,7 @@ const Testswiper = (props)=> {
             // console.log(vidLink);
             setBigImgVid(vidLink);
         }
+        console.log(bigImgVid);
     };
 
     // 원하는 이미지 슬라이드를 클릭했을때 해당 슬라이드를 가져오는 함수
@@ -100,12 +102,12 @@ const Testswiper = (props)=> {
                 <Swiper 
                 ref={swiperRef} 
                 navigation={true} 
-                // autoplay={{delay : 5000, disableOnInteraction : false}} 
+                autoplay={{delay : 5000, disableOnInteraction : false}} 
                 loop={true} 
                 modules={[Navigation, Autoplay, Scrollbar]} 
                 slidesPerView={4} 
                 centeredSlides={false}
-                onSlideChange={handleSlideChange} 
+                onSlideChangeTransitionEnd={handleSlideChange} 
                 spaceBetween={5}
                 className="mySwiper" 
                 scrollbar={{draggable : true}}

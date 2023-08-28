@@ -54,7 +54,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     /////////////// 대댓글 view ///////////////////
     const fetchRereply = async () => {
         const rereplyData = await Promise.all(
-            replyId.map(async (e) => {
+            replyId?.map(async (e) => {
                 const response = await axios.get(`${backend}/rereply?replyId=${e}`, {
                     withCredentials: true
                 });
@@ -399,66 +399,47 @@ useEffect(() => {
             }}>작성</button>
         </div>
         <div className='reply_container'>
-            <div className='reply_header'>
+            {/* <div className='reply_header'>
                 <p>글쓴이</p>
                 <p>내용</p>
                 <p>등록일</p>
                 <p>추천</p>
-            </div>
+                /div> */}
             {/* 댓글 렌더링 */}
             {replys && replys.map((reply, index)=>(
                 <div key={index} className='reply_li'>
-                <div className='replyli_container'>
-                    <p>{reply.User.nickname}</p> 
-                    {replyUpdate === reply.id ? 
-                        <input
-                        value={replyEdit}
-                        onChange={e=> setReplyEdit(e.target.value)}
-                        ref={focusReplyContent}
-                        />
-                        : <p>{reply.content}</p>
-                    }
+                    <div className='replyli_container'>
+                        <p className='replyUserNickname'>{reply.User.nickname}</p> 
+                        {replyUpdate === reply.id ? 
+                            <input
+                            value={replyEdit}
+                            onChange={e=> setReplyEdit(e.target.value)}
+                            ref={focusReplyContent}
+                            />
+                            : <p className='replyContent'>{reply.content}</p>
+                        }
+
+                        <p className='replyDate'>{reply.createdAt.split('T')[0]}</p>
+                        <button onClick={()=>replyLikeHandler(reply.id,index)}>추천 : {replyLikeNum[index]}</button>
                     
-                    <p>{reply.createdAt.split('T')[0]}</p>
-                    <button onClick={()=>replyLikeHandler(reply.id,index)}>추천 : {replyLikeNum[index]}</button>
-                
-                    {/* 댓글 수정 로그인 식별 */}
-                    {reply.User.id === currentUser.id && (
-                        <>
-                            <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
-                                {replyUpdate === reply.id ? '수정 취소' : '수정'}
-                            </button>
-
-                            {replyUpdate === reply.id && (
-                                <button onClick={confirmHandlerReply}>
-                                수정 완료
+                        {/* 댓글 수정 로그인 식별 */}
+                        {reply.User.id === currentUser.id && (
+                            <>
+                                <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
+                                    {replyUpdate === reply.id ? '수정 취소' : '수정'}
                                 </button>
-                            )}
 
-                            <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
-                        </>
-                    )}
+                                {replyUpdate === reply.id && (
+                                    <button onClick={confirmHandlerReply}>
+                                    수정 완료
+                                    </button>
+                                )}
+
+                                <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                            </>
+                        )}
                     </div>
                     <div className='rereply_li_container'></div>
-                    {/* 대댓글 버튼 */}
-                    
-                        {/* <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글 작성</button> */}
-                        {reply.id && (
-                            <div className='rereply_input_container'>
-                                <label>대댓글</label>
-                                <input 
-                                    value={rereplyContent}
-                                    onChange={e => setRereplyContent(e.target.value)}
-                                    ref={focusRereplyContent}
-                                    />
-                                <button onClick={()=> {
-                                    dispatch(addRereplypost(rereplyContent));
-                                    setRereplyContent('');
-                                    alert('대댓글이 작성되었습니다.')
-                                }}>작성</button>
-                            </div>
-                        )}
-                    
 
                     {/* 대댓글 렌더링 */}
                     <div className='rereply_container'>
@@ -497,6 +478,28 @@ useEffect(() => {
                             
                         ))}
                     </div>
+
+                    {/* 대댓글 버튼 */}
+                    
+                        {/* <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글 작성</button> */}
+                        {reply.id && (
+                            <div className='rereply_input_box'>
+                                <div className='rereply_input_container'>
+                                    <label>대댓글</label>
+                                    <input 
+                                        value={rereplyContent}
+                                        onChange={e => setRereplyContent(e.target.value)}
+                                        ref={focusRereplyContent}
+                                        />
+                                    <button onClick={()=> {
+                                        dispatch(addRereplypost(rereplyContent));
+                                        setRereplyContent('');
+                                        alert('대댓글이 작성되었습니다.')
+                                    }}>작성</button>
+                                </div>
+                            </div>
+                        )}
+
                 </div>
             ))}
         </div>

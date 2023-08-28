@@ -100,4 +100,26 @@ export const InsertBox = styled.div`
         border-radius: 4px;
         margin-bottom: 12px;
     }
+
+    .rereply_container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .rereply_li {
+        width: 90%;
+    }
+
+    .rereply_input_box {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .rereply_input_container {
+        width: 90%;
+    }
+
+    
 `;
