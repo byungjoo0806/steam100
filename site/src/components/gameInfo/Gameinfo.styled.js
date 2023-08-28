@@ -63,6 +63,7 @@ export const Introtextbox = styled.div`
 
 export const Introtext = styled.p`
     margin-left : 5px;
+    font-size: 14px;
 `
 
 export const Companybox = styled.div`
@@ -71,7 +72,7 @@ export const Companybox = styled.div`
     display : flex;
     flex-wrap : wrap;
     align-content: center;
-    font-size: 15px;
+    font-size: 14px;
     border-top: 1px dashed;
 `
 
