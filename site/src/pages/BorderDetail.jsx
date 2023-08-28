@@ -43,6 +43,8 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     // const [replyLikeNum, setReplyLikeNum] = useState(0);
     const postId = useSelector(state => state.border.currentPostId); 
     const replyId = useSelector(state => state.reply.currentReplyId);
+    const replyInsertResult = useSelector(state => state.reply.Replys);
+    const rereplyInsertResult = useSelector(state => state.rereply.Rereplys);
     
     ///////////////// 댓글 view //////////////////
     const fetchReply = async () => {
@@ -184,6 +186,10 @@ const confirmHandlerReply = async () => {
     }
 }
 
+useEffect(()=>{
+    console.log(rereplyInsertResult);
+},[])
+
     // 삭제 버튼
     const deleteHandlerReply = async (replyId) => {
         try {
@@ -227,7 +233,7 @@ const confirmHandlerReply = async () => {
     const [rereplyEdit, setRereplyEdit] = useState(rereplyContent);
     const [rereplyUpdate, setRereplyUpdate] = useState();
     const focusRereplyContent = useRef(null);
-    // const [activeReplyId, setActiveReplyId] = useState(null);
+    const [activeReplyId, setActiveReplyId] = useState(null);
     const [rereplyData, setRereplyData] = useState(null);
     const [rereplyLikeNum, setRereplyLikeNum] = useState(0);
 
@@ -255,14 +261,14 @@ const confirmHandlerReply = async () => {
     },[replys,rereplys])
 
     // 대댓글 클릭 핸들러
-    // const handleCommentButtonClick = (replyId) => {
-    //     if (activeReplyId === replyId) {
-    //         setActiveReplyId(null); // 이미 활성화된 댓글의 버튼을 다시 클릭하면 숨김
-    //     } else {
-    //         setActiveReplyId(replyId); // 해당 댓글의 대댓글 작성 버튼 활성화
-    //         dispatch(setCurrentReplyId(replyId));
-    //     }
-    // };
+    const handleCommentButtonClick = (replyId) => {
+        if (activeReplyId === replyId) {
+            setActiveReplyId(null); // 이미 활성화된 댓글의 버튼을 다시 클릭하면 숨김
+        } else {
+            setActiveReplyId(replyId); // 해당 댓글의 대댓글 작성 버튼 활성화
+            // dispatch(setCurrentReplyId(replyId));
+        }
+    };
     // 대댓글 수정 버튼
     const toggleRereplyUpdate = useCallback((rereplyId, content) => {
         if(rereplyUpdate === rereplyId) {
@@ -433,7 +439,12 @@ useEffect(() => {
             <button onClick={()=> {
                 dispatch(addReplyPost(replyContent));
                 setReplyContent('');
-                alert('댓글이 작성되었습니다.')
+                if(replyInsertResult[replyInsertResult.length - 1] !== '세션 만료. 다시 로그인해주세요.'){
+                    alert('댓글이 작성되었습니다.')
+                }else{
+                    alert(replyInsertResult[replyInsertResult.length - 1]);
+                    navi('/login');
+                }
             }}>작성</button>
         </div>
         <div className='reply_container'>
@@ -480,8 +491,8 @@ useEffect(() => {
                     <div className='rereply_li_container'></div>
                     {/* 대댓글 버튼 */}
                     
-                        {/* <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글 작성</button> */}
-                        {reply.id && (
+                        <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글 작성</button>
+                        {activeReplyId === reply.id && (
                             <div className='rereply_input_container'>
                                 <label>대댓글</label>
                                 <input 
@@ -490,9 +501,14 @@ useEffect(() => {
                                     ref={focusRereplyContent}
                                     />
                                 <button onClick={()=> {
-                                    dispatch(addRereplypost(rereplyContent));
+                                    dispatch(addRereplypost({content : rereplyContent, id : reply.id}));
                                     setRereplyContent('');
-                                    alert('대댓글이 작성되었습니다.')
+                                    if(rereplyInsertResult[rereplyInsertResult.length - 1] !== '세션 만료. 다시 로그인해주세요.'){
+                                        alert('대댓글이 작성되었습니다.')
+                                    }else{
+                                        alert(rereplyInsertResult[rereplyInsertResult.length - 1]);
+                                        navi('/login');
+                                    }
                                 }}>작성</button>
                             </div>
                         )}
