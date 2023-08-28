@@ -6,14 +6,13 @@ const backend = process.env.REACT_APP_BACKEND_SERVER;
 // 대댓글 작성 기능
 export const addRereplypost = createAsyncThunk('border/rereplyPost', async (rereplyContent, thunkAPI) => {
     const user = thunkAPI.getState().login;
-    const replyId = thunkAPI.getState().reply.currentReplyId;
-     
-    
+    console.log(rereplyContent)
+        
     try {
         const response = await axios.post(`${backend}/rereply/insert`, {
-        content : rereplyContent,
+        content : rereplyContent.content,
         userId : user.id,
-        replyId : replyId
+        replyId : rereplyContent.id
     }, {withCredentials : true});
     
     return response.data;

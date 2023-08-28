@@ -69,3 +69,33 @@ exports.RereplyDelete = async (req, res) => {
         console.log(error)
     }
 }
+
+exports.RereplyLikeChange = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const {acc_decoded} = req;
+
+        const rereplyBefore = await Rereply.findOne({where: {id}});
+
+        let rereplyLike = rereplyBefore.rereplyLikes.split(',');
+        let changeLike = '';
+        let clickUser = acc_decoded.id.toString();
+        
+        if(rereplyLike.includes(clickUser)){
+            rereplyLike.splice(rereplyLike.indexOf(clickUser), 1);
+        }else {
+            rereplyLike.push(clickUser);
+        }
+
+        changeLike = rereplyLike.join(',');
+
+        await Rereply.update({rereplyLikes : changeLike}, {where : {id}});
+
+        const rereply = await Rereply.findOne({where : {id}});
+
+        res.send(rereply);
+    } catch (error) {
+        console.log('리리플 컨트롤러에서 대댓글 좋아요 변경하다 에러남');
+        console.log(error);
+    }
+}
