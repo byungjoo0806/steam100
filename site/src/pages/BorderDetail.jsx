@@ -409,17 +409,19 @@ useEffect(() => {
             {replys && replys.map((reply, index)=>(
                 <div key={index} className='reply_li'>
                     <div className='replyli_container'>
-                        <p className='replyUserNickname'>{reply.User.nickname}</p> 
-                        {replyUpdate === reply.id ? 
-                            <input
-                            value={replyEdit}
-                            onChange={e=> setReplyEdit(e.target.value)}
-                            ref={focusReplyContent}
-                            />
-                            : <p className='replyContent'>{reply.content}</p>
-                        }
+                        <div className='replyTextBox'>
+                            <p className='replyUserNickname'>{reply.User.nickname}</p> 
+                            <p className='replyDate'>{reply.createdAt.split('T')[0]}</p>
+                            {replyUpdate === reply.id ? 
+                                <input
+                                value={replyEdit}
+                                onChange={e=> setReplyEdit(e.target.value)}
+                                ref={focusReplyContent}
+                                />
+                                : <p className='replyContent'>{reply.content}</p>
+                            }
+                        </div>
 
-                        <p className='replyDate'>{reply.createdAt.split('T')[0]}</p>
                         <button onClick={()=>replyLikeHandler(reply.id,index)}>추천 : {replyLikeNum[index]}</button>
                     
                         {/* 댓글 수정 로그인 식별 */}

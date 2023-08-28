@@ -104,6 +104,7 @@ export const InsertBox = styled.div`
     .rereply_container {
         display: flex;
         justify-content: flex-end;
+        flex-wrap: wrap;
     }
 
     .rereply_li {
@@ -121,5 +122,8 @@ export const InsertBox = styled.div`
         width: 90%;
     }
 
-    
+    .replyTextBox {
+        width: 30%;
+        display: flex;
+    }
 `;
