@@ -73,7 +73,7 @@ export const InsertBox = styled.div`
     }
 
     .reply_container, .rereply_container {
-        width: 100%;
+        width: 80%;
     }
 
     .reply_header, .rereply_li {
@@ -89,8 +89,11 @@ export const InsertBox = styled.div`
             text-align: center;
         }
     }
-
-    .replyli_container, .rereply_li {
+    .reply_li {
+        border: 10px solid #eee;
+        margin-bottom: 20px;
+    }
+    .replyli_container {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -99,16 +102,30 @@ export const InsertBox = styled.div`
         border: 1px solid #ccc;
         border-radius: 4px;
         margin-bottom: 12px;
+        background-color: #e6f7ff;
+    }
+    .rereply_li{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        background-color: #b3e0ff;
     }
 
     .rereply_container {
         display: flex;
+        flex-direction: column;
         justify-content: flex-end;
-        flex-wrap: wrap;
     }
 
     .rereply_li {
         width: 90%;
+        display: flex;
+        justify-content: space-between;
     }
 
     .rereply_input_box {
@@ -119,11 +136,93 @@ export const InsertBox = styled.div`
     }
 
     .rereply_input_container {
-        width: 90%;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
     }
 
-    .replyTextBox {
+    .replyli_container{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .replyTextBox{
         width: 30%;
         display: flex;
+        flex-wrap: wrap;
+    }
+
+    .replyTextNickname{
+        width: 50%;
+        font-size: 16px;
+        font-weight: bolder;
+    }
+    .replyTextCreatedTime{
+        width: 50%;
+        font-size: 12px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .replyTextContent{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .rereply_box{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .rereply_input_show {
+        width: 90%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .rereply_write_btn{
+        width: 50px;
+        height: 40px;
+    }
+
+    .rereplyTextBox{
+        width: 40%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .rereplyTextNickname{
+        width: 50%;
+        font-size: 16px;
+        font-weight: bolder;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .rereplyTextCreatedTime{
+        width: 50%;
+        font-size: 12px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .rereplyTextContent{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .rereplyBtnsBox{
+        width: 60%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
 `;

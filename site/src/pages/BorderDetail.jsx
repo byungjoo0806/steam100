@@ -436,7 +436,7 @@ useEffect(() => {
 {/* /////////////////////////////////////////// 댓글 ////////////////////////////////////////////////// */}
 
         <div className='reply_insert_container'>
-        <label>댓글</label>
+        <label>comment</label>
         <input value={replyContent}
         onChange={e => setReplyContent(e.target.value)}>
         </input>
@@ -452,108 +452,119 @@ useEffect(() => {
             }}>작성</button>
         </div>
         <div className='reply_container'>
-            <div className='reply_header'>
+            {/* <div className='reply_header'>
                 <p>글쓴이</p>
                 <p>내용</p>
                 <p>등록일</p>
                 <p>추천</p>
-            </div>
+                </div> */}
             {/* 댓글 렌더링 */}
             {replys && replys.map((reply, index)=>(
                 <div key={index} className='reply_li'>
                 <div className='replyli_container'>
-                    <p>{reply.User.nickname}</p> 
-                    {replyUpdate === reply.id ? 
-                        <input
-                        value={replyEdit}
-                        onChange={e=> setReplyEdit(e.target.value)}
-                        ref={focusReplyContent}
-                        />
-                        : <p>{reply.content}</p>
-                    }
-                    
-                    <p>{reply.createdAt.split('T')[0]}</p>
-                    <button onClick={()=>replyLikeHandler(reply.id,index)}>추천 : {replyLikeNum[index]}</button>
-                
-                    {/* 댓글 수정 로그인 식별 */}
-                    {reply.User.id === currentUser.id && (
-                        <>
-                            <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
-                                {replyUpdate === reply.id ? '수정 취소' : '수정'}
-                            </button>
-
-                            {replyUpdate === reply.id && (
-                                <button onClick={confirmHandlerReply}>
-                                수정 완료
-                                </button>
-                            )}
-
-                            <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
-                        </>
-                    )}
+                    <div className='replyTextBox'>
+                        <p className='replyTextNickname'>{reply.User.nickname}</p> 
+                        <p className='replyTextCreatedTime'>{reply.createdAt.split('T')[0]}</p>
+                        {replyUpdate === reply.id ? 
+                            <input
+                            value={replyEdit}
+                            onChange={e=> setReplyEdit(e.target.value)}
+                            ref={focusReplyContent}
+                            />
+                            : <p className='replyTextContent'>{reply.content}</p>
+                        }
                     </div>
+                    <div>
+                        <button onClick={()=>replyLikeHandler(reply.id,index)}>추천 : {replyLikeNum[index]}</button>
+                        
+                        {/* 댓글 수정 로그인 식별 */}
+                        {reply.User.id === currentUser.id && (
+                            <>
+                                <button onClick={()=>toggleReplyUpdate(reply.id, reply.content)}>
+                                    {replyUpdate === reply.id ? '수정 취소' : '수정'}
+                                </button>
+
+                                {replyUpdate === reply.id && (
+                                    <button onClick={confirmHandlerReply}>
+                                    수정 완료
+                                    </button>
+                                )}
+
+                                <button onClick={()=>deleteHandlerReply(reply.id)}>댓글삭제</button>
+                            </>
+                        )}
+                    </div>
+                </div>
                     <div className='rereply_li_container'></div>
                     {/* 대댓글 버튼 */}
                     
-                        <button onClick={()=>handleCommentButtonClick(reply.id)}>댓글 작성</button>
+                        <button onClick={()=>handleCommentButtonClick(reply.id)}>reply</button>
                         {activeReplyId === reply.id && (
                             <div className='rereply_input_container'>
-                                <label>대댓글</label>
-                                <input 
-                                    value={rereplyContent}
-                                    onChange={e => setRereplyContent(e.target.value)}
-                                    ref={focusRereplyContent}
-                                    />
-                                <button onClick={()=> {
-                                    dispatch(addRereplypost({content : rereplyContent, id : reply.id}));
-                                    setRereplyContent('');
-                                    if(rereplyInsertResult[rereplyInsertResult.length - 1] !== '세션 만료. 다시 로그인해주세요.'){
-                                        alert('대댓글이 작성되었습니다.')
-                                    }else{
-                                        alert(rereplyInsertResult[rereplyInsertResult.length - 1]);
-                                        navi('/login');
-                                    }
-                                }}>작성</button>
+                                <div className='rereply_input_show'>
+                                    {/* <label>reply</label> */}
+                                    <input 
+                                        value={rereplyContent}
+                                        onChange={e => setRereplyContent(e.target.value)}
+                                        ref={focusRereplyContent}
+                                        />
+                                    <button className='rereply_write_btn' onClick={()=> {
+                                        dispatch(addRereplypost({content : rereplyContent, id : reply.id}));
+                                        setRereplyContent('');
+                                        if(rereplyInsertResult[rereplyInsertResult.length - 1] !== '세션 만료. 다시 로그인해주세요.'){
+                                            alert('대댓글이 작성되었습니다.')
+                                        }else{
+                                            alert(rereplyInsertResult[rereplyInsertResult.length - 1]);
+                                            navi('/login');
+                                        }
+                                    }}>작성</button>
+                                </div>
                             </div>
                         )}
                     
 
                     {/* 대댓글 렌더링 */}
-                    <div className='rereply_container'>
-                        {rereplyData && rereplyData[index] && rereplyData[index].map((rereply, rIndex) => (
-                            <div key={rIndex} className='rereply_li'>
-                                    <p>{rereply.User.nickname}</p>             
-                                    {rereplyUpdate === rereply.id ? 
-                                        <input 
-                                            value={rereplyEdit}
-                                            onChange={e=>setRereplyEdit(e.target.value)}
-                                            ref={focusRereplyContent}
-                                        />
-                                        : <p>{rereply.content}</p>
-                                    }
-                                    <p>{rereply.createdAt.split('T')[0]}</p>
-                                    <button onClick={()=>rereplyLikeHandler(rereply.id,index,rIndex)}>추천 : {rereplyLikeNum[index][rIndex]}</button>
-                                    <div>
-                                        {/* 대댓글 수정 로그인 식별 */}
-                                            {rereply.userId === currentUser.id && (
-                                            <div className='rereply_btns'>
-                                                <button onClick={()=>toggleRereplyUpdate(rereply.id, rereply.content)}>
-                                                    {rereplyUpdate === rereply.id ? "수정 취소" : '수정'}
-                                                </button>
-
-                                                {rereplyUpdate === rereply.id && (
-                                                    <button onClick={confirmhandlerRereply}>
-                                                        수정 완료
-                                                    </button>
-                                                )}
-
-                                                <button onClick={()=>deleteHandlerRereply(rereply.id)}>댓글 삭제</button>
-                                            </div>
-                                            )}         
+                    <div className='rereply_box'>
+                        <div className='rereply_container'>
+                            {rereplyData && rereplyData[index] && rereplyData[index].map((rereply, rIndex) => (
+                                <div key={rIndex} className='rereply_li'>
+                                    <div className='rereplyTextBox'>
+                                        <p className='rereplyTextNickname'>{rereply.User.nickname}</p>
+                                        <p className='rereplyTextCreatedTime'>{rereply.createdAt.split('T')[0]}</p>     
+                                        {rereplyUpdate === rereply.id ? 
+                                            <input 
+                                                value={rereplyEdit}
+                                                onChange={e=>setRereplyEdit(e.target.value)}
+                                                ref={focusRereplyContent}
+                                            />
+                                            : <p className='rereplyTextContent'>{rereply.content}</p>
+                                        }
                                     </div>
-                            </div>
-                            
-                        ))}
+                                    <div className='rereplyBtnsBox'>
+                                        <>
+                                            <button onClick={()=>rereplyLikeHandler(rereply.id,index,rIndex)}>추천 : {rereplyLikeNum[index][rIndex]}</button>
+                                            {/* 대댓글 수정 로그인 식별 */}
+                                                {rereply.userId === currentUser.id && (
+                                                <div className='rereply_btns'>
+                                                    <button onClick={()=>toggleRereplyUpdate(rereply.id, rereply.content)}>
+                                                        {rereplyUpdate === rereply.id ? "수정 취소" : '수정'}
+                                                    </button>
+
+                                                    {rereplyUpdate === rereply.id && (
+                                                        <button onClick={confirmhandlerRereply}>
+                                                            수정 완료
+                                                        </button>
+                                                    )}
+
+                                                    <button onClick={()=>deleteHandlerRereply(rereply.id)}>댓글 삭제</button>
+                                                </div>
+                                                )}         
+                                        </>
+                                    </div>
+                                </div>
+
+                            ))}
+                        </div>
                     </div>
                 </div>
             ))}
