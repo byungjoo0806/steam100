@@ -55,6 +55,10 @@ const BorderDetail = ({ postContent, setPostContent }) => {
     }
     /////////////// 대댓글 view ///////////////////
     const fetchRereply = async () => {
+        if(!replyId || !Array.isArray(replyId)){
+            return [];
+        }
+        
         const rereplyData = await Promise.all(
             replyId.map(async (e) => {
                 const response = await axios.get(`${backend}/rereply?replyId=${e}`, {
