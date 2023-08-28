@@ -158,7 +158,7 @@ const BorderDetail = ({ postContent, setPostContent }) => {
 
             setReplyLikeNum(replyLike);
         }
-    },[])
+    },[replys])
 
 // 수정 버튼
 const toggleReplyUpdate = useCallback((replyId, content)=>{
@@ -229,18 +229,30 @@ const confirmHandlerReply = async () => {
     const focusRereplyContent = useRef(null);
     // const [activeReplyId, setActiveReplyId] = useState(null);
     const [rereplyData, setRereplyData] = useState(null);
+    const [rereplyLikeNum, setRereplyLikeNum] = useState(0);
 
     const {data : rereplys } = useQuery(['rereplys', replyId], fetchRereply);
 
     useEffect(()=>{
-        setRereplyData(rereplys);
-    },[replys,rereplys])
+        if(rereplys){
+            let rereplyLike = [];
+
+            rereplys.map((el)=>{
+                let arr = [];
+                el.map((i)=>{
+                    arr.push(i.replyLikes?.split(',').length - 1);
+                })
+
+                rereplyLike.push(arr);
+            })
+
+            setRereplyLikeNum(rereplyLike);
+        }
+    },[rereplys])
 
     useEffect(()=>{
-        console.log(replys)
-        console.log(rereplys)
-        console.log(rereplyData);
-    },[rereplyData])
+        setRereplyData(rereplys);
+    },[replys,rereplys])
 
     // 대댓글 클릭 핸들러
     // const handleCommentButtonClick = (replyId) => {
@@ -286,6 +298,32 @@ const confirmHandlerReply = async () => {
         }
     }
 
+    // 대댓글 좋아요
+    const likeRereplyPostUpdateId = async(id,index,rIndex) => {
+        await axios.get(`${backend}/rereply/rereplylike/${id}`, {
+            withCredentials : true
+        }).then((e)=> {
+            if(e.data[0] !== '세') {
+                let changeNum = [...rereplyLikeNum];
+                const changeIndexNum = e.data.rereplyLikes.split(',').length -1;
+                changeNum[index][rIndex] = changeIndexNum;
+                setRereplyLikeNum(changeNum);
+            }else {
+                alert(e.data);
+                navi('/login');
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+    // 대댓글 좋아요 버튼
+    const rereplyLikeHandler = async (id,index,rIndex) => {
+        try {
+            await likeRereplyPostUpdateId(id,index,rIndex);
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 /////////////////////////////////////////
 
@@ -474,7 +512,7 @@ useEffect(() => {
                                         : <p>{rereply.content}</p>
                                     }
                                     <p>{rereply.createdAt.split('T')[0]}</p>
-                                    {/* <p>{rereply.rereplyLikes}</p> */}
+                                    <button onClick={()=>rereplyLikeHandler(rereply.id,index,rIndex)}>추천 : {rereplyLikeNum[index][rIndex]}</button>
                                     <div>
                                         {/* 대댓글 수정 로그인 식별 */}
                                             {rereply.userId === currentUser.id && (
