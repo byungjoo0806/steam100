@@ -125,7 +125,7 @@ const Testswiper = (props)=> {
                 </Swiper>
             </Swiperbox> 
         </>
-  );
+    );
 };
 
 export default Testswiper;
